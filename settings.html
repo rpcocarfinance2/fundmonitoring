@@ -630,61 +630,105 @@
             </div>
           </div>
 
-          <!-- Data Management -->
-          <div class="tab-pane fade" id="data" role="tabpanel">
-            <div class="card">
-              <div class="card-header">
-                <h4><i class="fas fa-database me-2"></i>Data Management</h4>
-              </div>
-              <div class="card-body">
-                <div class="alert alert-warning">
-                  <i class="fas fa-exclamation-triangle me-2"></i>
-                  <strong>Warning:</strong> These actions cannot be undone. Please proceed with caution.
-                </div>
+ <!-- Data Management -->
+<div class="tab-pane fade" id="data" role="tabpanel">
+  <div class="card">
+    <div class="card-header">
+      <h4><i class="fas fa-database me-2"></i>Data Management</h4>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-warning">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        <strong>Warning:</strong> These actions cannot be undone. Please proceed with caution.
+      </div>
 
-                <h5 class="mb-3">Export Data</h5>
-                <p class="text-muted">Download all your data in various formats.</p>
-                <div class="mb-4">
-                  <button class="btn btn-outline-primary me-2" onclick="exportData('csv')">
-                    <i class="fas fa-file-csv me-2"></i>Export as CSV
-                  </button>
-                  <button class="btn btn-outline-primary me-2" onclick="exportData('json')">
-                    <i class="fas fa-file-code me-2"></i>Export as JSON
-                  </button>
-                  <button class="btn btn-outline-primary" onclick="exportData('pdf')">
-                    <i class="fas fa-file-pdf me-2"></i>Export as PDF
-                  </button>
-                </div>
+      <h5 class="mb-3">Export Data</h5>
+      <p class="text-muted">Download all your data in various formats.</p>
+      <div class="mb-4">
+        <button class="btn btn-outline-primary me-2" onclick="exportData('csv')">
+          <i class="fas fa-file-csv me-2"></i>Export as CSV
+        </button>
+        <button class="btn btn-outline-primary me-2" onclick="exportData('json')">
+          <i class="fas fa-file-code me-2"></i>Export as JSON
+        </button>
+      </div>
 
-                <div class="divider"></div>
+      <div class="divider"></div>
 
-                <h5 class="mb-3">Import Data</h5>
-                <p class="text-muted">Import transactions from a file.</p>
-                <div class="mb-4">
-                  <input type="file" id="importFile" accept=".csv,.json" style="display: none;" onchange="importData(event)">
-                  <button class="btn btn-outline-success" onclick="document.getElementById('importFile').click()">
-                    <i class="fas fa-upload me-2"></i>Import Data
-                  </button>
-                </div>
+      <!-- IMPORT SECTION -->
+      <h5 class="mb-3">Import Transactions</h5>
+      <p class="text-muted">Import transactions from CSV or Excel file.</p>
+      
+      <!-- Template Download -->
+      <div class="alert alert-info mb-3">
+        <i class="fas fa-download me-2"></i>
+        <strong>Download Template:</strong>
+        <button class="btn btn-sm btn-outline-primary ms-2" onclick="downloadCSVTemplate()">
+          <i class="fas fa-file-csv me-1"></i>CSV Template
+        </button>
+        <button class="btn btn-sm btn-outline-success ms-2" onclick="downloadSampleData()">
+          <i class="fas fa-file me-1"></i>Sample Data
+        </button>
+      </div>
+      
+      <!-- File Upload Area -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">Select File to Import:</label>
+        <input type="file" id="importFileInput" class="form-control" accept=".csv,.json,.xlsx,.xls" onchange="previewImportFile(event)">
+      </div>
+      
+      <!-- Preview Section -->
+      <div id="importPreviewSection" style="display: none;" class="mb-3">
+        <label class="form-label fw-bold">Data Preview:</label>
+        <div style="max-height: 250px; overflow: auto; border: 1px solid var(--border-color); border-radius: 8px;">
+          <table id="importPreviewTable" class="table table-sm table-striped mb-0">
+            <thead><tr><th colspan="5" class="text-center">Loading preview...</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <small class="text-muted mt-1">Showing first 5 rows. Total: <span id="importRowCount">0</span> records</small>
+      </div>
+      
+      <!-- Import Progress -->
+      <div id="importProgressSection" style="display: none;" class="mb-3">
+        <label class="form-label">Import Progress:</label>
+        <div class="progress">
+          <div id="importProgressBar" class="progress-bar progress-bar-striped progress-bar-animated" 
+               role="progressbar" style="width: 0%">0%</div>
+        </div>
+        <div id="importStatus" class="mt-2"></div>
+      </div>
+      
+      <!-- Import Actions -->
+      <div class="mb-4">
+        <button class="btn btn-success" id="startImportBtn" onclick="startImport()" disabled>
+          <i class="fas fa-upload me-2"></i>Start Import
+        </button>
+        <button class="btn btn-outline-secondary ms-2" onclick="cancelImport()" id="cancelImportBtn" style="display: none;">
+          <i class="fas fa-times me-2"></i>Cancel
+        </button>
+      </div>
 
-                <div class="divider"></div>
+      <div class="divider"></div>
 
-                <h5 class="mb-3 text-danger">Danger Zone</h5>
-                <p class="text-muted">Permanently delete your data.</p>
-                <div class="mb-3">
-                  <button class="btn btn-outline-danger me-2" onclick="clearAllTransactions()">
-                    <i class="fas fa-trash me-2"></i>Clear All Transactions
-                  </button>
-                  <button class="btn btn-outline-danger" onclick="clearAllFunds()">
-                    <i class="fas fa-trash me-2"></i>Clear All Funds
-                  </button>
-                </div>
-                <div>
-                  <button class="btn btn-danger" onclick="resetAllData()">
-                    <i class="fas fa-exclamation-triangle me-2"></i>Reset All Data
-                  </button>
-                </div>
-              </div>
+      <h5 class="mb-3 text-danger">Danger Zone</h5>
+      <p class="text-muted">Permanently delete your data.</p>
+      <div class="mb-3">
+        <button class="btn btn-outline-danger me-2" onclick="clearAllTransactions()">
+          <i class="fas fa-trash me-2"></i>Clear All Transactions
+        </button>
+        <button class="btn btn-outline-danger" onclick="clearAllFunds()">
+          <i class="fas fa-trash me-2"></i>Clear All Funds
+        </button>
+      </div>
+      <div>
+        <button class="btn btn-danger" onclick="resetAllData()">
+          <i class="fas fa-exclamation-triangle me-2"></i>Reset All Data
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
             </div>
           </div>
 
@@ -1095,6 +1139,341 @@
   window.clearAllFunds = clearAllFunds;
   window.resetAllData = resetAllData;
   window.showAddUserModal = showAddUserModal;
+
+  // ==================== IMPORT FUNCTIONALITY ====================
+
+let importDataArray = [];
+let isImporting = false;
+let importAbortController = null;
+
+// CSV Template Structure
+const CSV_HEADERS = [
+  'year', 'moNo', 'month', 'transactionDate', 'asaNo', 'pap', 'rc', 'orsNo', 
+  'fund', 'payee', 'fundSource', 'component', 'componentNo', 'unit', 'category',
+  'accountTitle', 'uacs', 'particulars', 'obligation', 'adjustment', 
+  'adjustedObligation', 'unpaidObligation', 'status',
+  'allocations_lp', 'allocations_gop', 'allocations_iplan11', 'allocations_iplan12',
+  'allocations_ibuild21', 'allocations_ibuild22', 'allocations_ireap31', 
+  'allocations_ireap32', 'allocations_isupport',
+  'expenseComponent', 'expenseCategory', 'expenseUACS', 'expenseAmount'
+];
+
+// Download CSV Template
+window.downloadCSVTemplate = function() {
+  const csvContent = CSV_HEADERS.join(',') + '\n' +
+    '2026,2,February,02/20,ASA No. 2026-000013,310500300010000 PRDP SCALE-UP,' +
+    '05-001-03-00014-24-01 PRDP SU,02-02101163-2026-02-000001,LP,ARNEL V. GAGUJAS,' +
+    'I-PLAN (1.1),I-PLAN (1.1),1.1,,IOC,Other Professional Services,50211990-00,' +
+    '"OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026",536800.00,0,536800.00,0,UNPAID,' +
+    '0,0,536800,0,0,0,0,0,0,I-PLAN (1.1),Other Professional Services,50211990-00,536800.00';
+  
+  downloadFile(csvContent, 'fundtrack_transactions_template.csv', 'text/csv');
+  showToast('CSV template downloaded', 'success');
+};
+
+// Download Sample Data
+window.downloadSampleData = function() {
+  const sampleRows = [
+    '2026,2,February,02/20,ASA No. 2026-000013,310500300010000 PRDP SCALE-UP,05-001-03-00014-24-01 PRDP SU,02-02101163-2026-02-000001,LP,ARNEL V. GAGUJAS,I-PLAN (1.1),I-PLAN (1.1),1.1,,IOC,Other Professional Services,50211990-00,"OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026",536800.00,0,536800.00,0,UNPAID,0,0,536800,0,0,0,0,0,0,I-PLAN (1.1),Other Professional Services,50211990-00,536800.00',
+    '2026,2,February,02/20,ASA No. 2026-000013,310500300010000 PRDP SCALE-UP,05-001-03-00014-24-01 PRDP SU,02-02101163-2026-02-000003,LP,EDWIN B. CAMHIT,I-BUILD (2.2),I-BUILD (2.2),2.2,,IOC,Other Professional Services,50211990-00,"OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026",536800.00,0,536800.00,0,UNPAID,0,0,0,0,0,536800,0,0,0,I-BUILD (2.2),Other Professional Services,50211990-00,536800.00',
+    '2026,2,February,02/20,ASA No. 2026-000013,310500300010000 PRDP SCALE-UP,05-001-03-00014-24-01 PRDP SU,02-02101163-2026-02-000008,LP,JOHNSON D. CEA,I-REAP (3.2),I-REAP (3.2),3.2,,IOC,Other Professional Services,50211990-00,"OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026",593824.00,0,593824.00,0,UNPAID,0,0,0,0,0,0,0,593824,0,I-REAP (3.2),Other Professional Services,50211990-00,593824.00',
+    '2026,2,February,02/20,ASA No. 2026-000013,310500300010000 PRDP SCALE-UP,05-001-03-00014-24-01 PRDP SU,02-02101163-2026-02-000013,LP,RIGI MAY COPATAN,I-SUPPORT,I-SUPPORT,4,,IOC,Other Professional Services,50211990-00,"OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026",536800.00,0,536800.00,0,UNPAID,0,0,0,0,0,0,0,0,536800,I-SUPPORT,Other Professional Services,50211990-00,536800.00'
+  ];
+  
+  const csvContent = CSV_HEADERS.join(',') + '\n' + sampleRows.join('\n');
+  downloadFile(csvContent, 'fundtrack_sample_transactions.csv', 'text/csv');
+  showToast('Sample data downloaded', 'success');
+};
+
+function downloadFile(content, filename, mimeType) {
+  const blob = new Blob([content], { type: mimeType });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(link.href);
+}
+
+// Preview Import File
+window.previewImportFile = function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const content = e.target.result;
+    
+    if (file.name.endsWith('.json')) {
+      try {
+        importDataArray = JSON.parse(content);
+        if (!Array.isArray(importDataArray)) importDataArray = [importDataArray];
+      } catch (err) {
+        showToast('Invalid JSON file', 'error');
+        return;
+      }
+    } else {
+      // Parse CSV
+      importDataArray = parseCSV(content);
+    }
+    
+    displayPreview();
+    document.getElementById('startImportBtn').disabled = importDataArray.length === 0;
+  };
+  
+  if (file.name.endsWith('.json')) {
+    reader.readAsText(file);
+  } else {
+    reader.readAsText(file);
+  }
+};
+
+function parseCSV(csvText) {
+  const lines = csvText.split('\n').filter(line => line.trim());
+  if (lines.length < 2) return [];
+  
+  const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+  const data = [];
+  
+  for (let i = 1; i < lines.length; i++) {
+    const values = parseCSVLine(lines[i]);
+    if (values.length !== headers.length) continue;
+    
+    const row = {};
+    headers.forEach((header, index) => {
+      let value = values[index];
+      
+      // Convert numeric fields
+      const numericFields = ['obligation', 'adjustment', 'adjustedObligation', 'unpaidObligation', 
+        'allocations_lp', 'allocations_gop', 'allocations_iplan11', 'allocations_iplan12',
+        'allocations_ibuild21', 'allocations_ibuild22', 'allocations_ireap31', 
+        'allocations_ireap32', 'allocations_isupport', 'expenseAmount'];
+      
+      if (numericFields.includes(header)) {
+        row[header] = parseFloat(value) || 0;
+      } else {
+        row[header] = value;
+      }
+    });
+    
+    // Build allocations object
+    row.allocations = {
+      lp: row.allocations_lp || 0,
+      gop: row.allocations_gop || 0,
+      iplan11: row.allocations_iplan11 || 0,
+      iplan12: row.allocations_iplan12 || 0,
+      ibuild21: row.allocations_ibuild21 || 0,
+      ibuild22: row.allocations_ibuild22 || 0,
+      ireap31: row.allocations_ireap31 || 0,
+      ireap32: row.allocations_ireap32 || 0,
+      isupport: row.allocations_isupport || 0
+    };
+    
+    data.push(row);
+  }
+  
+  return data;
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+  
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    
+    if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === ',' && !inQuotes) {
+      result.push(current.trim());
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  result.push(current.trim());
+  
+  return result;
+}
+
+function displayPreview() {
+  const section = document.getElementById('importPreviewSection');
+  const table = document.getElementById('importPreviewTable');
+  const rowCount = document.getElementById('importRowCount');
+  
+  section.style.display = 'block';
+  rowCount.textContent = importDataArray.length;
+  
+  if (importDataArray.length === 0) {
+    table.innerHTML = '<thead><tr><th colspan="5" class="text-center text-danger">No valid data found</th></tr></thead><tbody></tbody>';
+    return;
+  }
+  
+  // Build preview table (show first 5 rows, key columns)
+  const previewColumns = ['orsNo', 'payee', 'fundSource', 'obligation', 'status'];
+  const previewData = importDataArray.slice(0, 5);
+  
+  let html = '<thead><tr>';
+  previewColumns.forEach(col => html += `<th>${col}</th>`);
+  html += '</tr></thead><tbody>';
+  
+  previewData.forEach(row => {
+    html += '<tr>';
+    previewColumns.forEach(col => {
+      let value = row[col] || '';
+      if (col === 'obligation') value = '₱' + parseFloat(value).toLocaleString();
+      html += `<td>${value}</td>`;
+    });
+    html += '</tr>';
+  });
+  
+  if (importDataArray.length > 5) {
+    html += `<tr><td colspan="${previewColumns.length}" class="text-center text-muted">... and ${importDataArray.length - 5} more rows</td></tr>`;
+  }
+  
+  html += '</tbody>';
+  table.innerHTML = html;
+}
+
+// Start Import
+window.startImport = async function() {
+  if (importDataArray.length === 0) {
+    showToast('No data to import', 'error');
+    return;
+  }
+  
+  if (!confirm(`Import ${importDataArray.length} transaction(s) to Firestore?`)) return;
+  
+  isImporting = true;
+  importAbortController = new AbortController();
+  
+  // Show progress UI
+  document.getElementById('importProgressSection').style.display = 'block';
+  document.getElementById('startImportBtn').disabled = true;
+  document.getElementById('cancelImportBtn').style.display = 'inline-block';
+  document.getElementById('importFileInput').disabled = true;
+  
+  const progressBar = document.getElementById('importProgressBar');
+  const statusDiv = document.getElementById('importStatus');
+  
+  let imported = 0;
+  let failed = 0;
+  const total = importDataArray.length;
+  
+  statusDiv.innerHTML = `<span class="text-info"><i class="fas fa-spinner fa-spin me-2"></i>Importing...</span>`;
+  
+  for (let i = 0; i < importDataArray.length; i++) {
+    if (!isImporting) {
+      statusDiv.innerHTML = '<span class="text-warning">Import cancelled</span>';
+      break;
+    }
+    
+    const data = importDataArray[i];
+    
+    try {
+      // Add system fields
+      const enrichedData = {
+        ...data,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        monthly: {
+          jan: 0, feb: data.obligation || 0, mar: 0, apr: 0, may: 0, jun: 0,
+          jul: 0, aug: 0, sep: 0, oct: 0, nov: 0, dec: 0
+        },
+        engasDate: data.engasDate || '',
+        boxDofDV: data.boxDofDV || '',
+        dvReceived: data.dvReceived || '',
+        lddapNo: data.lddapNo || '',
+        expendituresLPGross: data.expendituresLPGross || 0,
+        totalExpenditures: data.obligation || 0
+      };
+      
+      await db.collection('transactions').add(enrichedData);
+      imported++;
+    } catch (error) {
+      failed++;
+      console.error('Import error:', error);
+    }
+    
+    // Update progress
+    const percent = Math.round(((imported + failed) / total) * 100);
+    progressBar.style.width = percent + '%';
+    progressBar.textContent = percent + '%';
+    statusDiv.innerHTML = `<span class="text-info">Imported: ${imported}, Failed: ${failed}</span>`;
+    
+    // Small delay to avoid rate limiting
+    await new Promise(resolve => setTimeout(resolve, 50));
+  }
+  
+  // Complete
+  isImporting = false;
+  progressBar.classList.remove('progress-bar-animated');
+  
+  if (failed === 0) {
+    progressBar.classList.add('bg-success');
+    statusDiv.innerHTML = `<span class="text-success"><i class="fas fa-check-circle me-2"></i>Import complete! ${imported} records imported successfully.</span>`;
+    showToast(`Successfully imported ${imported} records`, 'success');
+  } else {
+    progressBar.classList.add('bg-warning');
+    statusDiv.innerHTML = `<span class="text-warning"><i class="fas fa-exclamation-triangle me-2"></i>Import completed with errors. Imported: ${imported}, Failed: ${failed}</span>`;
+    showToast(`Imported ${imported} records, ${failed} failed`, 'warning');
+  }
+  
+  // Reset UI
+  document.getElementById('cancelImportBtn').style.display = 'none';
+  document.getElementById('importFileInput').disabled = false;
+  document.getElementById('importFileInput').value = '';
+  importDataArray = [];
+  document.getElementById('importPreviewSection').style.display = 'none';
+};
+
+window.cancelImport = function() {
+  isImporting = false;
+  showToast('Import cancelled', 'info');
+};
+
+// Enhanced Export Function
+window.exportData = async function(format) {
+  try {
+    const snapshot = await db.collection('transactions').get();
+    const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    
+    if (format === 'csv') {
+      if (data.length === 0) {
+        showToast('No data to export', 'warning');
+        return;
+      }
+      
+      const headers = Object.keys(data[0]).filter(k => 
+        !['createdAt', 'updatedAt', 'allocations', 'monthly'].includes(k)
+      );
+      
+      let csv = headers.join(',') + '\n';
+      data.forEach(row => {
+        const values = headers.map(h => {
+          let val = row[h];
+          if (typeof val === 'string' && val.includes(',')) {
+            val = `"${val}"`;
+          }
+          return val !== undefined && val !== null ? val : '';
+        });
+        csv += values.join(',') + '\n';
+      });
+      
+      downloadFile(csv, `transactions_export_${new Date().toISOString().split('T')[0]}.csv`, 'text/csv');
+      showToast(`Exported ${data.length} records as CSV`, 'success');
+      
+    } else if (format === 'json') {
+      const jsonStr = JSON.stringify(data, null, 2);
+      downloadFile(jsonStr, `transactions_export_${new Date().toISOString().split('T')[0]}.json`, 'application/json');
+      showToast(`Exported ${data.length} records as JSON`, 'success');
+    }
+  } catch (error) {
+    showToast('Export failed: ' + error.message, 'error');
+  }
+};
 </script>
 
 <script src="assets/js/script.js"></script>
