@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Funds · FundTrack</title>
+
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="assets/modules/bootstrap-5.1.3/css/bootstrap.css">
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- FontAwesome CSS-->
+  <link rel="stylesheet" href="assets/modules/fontawesome6.1.1/css/all.css">
+  <!-- Boxicons CSS-->
+  <link rel="stylesheet" href="assets/modules/boxicons/css/boxicons.min.css">
+  
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --primary-light: #34495e;
+      --accent-color: #3498db;
+      --success-color: #27ae60;
+      --warning-color: #f39c12;
+      --danger-color: #e74c3c;
+      --border-color: #e0e0e0;
+      --bg-light: #f8f9fa;
+      --text-dark: #2c3e50;
+      --text-muted: #7f8c8d;
+    }
+
+    body {
+      background: #f5f7fa;
+    }
+
+    .content-header h1 {
+      color: var(--primary-color);
+      font-weight: 600;
+      font-size: 1.8rem;
+    }
+
+    .content-header p {
+      color: var(--text-muted);
+    }
+    
+    .custom-toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 500;
+      z-index: 9999;
+      animation: slideIn 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .custom-toast.success { background: var(--success-color); }
+    .custom-toast.error { background: var(--danger-color); }
+    .custom-toast.info { background: var(--accent-color); }
+    
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    .stat-card {
+      border: none;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    
+    .stat-card .icon-home {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+    }
+    
+    .stat-card h4 {
+      color: var(--primary-color);
+      font-weight: 700;
+      font-size: 1.8rem;
+      margin-bottom: 4px;
+    }
+    
+    .stat-card p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    
+    .card-header {
+      background-color: white;
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 20px;
+    }
+    
+    .card-header h4 {
+      color: var(--primary-color);
+      font-weight: 600;
+      margin: 0;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .card-header h4 i {
+      color: var(--accent-color);
+      margin-right: 10px;
+    }
+    
+    .card-body {
+      padding: 20px;
+    }
+    
+    .form-label {
+      font-weight: 500;
+      color: var(--primary-light);
+      margin-bottom: 4px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    
+    .form-control, .form-select {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      padding: 10px 12px;
+      background-color: white;
+      transition: all 0.2s ease;
+    }
+    
+    .form-control:focus, .form-select:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
+    
+    .btn {
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+      border: none;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+    }
+    
+    .btn-outline-secondary {
+      border-color: var(--border-color);
+      color: var(--text-dark);
+    }
+    
+    .btn-outline-secondary:hover {
+      background-color: var(--bg-light);
+      border-color: var(--text-muted);
+    }
+    
+    .btn-outline-success {
+      border-color: var(--success-color);
+      color: var(--success-color);
+    }
+    
+    .btn-outline-success:hover {
+      background-color: var(--success-color);
+      color: white;
+    }
+    
+    .btn-outline-primary {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+    
+    .btn-outline-primary:hover {
+      background-color: var(--accent-color);
+      color: white;
+    }
+    
+    .btn-outline-danger {
+      border-color: var(--danger-color);
+      color: var(--danger-color);
+    }
+    
+    .btn-outline-danger:hover {
+      background-color: var(--danger-color);
+      color: white;
+    }
+    
+    .table {
+      margin-bottom: 0;
+    }
+    
+    .table th {
+      background-color: var(--primary-color) !important;
+      color: white !important;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-align: center;
+      padding: 14px 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: none;
+    }
+    
+    .table td {
+      padding: 12px 10px;
+      vertical-align: middle;
+      border-color: var(--border-color);
+      font-size: 0.9rem;
+    }
+    
+    .table-striped tbody tr:nth-of-type(odd) {
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+    
+    .table-hover tbody tr:hover {
+      background-color: rgba(52, 152, 219, 0.05);
+    }
+    
+    .badge {
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 0.75rem;
+    }
+    
+    .badge.bg-info {
+      background-color: var(--accent-color) !important;
+      color: white;
+    }
+    
+    .text-success {
+      color: var(--success-color) !important;
+    }
+    
+    footer .footer {
+      background: transparent;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      padding-top: 20px;
+      margin-top: 20px;
+    }
+    
+    .search-box {
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    
+    .search-box:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
+    
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+    }
+    
+    /* Animation for form */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .card {
+      animation: fadeIn 0.4s ease;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar transition">
+  <div class="bars">
+    <button type="button" class="btn transition" id="sidebar-toggle"><i class="fa fa-bars"></i></button>
+  </div>
+  <div class="menu">
+    <ul>
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
+          <img src="assets/images/avatar/avatar-1.png" alt="">
+          <span id="userDisplayName" class="ms-2 text-white">Loading...</span>
+        </a>
+        <ul class="dropdown-menu" id="userDropdownMenu">
+          <div class="dropdown-item-text" id="userRoleDisplay">
+            <i class="fa fa-user me-2"></i> Loading...
+          </div>
+          <hr class="dropdown-divider">
+          <a class="dropdown-item" href="#" onclick="syncFunds()"><i class="fa fa-sync-alt me-2"></i> Refresh</a>
+          <hr class="dropdown-divider">
+          <a class="dropdown-item text-danger" href="#" onclick="handleSignOut()"><i class="fa fa-sign-out-alt me-2"></i> Sign Out</a>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar transition overlay-scrollbars">
+  <div class="sidebar-content">
+    <div id="sidebar">
+      <div class="logo"><h2 class="mb-0"><img src="assets/images/logo.png"> FundTrack</h2></div>
+      <ul class="side-menu">
+        <li><a href="index.html"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
+        <li class="divider" data-text="MAIN">MAIN</li>
+        <li><a href="funds.html" class="active"><i class='bx bx-wallet icon'></i> Funds</a></li>
+        <li><a href="transactions.html"><i class='bx bx-transfer-alt icon'></i> Transactions</a></li>
+        <li class="divider" data-text="ADMIN">ADMIN</li>
+        <li><a href="#"><i class='bx bxs-cog icon'></i> Settings</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="sidebar-overlay"></div>
+
+<!-- Content Start -->
+<div class="content-start transition">
+  <div class="container-fluid dashboard">
+    <div class="content-header">
+      <h1>Fund Management</h1>
+      <p>Create and manage budget allocations</p>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card stat-card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="icon-home me-3">
+                <i class="fas fa-layer-group text-white"></i>
+              </div>
+              <div>
+                <p class="mb-1">Total Funds</p>
+                <h4 id="totalFunds">0</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card stat-card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="icon-home me-3" style="background: linear-gradient(135deg, var(--success-color), #2ecc71);">
+                <i class="fas fa-dollar-sign text-white"></i>
+              </div>
+              <div>
+                <p class="mb-1">Total Allocated</p>
+                <h4 id="totalAllocated">₱0.00</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card stat-card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="icon-home me-3" style="background: linear-gradient(135deg, var(--warning-color), #e67e22);">
+                <i class="fas fa-chart-pie text-white"></i>
+              </div>
+              <div>
+                <p class="mb-1">Average Allocation</p>
+                <h4 id="avgAllocation">₱0.00</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Fund Form -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4><i class="fas fa-plus-circle me-2"></i><span id="formTitle">Create New Fund</span></h4>
+          </div>
+          <div class="card-body">
+            <form id="fundForm">
+              <input type="hidden" id="fundId">
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label for="fundName" class="form-label">Fund Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="fundName" placeholder="e.g., General Fund, Special Education Fund" required>
+                </div>
+                <div class="col-md-4">
+                  <label for="fundYear" class="form-label">Year <span class="text-danger">*</span></label>
+                  <select class="form-select" id="fundYear" required>
+                    <option value="">Select Year</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="allocatedFund" class="form-label">Allocated Amount (₱) <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="allocatedFund" placeholder="0.00" min="0" step="0.01" required>
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-md-12">
+                  <button type="submit" class="btn btn-primary" id="submitBtn">
+                    <i class="fas fa-plus-circle me-2"></i>Add Fund
+                  </button>
+                  <button type="button" class="btn btn-outline-secondary ms-2" id="cancelEditBtn" style="display:none;" onclick="resetForm()">
+                    <i class="fas fa-times me-2"></i>Cancel
+                  </button>
+                  <button type="button" class="btn btn-outline-success ms-2" onclick="syncFunds()">
+                    <i class="fas fa-sync-alt me-2"></i>Refresh
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Funds Table -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h4><i class="fas fa-list me-2"></i>Funds List</h4>
+            <div>
+              <input type="text" class="form-control search-box" id="searchFund" placeholder="🔍 Search by fund name...">
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover" id="fundsTable">
+                <thead>
+                  <tr>
+                    <th width="5%">#</th>
+                    <th width="30%">Fund Name</th>
+                    <th width="10%">Year</th>
+                    <th width="20%">Allocated Amount</th>
+                    <th width="20%">Date Created</th>
+                    <th width="15%">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="fundsTableBody">
+                  <tr><td colspan="6" class="text-center py-5 text-muted"><i class="fas fa-spinner fa-spin me-2"></i>Loading funds...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer">
+    <div class="float-start"><p>2026 &copy; FundTrack · Financial Management System</p></div>
+    <div class="float-end"><p>Crafted with <span class="text-danger"><i class="fa fa-heart"></i></span> by FundTrack Team</p></div>
+  </div>
+</footer>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore-compat.js"></script>
+
+<script src="assets/js/atrana.js"></script>
+<script src="assets/modules/jquery/jquery.min.js"></script>
+<script src="assets/modules/bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="assets/modules/popper/popper.min.js"></script>
+
+<script>
+  // Simple toast function
+  function showToast(message, type = 'success') {
+    const existingToast = document.querySelector('.custom-toast');
+    if (existingToast) existingToast.remove();
+    
+    const toast = document.createElement('div');
+    toast.className = `custom-toast ${type}`;
+    toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} me-2"></i>${message}`;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s';
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
+  // Firebase Configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAtduM2t1jzgVs0TfPD48t3LJB5UJ90BrQ",
+    authDomain: "fundmonitoring-3c89f.firebaseapp.com",
+    projectId: "fundmonitoring-3c89f",
+    storageBucket: "fundmonitoring-3c89f.firebasestorage.app",
+    messagingSenderId: "630221204555",
+    appId: "1:630221204555:web:fa5116e95ad993093bb1ce",
+    measurementId: "G-MQ35CGE6EB"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const auth = firebase.auth();
+  
+  db.enablePersistence().catch((err) => {
+    console.warn('Offline persistence not available:', err.code);
+  });
+
+  let funds = [];
+  let editingId = null;
+  let currentUser = null;
+  let userRole = 'viewer';
+
+  // ==================== AUTHENTICATION ====================
+  
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) {
+      window.location.href = 'auth-login.html';
+      return;
+    }
+    
+    currentUser = user;
+    
+    document.getElementById('userDisplayName').textContent = user.displayName || user.email?.split('@')[0] || 'User';
+    
+    try {
+      const userDoc = await db.collection('users').doc(user.uid).get();
+      if (userDoc.exists) {
+        userRole = userDoc.data().role || 'viewer';
+      }
+      
+      if (userRole !== 'admin') {
+        showToast('Access denied. Administrator privileges required.', 'error');
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 2000);
+        return;
+      }
+      
+      document.getElementById('userRoleDisplay').innerHTML = 
+        '<i class="fa fa-shield-alt me-2 text-success"></i> Administrator';
+      
+      loadFunds();
+      
+    } catch (error) {
+      console.error('Error getting user role:', error);
+      showToast('Error verifying permissions', 'error');
+    }
+  });
+
+  async function handleSignOut() {
+    try {
+      await auth.signOut();
+      window.location.href = 'auth-login.html';
+    } catch (error) {
+      console.error('Sign out error:', error);
+      showToast('Error signing out', 'error');
+    }
+  }
+
+  // ==================== FUND MANAGEMENT ====================
+
+  function formatCurrency(amount) {
+    return '₱' + parseFloat(amount || 0).toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function formatDate(timestamp) {
+    if (!timestamp) return '-';
+    try {
+      const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    } catch (e) {
+      return '-';
+    }
+  }
+
+  async function loadFunds() {
+    try {
+      const snapshot = await db.collection('funds')
+        .orderBy('createdAt', 'desc')
+        .get();
+      
+      funds = [];
+      snapshot.forEach(doc => {
+        funds.push({ id: doc.id, ...doc.data() });
+      });
+      
+      renderTable();
+      updateSummary();
+    } catch (error) {
+      console.error('Error loading funds:', error);
+      showToast('Error loading funds: ' + error.message, 'error');
+      document.getElementById('fundsTableBody').innerHTML = 
+        '<tr><td colspan="6" class="text-center py-5 text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Failed to load funds.</td></tr>';
+    }
+  }
+
+  function renderTable(filterText = '') {
+    const tbody = document.getElementById('fundsTableBody');
+    
+    let filteredFunds = funds;
+    if (filterText) {
+      filteredFunds = funds.filter(f => 
+        f.name?.toLowerCase().includes(filterText.toLowerCase())
+      );
+    }
+
+    if (filteredFunds.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" class="text-center py-5 text-muted"><i class="fas fa-inbox me-2"></i>No funds found. Add your first fund above.</td></tr>';
+      return;
+    }
+    
+    tbody.innerHTML = filteredFunds.map((fund, index) => `
+      <tr>
+        <td class="text-center fw-bold">${index + 1}</td>
+        <td><strong>${fund.name || ''}</strong></td>
+        <td><span class="badge bg-info">${fund.year || ''}</span></td>
+        <td><strong class="text-success">${formatCurrency(fund.allocated)}</strong></td>
+        <td><small class="text-muted"><i class="far fa-calendar-alt me-1"></i>${formatDate(fund.createdAt)}</small></td>
+        <td>
+          <button class="btn btn-sm btn-outline-primary me-1" onclick="editFund('${fund.id}')" title="Edit">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn btn-sm btn-outline-danger" onclick="deleteFund('${fund.id}')" title="Delete">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function updateSummary() {
+    const totalFunds = funds.length;
+    const totalAllocated = funds.reduce((sum, f) => sum + (parseFloat(f.allocated) || 0), 0);
+    const avgAllocation = totalFunds > 0 ? totalAllocated / totalFunds : 0;
+
+    document.getElementById('totalFunds').textContent = totalFunds;
+    document.getElementById('totalAllocated').textContent = formatCurrency(totalAllocated);
+    document.getElementById('avgAllocation').textContent = formatCurrency(avgAllocation);
+  }
+
+  document.getElementById('fundForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const fundData = {
+      name: document.getElementById('fundName').value.trim(),
+      year: document.getElementById('fundYear').value,
+      allocated: parseFloat(document.getElementById('allocatedFund').value) || 0,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    if (!fundData.name) {
+      showToast('Please enter a fund name', 'error');
+      return;
+    }
+    if (!fundData.year) {
+      showToast('Please select a year', 'error');
+      return;
+    }
+    if (fundData.allocated <= 0) {
+      showToast('Please enter a valid allocated amount', 'error');
+      return;
+    }
+
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
+
+    try {
+      if (editingId) {
+        await db.collection('funds').doc(editingId).update(fundData);
+        showToast(`Fund "${fundData.name}" updated successfully`);
+      } else {
+        fundData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+        await db.collection('funds').add(fundData);
+        showToast(`Fund "${fundData.name}" added successfully`);
+      }
+      
+      resetForm();
+      loadFunds();
+    } catch (error) {
+      console.error('Error saving fund:', error);
+      showToast('Error saving fund: ' + error.message, 'error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = editingId ? 
+        '<i class="fas fa-save me-2"></i>Update Fund' : 
+        '<i class="fas fa-plus-circle me-2"></i>Add Fund';
+    }
+  });
+
+  function resetForm() {
+    document.getElementById('fundForm').reset();
+    document.getElementById('fundId').value = '';
+    editingId = null;
+    document.getElementById('formTitle').textContent = 'Create New Fund';
+    document.getElementById('submitBtn').innerHTML = '<i class="fas fa-plus-circle me-2"></i>Add Fund';
+    document.getElementById('cancelEditBtn').style.display = 'none';
+  }
+
+  function editFund(id) {
+    const fund = funds.find(f => f.id === id);
+    if (!fund) return;
+    
+    editingId = id;
+    document.getElementById('fundId').value = id;
+    document.getElementById('fundName').value = fund.name || '';
+    document.getElementById('fundYear').value = fund.year || '';
+    document.getElementById('allocatedFund').value = fund.allocated || '';
+    
+    document.getElementById('formTitle').textContent = 'Edit Fund';
+    document.getElementById('submitBtn').innerHTML = '<i class="fas fa-save me-2"></i>Update Fund';
+    document.getElementById('cancelEditBtn').style.display = 'inline-block';
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function deleteFund(id) {
+    const fund = funds.find(f => f.id === id);
+    if (!fund) return;
+    
+    if (!confirm(`Are you sure you want to delete "${fund.name}"?`)) return;
+    
+    try {
+      await db.collection('funds').doc(id).delete();
+      showToast(`Fund "${fund.name}" deleted successfully`);
+      loadFunds();
+    } catch (error) {
+      console.error('Error deleting fund:', error);
+      showToast('Error deleting fund: ' + error.message, 'error');
+    }
+  }
+
+  function syncFunds() {
+    showToast('Refreshing funds...', 'info');
+    loadFunds();
+  }
+
+  function populateYearDropdown() {
+    const select = document.getElementById('fundYear');
+    const currentYear = new Date().getFullYear();
+    
+    while (select.options.length > 1) {
+      select.remove(1);
+    }
+    
+    for (let year = currentYear - 5; year <= currentYear + 5; year++) {
+      const option = document.createElement('option');
+      option.value = year;
+      option.textContent = year;
+      select.appendChild(option);
+    }
+  }
+
+  document.getElementById('searchFund').addEventListener('input', function(e) {
+    renderTable(e.target.value);
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    populateYearDropdown();
+    
+    const loader = document.querySelector('.loader');
+    const loaderOverlay = document.querySelector('.loader-overlay');
+    if (loader) loader.style.display = 'none';
+    if (loaderOverlay) loaderOverlay.style.display = 'none';
+  });
+
+  window.editFund = editFund;
+  window.deleteFund = deleteFund;
+  window.resetForm = resetForm;
+  window.syncFunds = syncFunds;
+  window.handleSignOut = handleSignOut;
+</script>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/custom.js"></script>
+</body>
+</html>

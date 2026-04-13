@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Import Transactions · FundTrack</title>
+  <link rel="stylesheet" href="assets/modules/bootstrap-5.1.3/css/bootstrap.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>Import Transactions to Firebase</h2>
+    <div class="card">
+      <div class="card-body">
+        <h5>Status</h5>
+        <div id="status" class="alert alert-info">Ready to import. Click the button below.</div>
+        <div class="progress mb-3">
+          <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%">0%</div>
+        </div>
+        <button id="importBtn" class="btn btn-primary btn-lg">Start Import</button>
+        <button id="clearBtn" class="btn btn-danger btn-lg ms-2">Clear All Transactions</button>
+      </div>
+    </div>
+    <div class="card mt-3">
+      <div class="card-header">Log</div>
+      <div class="card-body">
+        <pre id="log" style="max-height: 400px; overflow-y: auto;"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Firebase Configuration - REPLACE WITH YOUR CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyAtduM2t1jzgVs0TfPD48t3LJB5UJ90BrQ",
+  authDomain: "fundmonitoring-3c89f.firebaseapp.com",
+  projectId: "fundmonitoring-3c89f",
+  storageBucket: "fundmonitoring-3c89f.firebasestorage.app",
+  messagingSenderId: "630221204555",
+  appId: "1:630221204555:web:fa5116e95ad993093bb1ce",
+  measurementId: "G-MQ35CGE6EB"
+};
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Transaction Data - Parsed from your spreadsheet
+    const transactionsData = [
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000001", fund: "LP", payee: "ARNEL V. GAGUJAS", fundSource: "I-PLAN (1.1)", component: "I-PLAN (1.1)", componentNo: "1.1", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 536800.00, adjustment: 0, adjustedObligation: 536800.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 536800, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 0 }, expenseComponent: "I-PLAN (1.1)", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 536800.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000002", fund: "LP", payee: "ISABEL B. TEJO", fundSource: "I-PLAN (1.1)", component: "I-PLAN (1.1)", componentNo: "1.1", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 536800.00, adjustment: 0, adjustedObligation: 536800.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 536800, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 0 }, expenseComponent: "I-PLAN (1.1)", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 536800.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000003", fund: "LP", payee: "EDWIN B. CAMHIT", fundSource: "I-BUILD (2.2)", component: "I-BUILD (2.2)", componentNo: "2.2", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 536800.00, adjustment: 0, adjustedObligation: 536800.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 536800, ireap31: 0, ireap32: 0, isupport: 0 }, expenseComponent: "I-BUILD (2.2)", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 536800.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000004", fund: "LP", payee: "MYRIC P. TICUALA", fundSource: "I-BUILD (2.2)", component: "I-BUILD (2.2)", componentNo: "2.2", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 536800.00, adjustment: 0, adjustedObligation: 536800.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 536800, ireap31: 0, ireap32: 0, isupport: 0 }, expenseComponent: "I-BUILD (2.2)", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 536800.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000005", fund: "LP", payee: "GENESIS C. DELOEG", fundSource: "I-BUILD (2.2)", component: "I-BUILD (2.2)", componentNo: "2.2", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 536800.00, adjustment: 0, adjustedObligation: 536800.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 536800, ireap31: 0, ireap32: 0, isupport: 0 }, expenseComponent: "I-BUILD (2.2)", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 536800.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000006", fund: "LP", payee: "JEFFREY T. BAS-ONG", fundSource: "I-BUILD (2.2)", component: "I-BUILD (2.2)", componentNo: "2.2", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 536800.00, adjustment: 0, adjustedObligation: 536800.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 536800, ireap31: 0, ireap32: 0, isupport: 0 }, expenseComponent: "I-BUILD (2.2)", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 536800.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000007", fund: "LP", payee: "TIM S. CHATTOM", fundSource: "I-BUILD (2.2)", component: "I-BUILD (2.2)", componentNo: "2.2", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - MARCH 2026 TO DECEMBER 2026", obligation: 332480.00, adjustment: 0, adjustedObligation: 332480.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 332480, ireap31: 0, ireap32: 0, isupport: 0 }, expenseComponent: "I-BUILD (2.2)", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 332480.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000008", fund: "LP", payee: "JOHNSON D. CEA", fundSource: "I-REAP (3.2)", component: "I-REAP (3.2)", componentNo: "3.2", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 593824.00, adjustment: 0, adjustedObligation: 593824.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 593824, isupport: 0 }, expenseComponent: "I-REAP (3.2)", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 593824.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000009", fund: "LP", payee: "LORNA E. PANYO", fundSource: "I-REAP (3.2)", component: "I-REAP (3.2)", componentNo: "3.2", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 536800.00, adjustment: 0, adjustedObligation: 536800.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 536800, isupport: 0 }, expenseComponent: "I-REAP (3.2)", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 536800.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000010", fund: "LP", payee: "RODERICK A. ADCHOG", fundSource: "I-REAP (3.2)", component: "I-REAP (3.2)", componentNo: "3.2", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 536800.00, adjustment: 0, adjustedObligation: 536800.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 536800, isupport: 0 }, expenseComponent: "I-REAP (3.2)", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 536800.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000011", fund: "LP", payee: "STEPHER L. BANHAN", fundSource: "I-REAP (3.2)", component: "I-REAP (3.2)", componentNo: "3.2", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 536800.00, adjustment: 0, adjustedObligation: 536800.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 536800, isupport: 0 }, expenseComponent: "I-REAP (3.2)", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 536800.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000012", fund: "LP", payee: "DALOS S. EMOK", fundSource: "I-REAP (3.2)", component: "I-REAP (3.2)", componentNo: "3.2", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 365728.00, adjustment: 0, adjustedObligation: 365728.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 365728, isupport: 0 }, expenseComponent: "I-REAP (3.2)", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 365728.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000013", fund: "LP", payee: "RIGI MAY COPATAN", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 536800.00, adjustment: 0, adjustedObligation: 536800.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 536800 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 536800.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000014", fund: "LP", payee: "RUDAN S. GARIN", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 479776.00, adjustment: 0, adjustedObligation: 479776.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 479776 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 479776.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000015", fund: "LP", payee: "JOHNNY P. COMICHO", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 479776.00, adjustment: 0, adjustedObligation: 479776.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 479776 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 479776.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000016", fund: "LP", payee: "LARENSTEIN D. BAKILAN", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 479776.00, adjustment: 0, adjustedObligation: 479776.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 479776 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 479776.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000017", fund: "LP", payee: "ROISTON Z. CARAME", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 536800.00, adjustment: 0, adjustedObligation: 536800.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 536800 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 536800.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000018", fund: "LP", payee: "AARON S. FAGYAN", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 536800.00, adjustment: 0, adjustedObligation: 536800.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 536800 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 536800.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000019", fund: "LP", payee: "CHRISTIAN ARIES M. SALGADO", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 479776.00, adjustment: 0, adjustedObligation: 479776.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 479776 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 479776.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000020", fund: "LP", payee: "ELVY T. ESTACIO", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 479776.00, adjustment: 0, adjustedObligation: 479776.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 479776 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 479776.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000021", fund: "LP", payee: "FRANCIS D. DUMAGAS", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 536800.00, adjustment: 0, adjustedObligation: 536800.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 536800 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 536800.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000022", fund: "LP", payee: "DETLEEF B. CAMPOS", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 536800.00, adjustment: 0, adjustedObligation: 536800.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 536800 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 536800.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000023", fund: "LP", payee: "BLIZYLE MAE T. ATIMPAO", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - MARCH 2026 TO DECEMBER 2026", obligation: 280640.00, adjustment: 0, adjustedObligation: 280640.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 280640 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 280640.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000024", fund: "LP", payee: "RODEL MARK U. GARCIA", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - MARCH 2026 TO DECEMBER 2026", obligation: 280640.00, adjustment: 0, adjustedObligation: 280640.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 280640 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 280640.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000025", fund: "LP", payee: "VANESSA A. BINNOY-PANGANIBAN", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - MARCH 2026 TO DECEMBER 2026", obligation: 280640.00, adjustment: 0, adjustedObligation: 280640.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 280640 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 280640.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000026", fund: "LP", payee: "NORBERTO O. CORRALES JR.", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - MARCH 2026 TO DECEMBER 2026", obligation: 280640.00, adjustment: 0, adjustedObligation: 280640.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 280640 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 280640.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000027", fund: "LP", payee: "LEE LUBANGAS", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - MARCH 2026 TO DECEMBER 2026", obligation: 280640.00, adjustment: 0, adjustedObligation: 280640.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 280640 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 280640.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000028", fund: "LP", payee: "DARIUS P. MALATEO", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - MARCH 2026 TO DECEMBER 2026", obligation: 280640.00, adjustment: 0, adjustedObligation: 280640.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 280640 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 280640.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000029", fund: "LP", payee: "HERDIE A. DAYSA", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Professional Services", uacs: "50211990-00", particulars: "OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026", obligation: 479776.00, adjustment: 0, adjustedObligation: 479776.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 479776 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Professional Services", expenseUACS: "50211990-00", expenseAmount: 479776.00 },
+      { year: "2026", moNo: "2", month: "February", transactionDate: "02/20", asaNo: "ASA No. 2026-000013", pap: "310500300010000 PRDP SCALE-UP", rc: "05-001-03-00014-24-01 PRDP SU", orsNo: "02-02101163-2026-02-000030", fund: "LP", payee: "BUREAU OF THE TREASURY", fundSource: "I-SUPPORT", component: "I-SUPPORT", componentNo: "4", unit: "", category: "IOC", accountTitle: "Other Maintenance and Operating Expenses", uacs: "50299990-99", particulars: "FIDELITY BOND - YOLANDA LINGBAWAN", obligation: 48000.00, adjustment: 0, adjustedObligation: 48000.00, unpaidObligation: 0, status: "UNPAID", allocations: { lp: 0, gop: 0, iplan11: 0, iplan12: 0, ibuild21: 0, ibuild22: 0, ireap31: 0, ireap32: 0, isupport: 48000 }, expenseComponent: "I-SUPPORT", expenseCategory: "Other Maintenance and Operating Expenses", expenseUACS: "50299990-99", expenseAmount: 48000.00 }
+    ];
+
+    const totalRecords = transactionsData.length;
+    let imported = 0;
+    let failed = 0;
+    const logElement = document.getElementById('log');
+    const statusElement = document.getElementById('status');
+    const progressBar = document.getElementById('progressBar');
+
+    function log(message, isError = false) {
+      const line = document.createElement('div');
+      line.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      line.style.color = isError ? '#dc3545' : '#198754';
+      logElement.appendChild(line);
+      logElement.scrollTop = logElement.scrollHeight;
+    }
+
+    function updateProgress() {
+      const percent = Math.round(((imported + failed) / totalRecords) * 100);
+      progressBar.style.width = percent + '%';
+      progressBar.textContent = percent + '%';
+    }
+
+    async function importData() {
+      imported = 0;
+      failed = 0;
+      logElement.innerHTML = '';
+      statusElement.className = 'alert alert-info';
+      statusElement.textContent = 'Starting import...';
+      document.getElementById('importBtn').disabled = true;
+      document.getElementById('clearBtn').disabled = true;
+
+      log(`Starting import of ${totalRecords} records...`);
+
+      for (let i = 0; i < transactionsData.length; i++) {
+        const data = transactionsData[i];
+        try {
+          // Add timestamp
+          data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+          data.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+          
+          // Add monthly data (default empty)
+          data.monthly = {
+            jan: 0, feb: data.obligation || 0, mar: 0, apr: 0, may: 0, jun: 0,
+            jul: 0, aug: 0, sep: 0, oct: 0, nov: 0, dec: 0
+          };
+          
+          // Add default fields
+          data.engasDate = '';
+          data.boxDofDV = '';
+          data.dvReceived = '';
+          data.lddapNo = '';
+          data.expendituresLPGross = 0;
+          data.totalExpenditures = data.obligation || 0;
+
+          await db.collection('transactions').add(data);
+          imported++;
+          log(`✓ Imported: ${data.orsNo} - ${data.payee} (₱${data.obligation.toLocaleString()})`);
+        } catch (error) {
+          failed++;
+          log(`✗ Failed: ${data.orsNo} - ${error.message}`, true);
+        }
+        updateProgress();
+        
+        // Small delay to avoid rate limiting
+        await new Promise(resolve => setTimeout(resolve, 50));
+      }
+
+      statusElement.className = failed === 0 ? 'alert alert-success' : 'alert alert-warning';
+      statusElement.textContent = `Import complete! Imported: ${imported}, Failed: ${failed}`;
+      document.getElementById('importBtn').disabled = false;
+      document.getElementById('clearBtn').disabled = false;
+      log(`\n=== IMPORT COMPLETE ===`);
+      log(`Successfully imported: ${imported} records`);
+      if (failed > 0) log(`Failed: ${failed} records`, true);
+    }
+
+    async function clearAllTransactions() {
+      if (!confirm('WARNING: This will delete ALL transactions from Firestore. Are you sure?')) return;
+      if (!confirm('FINAL WARNING: This cannot be undone! Continue?')) return;
+
+      statusElement.className = 'alert alert-warning';
+      statusElement.textContent = 'Deleting all transactions...';
+      document.getElementById('importBtn').disabled = true;
+      document.getElementById('clearBtn').disabled = true;
+      logElement.innerHTML = '';
+      log('Starting deletion of all transactions...');
+
+      try {
+        const snapshot = await db.collection('transactions').get();
+        const batchSize = 500;
+        const totalDocs = snapshot.size;
+        let deleted = 0;
+
+        log(`Found ${totalDocs} documents to delete`);
+
+        for (let i = 0; i < snapshot.docs.length; i += batchSize) {
+          const batch = db.batch();
+          const chunk = snapshot.docs.slice(i, i + batchSize);
+          
+          chunk.forEach(doc => {
+            batch.delete(doc.ref);
+          });
+          
+          await batch.commit();
+          deleted += chunk.length;
+          log(`Deleted batch: ${deleted}/${totalDocs}`);
+          
+          const percent = Math.round((deleted / totalDocs) * 100);
+          progressBar.style.width = percent + '%';
+          progressBar.textContent = percent + '%';
+        }
+
+        statusElement.className = 'alert alert-success';
+        statusElement.textContent = `Successfully deleted ${deleted} transactions`;
+        log(`\n=== DELETION COMPLETE ===`);
+        log(`Deleted ${deleted} transactions`);
+      } catch (error) {
+        statusElement.className = 'alert alert-danger';
+        statusElement.textContent = 'Error deleting transactions';
+        log(`Error: ${error.message}`, true);
+      } finally {
+        document.getElementById('importBtn').disabled = false;
+        document.getElementById('clearBtn').disabled = false;
+      }
+    }
+
+    document.getElementById('importBtn').addEventListener('click', importData);
+    document.getElementById('clearBtn').addEventListener('click', clearAllTransactions);
+
+    log('Ready. Replace Firebase config with your actual credentials.');
+  </script>
+</body>
+</html>

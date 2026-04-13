@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Dashboard · FundTrack</title>
+
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="assets/modules/bootstrap-5.1.3/css/bootstrap.css">
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- FontAwesome CSS-->
+  <link rel="stylesheet" href="assets/modules/fontawesome6.1.1/css/all.css">
+  <!-- Boxicons CSS-->
+  <link rel="stylesheet" href="assets/modules/boxicons/css/boxicons.min.css">
+  <!-- Apexcharts CSS -->
+  <link rel="stylesheet" href="assets/modules/apexcharts/apexcharts.css">
+  <!-- Toastify CSS -->
+  <link rel="stylesheet" href="assets/modules/toastify/toastify.min.css">
+  
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --primary-light: #34495e;
+      --accent-color: #3498db;
+      --success-color: #27ae60;
+      --warning-color: #f39c12;
+      --danger-color: #e74c3c;
+      --border-color: #e0e0e0;
+      --bg-light: #f8f9fa;
+      --text-dark: #2c3e50;
+      --text-muted: #7f8c8d;
+    }
+
+    body {
+      background: #f5f7fa;
+    }
+
+    .content-header h1 {
+      color: var(--primary-color);
+      font-weight: 600;
+      font-size: 1.8rem;
+    }
+
+    .content-header p {
+      color: var(--text-muted);
+    }
+
+    .stat-card {
+      border: none;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-card .icon-home {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+    }
+
+    .stat-card .card-body {
+      padding: 20px;
+    }
+
+    .stat-card h4 {
+      color: var(--primary-color);
+      font-weight: 700;
+      font-size: 1.8rem;
+      margin-bottom: 4px;
+    }
+
+    .stat-card p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .stat-card small {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .card-header {
+      background-color: white;
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 20px;
+    }
+
+    .card-header h4 {
+      color: var(--primary-color);
+      font-weight: 600;
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .progress-thin {
+      height: 8px;
+      border-radius: 4px;
+      background-color: var(--bg-light);
+    }
+
+    .progress-bar {
+      border-radius: 4px;
+    }
+
+    .recent-activity-item {
+      border-bottom: 1px solid var(--border-color);
+      padding: 14px 0;
+      transition: background 0.2s ease;
+    }
+
+    .recent-activity-item:hover {
+      background-color: var(--bg-light);
+      margin: 0 -20px;
+      padding: 14px 20px;
+    }
+
+    .recent-activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .chart-container {
+      min-height: 280px;
+    }
+
+    .badge {
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 0.75rem;
+    }
+
+    .btn {
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .btn-outline-primary {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    .btn-outline-primary:hover {
+      background-color: var(--accent-color);
+      color: white;
+    }
+
+    .btn-outline-success {
+      border-color: var(--success-color);
+      color: var(--success-color);
+    }
+
+    .btn-outline-success:hover {
+      background-color: var(--success-color);
+      color: white;
+    }
+
+    .table {
+      margin-bottom: 0;
+    }
+
+    .table th {
+      background-color: var(--primary-color) !important;
+      color: white !important;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-align: center;
+      padding: 12px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .table td {
+      padding: 10px 8px;
+      vertical-align: middle;
+      border-color: var(--border-color);
+      font-size: 0.85rem;
+    }
+
+    .table-secondary {
+      background-color: var(--bg-light);
+    }
+
+    footer .footer {
+      background: transparent;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      padding-top: 20px;
+      margin-top: 20px;
+    }
+
+    .filter-section {
+      background: white;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .filter-select {
+      min-width: 250px;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+
+    .text-success {
+      color: var(--success-color) !important;
+    }
+
+    .text-warning {
+      color: var(--warning-color) !important;
+    }
+
+    .text-danger {
+      color: var(--danger-color) !important;
+    }
+
+    .bg-success {
+      background-color: var(--success-color) !important;
+    }
+
+    .bg-warning {
+      background-color: var(--warning-color) !important;
+    }
+
+    .bg-danger {
+      background-color: var(--danger-color) !important;
+    }
+
+    .bg-primary {
+      background: linear-gradient(135deg, var(--accent-color), var(--primary-light)) !important;
+    }
+
+    .user-role-badge {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar transition">
+  <div class="bars">
+    <button type="button" class="btn transition" id="sidebar-toggle">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+  <div class="menu">
+    <ul>
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="#" id="navbarDropdownUser" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="assets/images/avatar/avatar-1.png" alt="">
+          <span id="userDisplayName" class="ms-2">Loading...</span>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownUser" id="userDropdownMenu">
+          <div class="dropdown-item-text" id="userRoleDisplay">
+            <i class="fa fa-user me-2"></i> Loading...
+          </div>
+          <hr class="dropdown-divider">
+          <a class="dropdown-item" href="#" onclick="syncData()"><i class="fa fa-sync-alt size-icon-1"></i> <span>Refresh Data</span></a>
+          <hr class="dropdown-divider">
+          <a class="dropdown-item text-danger" href="#" onclick="handleSignOut()"><i class="fa fa-sign-out-alt size-icon-1"></i> <span>Sign Out</span></a>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar transition overlay-scrollbars animate__animated animate__slideInLeft">
+  <div class="sidebar-content">
+    <div id="sidebar">
+      <div class="logo">
+        <h2 class="mb-0"><img src="assets/images/logo.png"> FundTrack</h2>
+      </div>
+
+      <ul class="side-menu" id="sideMenu">
+        <li>
+          <a href="index.html" class="active">
+            <i class='bx bxs-dashboard icon'></i> Dashboard
+          </a>
+        </li>
+
+        <li class="divider" data-text="MAIN">MAIN</li>
+
+        <li id="fundsMenuItem">
+          <a href="funds.html">
+            <i class='bx bx-wallet icon'></i> Funds
+          </a>
+        </li>
+
+        <li id="transactionsMenuItem">
+          <a href="transactions.html">
+            <i class='bx bx-transfer-alt icon'></i> Transactions
+          </a>
+        </li>
+
+        <li class="divider" data-text="REPORTS">REPORTS</li>
+
+        <li>
+          <a href="#">
+            <i class='bx bx-bar-chart-alt-2 icon'></i>
+            Monthly Reports
+          </a>
+        </li>
+
+        <li class="divider" data-text="ADMIN">ADMIN</li>
+
+        <li id="settingsMenuItem">
+          <a href="#">
+            <i class='bx bxs-cog icon'></i>
+            Settings
+          </a>
+        </li>
+      </ul>
+
+      <div class="ads">
+        <div class="wrapper">
+          <div class="help-icon"><i class="fa fa-chart-pie fa-3x"></i></div>
+          <p><strong>Budget Utilization</strong><br><span id="utilizationRateWidget">0%</span></p>
+          <a href="#" class="btn-upgrade" onclick="syncData()">Refresh Data</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="sidebar-overlay"></div>
+
+<!-- Content Start -->
+<div class="content-start transition">
+  <div class="container-fluid dashboard">
+    <div class="content-header">
+      <h1>Dashboard</h1>
+      <p>Fund utilization overview and key metrics</p>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <i class="fas fa-filter me-2" style="color: var(--accent-color);"></i>
+          <h6 class="mb-0 me-3">Filter by Budget (Fund):</h6>
+          <select id="fundFilterSelect" class="filter-select" onchange="setFilter(this.value)">
+            <option value="ALL">All Budgets</option>
+          </select>
+        </div>
+        <div>
+          <small class="text-muted me-3">
+            <i class="fas fa-info-circle me-1"></i>
+            <span id="filterInfo">Showing all budgets</span>
+          </small>
+          <button class="btn btn-sm btn-outline-secondary" onclick="clearFilters()">
+            <i class="fas fa-times me-1"></i> Clear Filter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Metrics Cards -->
+    <div class="row">
+      <div class="col-md-6 col-lg-3">
+        <div class="card stat-card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4 d-flex align-items-center">
+                <i class="fas fa-coins icon-home text-light"></i>
+              </div>
+              <div class="col-8">
+                <p class="mb-1">Budget</p>
+                <h4 id="totalBudget">₱0.00</h4>
+                <small id="budgetInfo">Allocated funds</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card stat-card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4 d-flex align-items-center">
+                <i class="fas fa-check-circle icon-home text-light"></i>
+              </div>
+              <div class="col-8">
+                <p class="mb-1">Disbursed</p>
+                <h4 id="totalDisbursed">₱0.00</h4>
+                <small id="utilizationRateText">0.0% utilization</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card stat-card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4 d-flex align-items-center">
+                <i class="fas fa-clock icon-home text-light"></i>
+              </div>
+              <div class="col-8">
+                <p class="mb-1">Pending</p>
+                <h4 id="pendingObligations">₱0.00</h4>
+                <small id="pendingCount">0 pending</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="card stat-card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4 d-flex align-items-center">
+                <i class="fas fa-file-invoice icon-home text-light"></i>
+              </div>
+              <div class="col-8">
+                <p class="mb-1">Transactions</p>
+                <h4 id="totalTransactions">0</h4>
+                <small>Filtered view</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h4><i class="fas fa-chart-bar me-2" style="color: var(--accent-color);"></i>Monthly Obligations</h4>
+            <span class="badge bg-primary" id="currentYearDisplay"></span>
+          </div>
+          <div class="card-body chart-container">
+            <div id="monthlyObligationsChart"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h4><i class="fas fa-chart-pie me-2" style="color: var(--accent-color);"></i>Budget Distribution</h4>
+          </div>
+          <div class="card-body chart-container">
+            <div id="fundSourceChart"></div>
+            <div class="mt-3" id="fundSourceLegend"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Transactions & Fund Utilization -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h4><i class="fas fa-history me-2" style="color: var(--accent-color);"></i>Recent Transactions</h4>
+            <a href="transactions.html" class="btn btn-sm btn-outline-primary" id="viewAllTransactionsBtn">View All <i class="fas fa-arrow-right ms-1"></i></a>
+          </div>
+          <div class="card-body">
+            <div class="recent-activity-list" id="recentTransactionsList">
+              <p class="text-center py-4 text-muted">Loading...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h4><i class="fas fa-tachometer-alt me-2" style="color: var(--accent-color);"></i>Budget Utilization</h4>
+          </div>
+          <div class="card-body">
+            <div id="fundUtilizationProgress">
+              <p class="text-center py-4 text-muted">Loading...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Monthly Summary Table -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h4><i class="fas fa-table me-2" style="color: var(--accent-color);"></i>Monthly Obligation Summary</h4>
+            <div>
+              <button class="btn btn-sm btn-outline-primary me-2" onclick="exportToCSV()">
+                <i class="fas fa-download me-1"></i> Export CSV
+              </button>
+              <button class="btn btn-sm btn-outline-success" onclick="syncData()">
+                <i class="fas fa-sync-alt me-1"></i> Refresh
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered text-center" id="monthlySummaryTable">
+                <thead>
+                  <tr>
+                    <th>Budget (Fund)</th>
+                    <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                    <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody id="monthlySummaryBody">
+                  <tr><td colspan="14" class="text-center py-4 text-muted">Loading...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer">
+    <div class="float-start">
+      <p>2026 &copy; FundTrack · Financial Management System</p>
+    </div>
+    <div class="float-end">
+      <p>Crafted with <span class="text-danger"><i class="fa fa-heart"></i></span></p>
+    </div>
+  </div>
+</footer>
+
+<!-- Preloader -->
+<div class="loader">
+  <div class="spinner-border text-light" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+<div class="loader-overlay"></div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore-compat.js"></script>
+
+<!-- Other Scripts -->
+<script src="assets/js/atrana.js"></script>
+<script src="assets/modules/jquery/jquery.min.js"></script>
+<script src="assets/modules/bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="assets/modules/popper/popper.min.js"></script>
+<script src="assets/modules/apexcharts/apexcharts.js"></script>
+<script src="assets/modules/toastify/toastify.min.js"></script>
+
+<script>
+  // Firebase Configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAtduM2t1jzgVs0TfPD48t3LJB5UJ90BrQ",
+    authDomain: "fundmonitoring-3c89f.firebaseapp.com",
+    projectId: "fundmonitoring-3c89f",
+    storageBucket: "fundmonitoring-3c89f.firebasestorage.app",
+    messagingSenderId: "630221204555",
+    appId: "1:630221204555:web:fa5116e95ad993093bb1ce",
+    measurementId: "G-MQ35CGE6EB"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const auth = firebase.auth();
+  db.enablePersistence().catch(console.warn);
+
+  // Chart instances
+  let monthlyChart = null;
+  let donutChart = null;
+
+  // Global data storage
+  let allTransactions = [];
+  let allFunds = [];
+  let currentFilter = 'ALL';
+  let currentUser = null;
+  let userRole = 'viewer';
+
+  // ==================== AUTHENTICATION ====================
+  
+  // Check authentication state
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) {
+      // Not logged in, redirect to login
+      window.location.href = 'auth-login.html';
+      return;
+    }
+    
+    currentUser = user;
+    
+    // Update user display
+    document.getElementById('userDisplayName').textContent = user.displayName || user.email?.split('@')[0] || 'User';
+    
+    // Get user role from Firestore
+    try {
+      const userDoc = await db.collection('users').doc(user.uid).get();
+      if (userDoc.exists) {
+        userRole = userDoc.data().role || 'viewer';
+      } else {
+        // Create user document if doesn't exist (default viewer)
+        const defaultRole = user.email?.includes('admin') ? 'admin' : 'viewer';
+        await db.collection('users').doc(user.uid).set({
+          email: user.email,
+          role: defaultRole,
+          displayName: user.displayName || user.email?.split('@')[0],
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        userRole = defaultRole;
+      }
+    } catch (error) {
+      console.error('Error getting user role:', error);
+    }
+    
+    // Update UI based on role
+    updateUIBasedOnRole();
+    
+    // Load dashboard data
+    loadDashboardData();
+  });
+
+  // Update UI based on user role
+  function updateUIBasedOnRole() {
+    const isAdmin = userRole === 'admin';
+    
+    // Update role display
+    const roleDisplay = document.getElementById('userRoleDisplay');
+    if (isAdmin) {
+      roleDisplay.innerHTML = '<i class="fa fa-shield-alt me-2 text-success"></i> Administrator';
+    } else {
+      roleDisplay.innerHTML = '<i class="fa fa-eye me-2 text-info"></i> Viewer (Read Only)';
+    }
+    
+    // Show/hide admin-only menu items
+    const fundsMenuItem = document.getElementById('fundsMenuItem');
+    const transactionsMenuItem = document.getElementById('transactionsMenuItem');
+    const settingsMenuItem = document.getElementById('settingsMenuItem');
+    const viewAllBtn = document.getElementById('viewAllTransactionsBtn');
+    
+    if (!isAdmin) {
+      if (fundsMenuItem) fundsMenuItem.style.display = 'none';
+      if (transactionsMenuItem) transactionsMenuItem.style.display = 'none';
+      if (settingsMenuItem) settingsMenuItem.style.display = 'none';
+      if (viewAllBtn) viewAllBtn.style.display = 'none';
+    }
+  }
+
+  // Sign out function
+  async function handleSignOut() {
+    try {
+      await auth.signOut();
+      window.location.href = 'auth-login.html';
+    } catch (error) {
+      console.error('Sign out error:', error);
+      showToast('Error signing out', 'error');
+    }
+  }
+
+  // Protect admin-only actions
+  function requireAdmin() {
+    if (userRole !== 'admin') {
+      showToast('You do not have permission to perform this action', 'error');
+      return false;
+    }
+    return true;
+  }
+
+  // ==================== DASHBOARD DATA ====================
+
+  // Load Dashboard Data
+  async function loadDashboardData() {
+    try {
+      const currentYear = new Date().getFullYear();
+      document.getElementById('currentYearDisplay').textContent = currentYear;
+      
+      // Load all funds
+      const fundsSnapshot = await db.collection('funds').orderBy('name').get();
+      allFunds = [];
+      fundsSnapshot.forEach(doc => {
+        allFunds.push({ id: doc.id, ...doc.data() });
+      });
+      
+      // Load all transactions
+      const transactionsSnapshot = await db.collection('transactions')
+        .orderBy('createdAt', 'desc')
+        .get();
+      
+      allTransactions = [];
+      transactionsSnapshot.forEach(doc => {
+        allTransactions.push({ id: doc.id, ...doc.data() });
+      });
+      
+      // Populate filter dropdown
+      populateFilterDropdown();
+      
+      // Apply current filter
+      applyFilter();
+      
+      // Hide loader
+      document.querySelector('.loader').style.display = 'none';
+      document.querySelector('.loader-overlay').style.display = 'none';
+      
+    } catch (error) {
+      console.error('Error loading dashboard:', error);
+      showToast('Error loading dashboard data', 'error');
+      document.querySelector('.loader').style.display = 'none';
+      document.querySelector('.loader-overlay').style.display = 'none';
+    }
+  }
+
+  // Populate filter dropdown with funds
+  function populateFilterDropdown() {
+    const select = document.getElementById('fundFilterSelect');
+    select.innerHTML = '<option value="ALL">All Budgets (All Funds)</option>';
+    
+    const fundsByYear = {};
+    allFunds.forEach(fund => {
+      const year = fund.year || 'Unknown';
+      if (!fundsByYear[year]) fundsByYear[year] = [];
+      fundsByYear[year].push(fund);
+    });
+    
+    const years = Object.keys(fundsByYear).sort((a, b) => b - a);
+    
+    years.forEach(year => {
+      const optgroup = document.createElement('optgroup');
+      optgroup.label = `Year ${year}`;
+      
+      fundsByYear[year].forEach(fund => {
+        const option = document.createElement('option');
+        option.value = fund.id;
+        option.textContent = `${fund.name} (₱${formatNumber(fund.allocated)})`;
+        optgroup.appendChild(option);
+      });
+      
+      select.appendChild(optgroup);
+    });
+  }
+
+  // Set filter
+  function setFilter(fundId) {
+    currentFilter = fundId;
+    
+    const filterInfo = document.getElementById('filterInfo');
+    
+    if (fundId === 'ALL') {
+      filterInfo.textContent = 'Showing all budgets';
+    } else {
+      const selectedFund = allFunds.find(f => f.id === fundId);
+      if (selectedFund) {
+        filterInfo.textContent = `Filtered by: ${selectedFund.name} (${selectedFund.year})`;
+      }
+    }
+    
+    applyFilter();
+  }
+
+  // Clear filters
+  function clearFilters() {
+    document.getElementById('fundFilterSelect').value = 'ALL';
+    setFilter('ALL');
+  }
+
+  // Apply filter to data
+  function applyFilter() {
+    const currentYear = new Date().getFullYear();
+    
+    const selectedFund = currentFilter !== 'ALL' 
+      ? allFunds.find(f => f.id === currentFilter) 
+      : null;
+    
+    let filteredTransactions = allTransactions;
+    if (selectedFund) {
+      filteredTransactions = allTransactions.filter(t => 
+        t.fund === selectedFund.name
+      );
+    }
+    
+    let totalBudget = 0;
+    const fundBudgets = {};
+    
+    if (selectedFund) {
+      totalBudget = selectedFund.allocated || 0;
+      fundBudgets[selectedFund.name] = selectedFund.allocated || 0;
+    } else {
+      allFunds.forEach(fund => {
+        totalBudget += fund.allocated || 0;
+        fundBudgets[fund.name] = fund.allocated || 0;
+      });
+    }
+    
+    let totalDisbursed = 0;
+    let pendingObligations = 0;
+    let pendingCount = 0;
+    
+    const monthlyData = {};
+    const fundObligations = {};
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+                    'July', 'August', 'September', 'October', 'November', 'December'];
+    months.forEach(m => { monthlyData[m] = 0; });
+    
+    const fundMonthlyData = {};
+    
+    filteredTransactions.forEach(t => {
+      const obligation = t.obligation || 0;
+      const txYear = t.year || (t.createdAt ? t.createdAt.toDate().getFullYear() : null);
+      const isCurrentYear = txYear == currentYear;
+      
+      if (isCurrentYear) {
+        if (t.status === 'Disbursed' || t.status === 'PAID') {
+          totalDisbursed += obligation;
+        } else if (t.status === 'UNPAID' || t.status === 'Obligated') {
+          pendingObligations += obligation;
+          pendingCount++;
+        }
+        
+        if (t.month && monthlyData.hasOwnProperty(t.month)) {
+          monthlyData[t.month] += obligation;
+        }
+        
+        const fundName = t.fund;
+        if (fundName) {
+          if (!fundObligations[fundName]) fundObligations[fundName] = 0;
+          fundObligations[fundName] += obligation;
+          
+          if (!fundMonthlyData[fundName]) {
+            fundMonthlyData[fundName] = {};
+            months.forEach(m => { fundMonthlyData[fundName][m] = 0; });
+          }
+          if (t.month) {
+            fundMonthlyData[fundName][t.month] += obligation;
+          }
+        }
+      }
+    });
+    
+    const recentTransactions = filteredTransactions.slice(0, 5);
+    
+    document.getElementById('totalBudget').textContent = formatCurrency(totalBudget);
+    document.getElementById('totalDisbursed').textContent = formatCurrency(totalDisbursed);
+    document.getElementById('pendingObligations').textContent = formatCurrency(pendingObligations);
+    document.getElementById('totalTransactions').textContent = filteredTransactions.length;
+    document.getElementById('pendingCount').textContent = `${pendingCount} pending`;
+    
+    const utilizationRate = totalBudget > 0 ? ((totalDisbursed / totalBudget) * 100).toFixed(1) : '0.0';
+    document.getElementById('utilizationRateText').textContent = `${utilizationRate}% utilization`;
+    document.getElementById('utilizationRateWidget').textContent = `${utilizationRate}%`;
+    
+    if (selectedFund) {
+      document.getElementById('budgetInfo').textContent = `${selectedFund.name} (${selectedFund.year})`;
+    } else {
+      document.getElementById('budgetInfo').textContent = `All funds combined`;
+    }
+    
+    updateCharts(monthlyData, fundObligations, fundBudgets);
+    updateRecentTransactions(recentTransactions);
+    updateFundUtilization(fundObligations, fundBudgets);
+    updateMonthlySummaryTable(fundMonthlyData, fundObligations);
+  }
+
+  // Update Charts
+  function updateCharts(monthlyData, fundObligations, fundBudgets) {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+                    'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    const monthlySeries = [{
+      name: 'Obligations',
+      data: months.map(m => monthlyData[m] || 0)
+    }];
+    
+    const monthlyOptions = {
+      series: monthlySeries,
+      chart: { type: 'bar', height: 280, toolbar: { show: false } },
+      colors: ['#3498db'],
+      plotOptions: { bar: { borderRadius: 6, columnWidth: '60%' } },
+      dataLabels: { enabled: false },
+      xaxis: { categories: months.map(m => m.substring(0, 3)) },
+      yaxis: { 
+        title: { text: 'Amount (₱)' },
+        labels: { formatter: (val) => formatCurrency(val) }
+      },
+      tooltip: { y: { formatter: (val) => formatCurrency(val) } }
+    };
+    
+    if (monthlyChart) monthlyChart.destroy();
+    monthlyChart = new ApexCharts(document.querySelector("#monthlyObligationsChart"), monthlyOptions);
+    monthlyChart.render();
+    
+    const fundNames = Object.keys(fundBudgets).sort();
+    const colors = ['#3498db', '#27ae60', '#f39c12', '#9b59b6', '#e74c3c', '#1abc9c', '#34495e', '#95a5a6'];
+    
+    const series = fundNames.map(f => fundBudgets[f] || 0);
+    
+    const donutOptions = {
+      series: series,
+      chart: { type: 'donut', height: 250 },
+      labels: fundNames,
+      colors: colors.slice(0, fundNames.length),
+      plotOptions: { pie: { donut: { size: '60%' } } },
+      dataLabels: { enabled: false },
+      legend: { show: false },
+      tooltip: { y: { formatter: (val) => formatCurrency(val) } }
+    };
+    
+    if (donutChart) donutChart.destroy();
+    if (fundNames.length > 0) {
+      donutChart = new ApexCharts(document.querySelector("#fundSourceChart"), donutOptions);
+      donutChart.render();
+    }
+    
+    let legendHtml = '';
+    fundNames.forEach((f, i) => {
+      const budget = fundBudgets[f] || 0;
+      const used = fundObligations[f] || 0;
+      const percent = budget > 0 ? ((used / budget) * 100).toFixed(1) : '0.0';
+      legendHtml += `
+        <div class="d-flex justify-content-between mb-2">
+          <span><i class="fas fa-circle me-1" style="color: ${colors[i % colors.length]}"></i> ${f}</span>
+          <strong>${formatCurrency(budget)}</strong>
+        </div>
+        <small class="text-muted d-block mb-2 ms-4">Used: ${formatCurrency(used)} (${percent}%)</small>
+      `;
+    });
+    if (!legendHtml) legendHtml = '<p class="text-center text-muted py-3">No budget data available</p>';
+    document.getElementById('fundSourceLegend').innerHTML = legendHtml;
+  }
+
+  // Update Recent Transactions
+  function updateRecentTransactions(transactions) {
+    const container = document.getElementById('recentTransactionsList');
+    
+    if (!transactions || transactions.length === 0) {
+      container.innerHTML = '<p class="text-center py-4 text-muted">No transactions yet</p>';
+      return;
+    }
+    
+    container.innerHTML = transactions.map(t => `
+      <div class="recent-activity-item d-flex align-items-center">
+        <div class="avatar bg-${getStatusColor(t.status)} text-white me-3">
+          <i class="fas ${getStatusIcon(t.status)}"></i>
+        </div>
+        <div class="flex-grow-1">
+          <div class="d-flex justify-content-between">
+            <h6 class="mb-0">${t.payee || 'N/A'}</h6>
+            <span class="fw-bold">${formatCurrency(t.obligation)}</span>
+          </div>
+          <small class="text-muted">${t.fund || ''} · ${t.component || ''} · ${t.status || 'UNPAID'} · ${t.transactionDate || ''}</small>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Update Fund Utilization
+  function updateFundUtilization(fundObligations, fundBudgets) {
+    const container = document.getElementById('fundUtilizationProgress');
+    const fundNames = Object.keys(fundBudgets).sort();
+    const colors = ['#3498db', '#27ae60', '#f39c12', '#9b59b6', '#e74c3c', '#1abc9c', '#34495e', '#95a5a6'];
+    
+    let html = '';
+    fundNames.forEach((f, i) => {
+      const budget = fundBudgets[f] || 0;
+      const used = fundObligations[f] || 0;
+      const percent = budget > 0 ? (used / budget) * 100 : 0;
+      const color = colors[i % colors.length];
+      
+      html += `
+        <div class="mb-4">
+          <div class="d-flex justify-content-between mb-2">
+            <span><i class="fas fa-circle me-1" style="color: ${color}"></i><strong>${f}</strong></span>
+            <span>${formatCurrency(used)} / ${formatCurrency(budget)} (${percent.toFixed(1)}%)</span>
+          </div>
+          <div class="progress progress-thin">
+            <div class="progress-bar" style="width: ${Math.min(percent, 100)}%; background-color: ${color}"></div>
+          </div>
+        </div>
+      `;
+    });
+    
+    if (!html) html = '<p class="text-center text-muted py-4">No budget data available</p>';
+    container.innerHTML = html;
+  }
+
+  // Update Monthly Summary Table
+  function updateMonthlySummaryTable(fundMonthlyData, fundObligations) {
+    const tbody = document.getElementById('monthlySummaryBody');
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+                    'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    const fundNames = Object.keys(fundObligations).sort();
+    
+    let html = '';
+    let monthlyTotals = months.map(() => 0);
+    let grandTotal = 0;
+    
+    fundNames.forEach(f => {
+      const data = fundMonthlyData[f] || {};
+      const total = fundObligations[f] || 0;
+      if (total > 0) {
+        grandTotal += total;
+        html += `<tr><td><strong>${f}</strong></td>`;
+        months.forEach((m, i) => {
+          const val = data[m] || 0;
+          monthlyTotals[i] += val;
+          html += `<td>${val > 0 ? formatCurrency(val).replace('₱', '') : '-'}</td>`;
+        });
+        html += `<td><strong>${formatCurrency(total).replace('₱', '')}</strong></td></tr>`;
+      }
+    });
+    
+    if (html === '') {
+      html = '<tr><td colspan="14" class="text-center py-4 text-muted">No transaction data available</td></tr>';
+    } else {
+      html += `<tr class="table-secondary"><td><strong>MONTHLY TOTAL</strong></td>`;
+      months.forEach((m, i) => {
+        const val = monthlyTotals[i] || 0;
+        html += `<td><strong>${val > 0 ? formatCurrency(val).replace('₱', '') : '-'}</strong></td>`;
+      });
+      html += `<td><strong>${formatCurrency(grandTotal).replace('₱', '')}</strong></td></tr>`;
+    }
+    
+    tbody.innerHTML = html;
+  }
+
+  // Helper Functions
+  function formatCurrency(amount) {
+    return '₱' + parseFloat(amount || 0).toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function formatNumber(amount) {
+    return parseFloat(amount || 0).toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function getStatusColor(status) {
+    const colors = {
+      'Pending': 'warning', 'UNPAID': 'warning',
+      'Obligated': 'info', 'PARTIAL': 'info',
+      'Disbursed': 'success', 'PAID': 'success',
+      'LDDAP Processed': 'primary',
+      'Cancelled': 'danger'
+    };
+    return colors[status] || 'secondary';
+  }
+
+  function getStatusIcon(status) {
+    const icons = {
+      'Pending': 'fa-clock', 'UNPAID': 'fa-clock',
+      'Obligated': 'fa-check', 'PARTIAL': 'fa-check',
+      'Disbursed': 'fa-check-double', 'PAID': 'fa-check-double',
+      'LDDAP Processed': 'fa-sync',
+      'Cancelled': 'fa-times'
+    };
+    return icons[status] || 'fa-file';
+  }
+
+  function showToast(message, type = 'success') {
+    Toastify({
+      text: message,
+      duration: 3000,
+      backgroundColor: type === 'success' ? '#27ae60' : '#e74c3c',
+    }).showToast();
+  }
+
+  function syncData() {
+    showToast('Refreshing data...', 'info');
+    loadDashboardData();
+  }
+
+  function exportToCSV() {
+    const table = document.getElementById('monthlySummaryTable');
+    let csv = [];
+    for (let row of table.rows) {
+      let rowData = [];
+      for (let cell of row.cells) {
+        rowData.push(cell.innerText);
+      }
+      csv.push(rowData.join(','));
+    }
+    
+    const blob = new Blob([csv.join('\n')], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `fundtrack-summary-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    
+    showToast('CSV exported successfully');
+  }
+
+  // Make functions globally available
+  window.setFilter = setFilter;
+  window.clearFilters = clearFilters;
+  window.handleSignOut = handleSignOut;
+  window.syncData = syncData;
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', function() {
+    // Auth state listener will handle loading
+  });
+</script>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/custom.js"></script>
+</body>
+</html>

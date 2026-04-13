@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Admin User · FundTrack</title>
+  <link rel="stylesheet" href="assets/modules/bootstrap-5.1.3/css/bootstrap.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h4>Create Admin User</h4>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-warning">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          This page should only be used once to create the first admin user. Delete after use!
+        </div>
+        
+        <form id="createAdminForm">
+          <div class="mb-3">
+            <label>Email</label>
+            <input type="email" class="form-control" id="email" value="admin@fundtrack.com" required>
+          </div>
+          <div class="mb-3">
+            <label>Password</label>
+            <input type="password" class="form-control" id="password" value="admin123" required>
+          </div>
+          <div class="mb-3">
+            <label>Display Name</label>
+            <input type="text" class="form-control" id="displayName" value="Administrator">
+          </div>
+          <button type="submit" class="btn btn-primary">Create Admin User</button>
+        </form>
+        
+        <div id="result" class="mt-4"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAtduM2t1jzgVs0TfPD48t3LJB5UJ90BrQ",
+      authDomain: "fundmonitoring-3c89f.firebaseapp.com",
+      projectId: "fundmonitoring-3c89f",
+      storageBucket: "fundmonitoring-3c89f.firebasestorage.app",
+      messagingSenderId: "630221204555",
+      appId: "1:630221204555:web:fa5116e95ad993093bb1ce",
+      measurementId: "G-MQ35CGE6EB"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    document.getElementById('createAdminForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const displayName = document.getElementById('displayName').value;
+      const resultDiv = document.getElementById('result');
+      
+      resultDiv.innerHTML = '<div class="alert alert-info">Creating admin user...</div>';
+      
+      try {
+        // Create user in Firebase Auth
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+        
+        // Update profile
+        await user.updateProfile({ displayName });
+        
+        // Create user document in Firestore with admin role
+        await db.collection('users').doc(user.uid).set({
+          email: email,
+          role: '',
+          displayName: displayName,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        resultDiv.innerHTML = `
+          <div class="alert alert-success">
+            <i class="fas fa-check-circle me-2"></i>
+            Admin user created successfully!<br>
+            <strong>Email:</strong> ${email}<br>
+            <strong>Password:</strong> ${password}<br>
+            <a href="auth-login.html" class="btn btn-success mt-3">Go to Login</a>
+          </div>
+        `;
+        
+      } catch (error) {
+        let errorMessage = error.message;
+        if (error.code === 'auth/email-already-in-use') {
+          errorMessage = 'Email already exists. Try logging in instead.';
+        }
+        resultDiv.innerHTML = `<div class="alert alert-danger">Error: ${errorMessage}</div>`;
+      }
+    });
+  </script>
+</body>
+</html>
