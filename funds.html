@@ -324,20 +324,66 @@
     </ul>
   </div>
 </div>
-
 <!-- Sidebar -->
-<div class="sidebar transition overlay-scrollbars">
+<div class="sidebar transition overlay-scrollbars animate__animated animate__slideInLeft">
   <div class="sidebar-content">
     <div id="sidebar">
-      <div class="logo"><h2 class="mb-0"><img src="assets/images/logo.png"> FundTrack</h2></div>
-      <ul class="side-menu">
-        <li><a href="index.html"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
+      <div class="logo">
+        <h2 class="mb-0"><img src="assets/images/logo.png"> FundTrack</h2>
+      </div>
+
+      <ul class="side-menu" id="sideMenu">
+        <li>
+          <a href="index.html">
+            <i class='bx bxs-dashboard icon'></i> Dashboard
+          </a>
+        </li>
+
         <li class="divider" data-text="MAIN">MAIN</li>
-        <li><a href="funds.html" class="active"><i class='bx bx-wallet icon'></i> Funds</a></li>
-        <li><a href="transactions.html"><i class='bx bx-transfer-alt icon'></i> Transactions</a></li>
+
+        <li id="fundsMenuItem">
+          <a href="funds.html"  class="active">
+            <i class='bx bx-wallet icon'></i> Funds
+          </a>
+        </li>
+
+        <li id="transactionsMenuItem">
+          <a href="transactions.html" >
+            <i class='bx bx-transfer-alt icon'></i> Transactions
+          </a>
+        </li>
+
+        <li class="divider" data-text="REPORTS">REPORTS</li>
+
+        <li>
+          <a href="monthly-reports.html">
+            <i class='bx bx-bar-chart-alt-2 icon'></i>
+            Monthly Reports
+          </a>
+        </li>
+
         <li class="divider" data-text="ADMIN">ADMIN</li>
-        <li><a href="#"><i class='bx bxs-cog icon'></i> Settings</a></li>
+
+        <li id="settingsMenuItem">
+          <a href="settings.html">
+            <i class='bx bxs-cog icon'></i>
+            Settings
+          </a>
+        </li>
       </ul>
+
+      <div class="ads">
+  <div class="wrapper">
+    <div class="help-icon"><i class="fa fa-chart-pie fa-3x"></i></div>
+    <p><strong>Budget Utilization</strong><br><span id="utilizationRateWidget">0%</span></p>
+    <div class="progress mt-2 mb-2" style="height: 6px; background: rgba(255,255,255,0.2);">
+      <div class="progress-bar" id="utilizationProgressBar" style="width: 0%; background: #27ae60;"></div>
+    </div>
+    <a href="#" class="btn-upgrade" onclick="refreshSidebarWidget(); return false;">
+      <i class="fas fa-sync-alt me-1"></i> Refresh Data
+    </a>
+  </div>
+</div>
     </div>
   </div>
 </div>
@@ -806,6 +852,102 @@
   window.resetForm = resetForm;
   window.syncFunds = syncFunds;
   window.handleSignOut = handleSignOut;
+
+  // ==================== SIDEBAR WIDGET ====================
+
+// Update sidebar utilization widget
+async function updateSidebarWidget() {
+  try {
+    const currentYear = new Date().getFullYear();
+    
+    // Get all funds
+    const fundsSnapshot = await db.collection('funds').get();
+    let totalBudget = 0;
+    fundsSnapshot.forEach(doc => {
+      totalBudget += doc.data().allocated || 0;
+    });
+    
+    // Get current year transactions
+    const txSnapshot = await db.collection('transactions')
+      .where('year', '==', currentYear.toString())
+      .get();
+    
+    let totalDisbursed = 0;
+    txSnapshot.forEach(doc => {
+      const t = doc.data();
+      if (t.status === 'Disbursed' || t.status === 'PAID' || t.status === 'LDDAP Processed') {
+        totalDisbursed += t.obligation || 0;
+      }
+    });
+    
+    // Calculate utilization rate
+    const utilizationRate = totalBudget > 0 ? ((totalDisbursed / totalBudget) * 100).toFixed(1) : '0.0';
+    
+    // Update widget
+    const widgetSpan = document.getElementById('utilizationRateWidget');
+    const progressBar = document.getElementById('utilizationProgressBar');
+    
+    if (widgetSpan) {
+      widgetSpan.textContent = utilizationRate + '%';
+    }
+    if (progressBar) {
+      progressBar.style.width = Math.min(utilizationRate, 100) + '%';
+      
+      // Color based on utilization
+      if (utilizationRate >= 90) {
+        progressBar.style.background = '#e74c3c'; // Red - Almost fully used
+      } else if (utilizationRate >= 75) {
+        progressBar.style.background = '#f39c12'; // Orange - Getting high
+      } else if (utilizationRate >= 50) {
+        progressBar.style.background = '#3498db'; // Blue - Moderate
+      } else {
+        progressBar.style.background = '#27ae60'; // Green - Plenty left
+      }
+    }
+    
+    // Update tooltip/title
+    if (widgetSpan) {
+      widgetSpan.title = `₱${totalDisbursed.toLocaleString()} disbursed of ₱${totalBudget.toLocaleString()}`;
+    }
+    
+  } catch (error) {
+    console.error('Error updating sidebar widget:', error);
+  }
+}
+
+// Refresh sidebar widget
+async function refreshSidebarWidget() {
+  const btn = document.querySelector('.btn-upgrade');
+  const originalText = btn.innerHTML;
+  
+  // Show loading
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> Loading...';
+  btn.disabled = true;
+  
+  try {
+    await updateSidebarWidget();
+    showToast('Data refreshed successfully', 'success');
+  } catch (error) {
+    showToast('Error refreshing data', 'error');
+  } finally {
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+  }
+}
+
+// Sync data function (calls refresh)
+function syncData() {
+  refreshSidebarWidget();
+  if (typeof loadDashboardData === 'function') loadDashboardData();
+  if (typeof loadFunds === 'function') loadFunds();
+  if (typeof loadTransactions === 'function') loadTransactions();
+  if (typeof loadReportData === 'function') loadReportData();
+}
+
+// Make functions globally available
+window.refreshSidebarWidget = refreshSidebarWidget;
+window.syncData = syncData;
+window.updateSidebarWidget = updateSidebarWidget;
 </script>
 
 <script src="assets/js/script.js"></script>

@@ -295,18 +295,60 @@
 </div>
 
 <!-- Sidebar -->
-<div class="sidebar transition overlay-scrollbars">
+<div class="sidebar transition overlay-scrollbars animate__animated animate__slideInLeft">
   <div class="sidebar-content">
     <div id="sidebar">
-      <div class="logo"><h2 class="mb-0"><img src="assets/images/logo.png"> FundTrack</h2></div>
-      <ul class="side-menu">
-        <li><a href="index.html"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
+      <div class="logo">
+        <h2 class="mb-0"><img src="assets/images/logo.png"> FundTrack</h2>
+      </div>
+
+      <ul class="side-menu" id="sideMenu">
+        <li>
+          <a href="index.html">
+            <i class='bx bxs-dashboard icon'></i> Dashboard
+          </a>
+        </li>
+
         <li class="divider" data-text="MAIN">MAIN</li>
-        <li><a href="funds.html"><i class='bx bx-wallet icon'></i> Funds</a></li>
-        <li><a href="transactions.html" class="active"><i class='bx bx-transfer-alt icon'></i> Transactions</a></li>
+
+        <li id="fundsMenuItem">
+          <a href="funds.html">
+            <i class='bx bx-wallet icon'></i> Funds
+          </a>
+        </li>
+
+        <li id="transactionsMenuItem">
+          <a href="transactions.html"  class="active">
+            <i class='bx bx-transfer-alt icon'></i> Transactions
+          </a>
+        </li>
+
+        <li class="divider" data-text="REPORTS">REPORTS</li>
+
+        <li>
+          <a href="monthly-reports.html">
+            <i class='bx bx-bar-chart-alt-2 icon'></i>
+            Monthly Reports
+          </a>
+        </li>
+
         <li class="divider" data-text="ADMIN">ADMIN</li>
-        <li><a href="#"><i class='bx bxs-cog icon'></i> Settings</a></li>
+
+        <li id="settingsMenuItem">
+          <a href="settings.html">
+            <i class='bx bxs-cog icon'></i>
+            Settings
+          </a>
+        </li>
       </ul>
+
+      <div class="ads">
+        <div class="wrapper">
+          <div class="help-icon"><i class="fa fa-chart-pie fa-3x"></i></div>
+          <p><strong>Budget Utilization</strong><br><span id="utilizationRateWidget">0%</span></p>
+          <a href="#" class="btn-upgrade" onclick="syncData()">Refresh Data</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>

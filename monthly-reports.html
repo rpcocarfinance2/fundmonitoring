@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Monthly Reports · FundTrack</title>
+
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="assets/modules/bootstrap-5.1.3/css/bootstrap.css">
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- FontAwesome CSS-->
+  <link rel="stylesheet" href="assets/modules/fontawesome6.1.1/css/all.css">
+  <!-- Boxicons CSS-->
+  <link rel="stylesheet" href="assets/modules/boxicons/css/boxicons.min.css">
+  <!-- Apexcharts CSS -->
+  <link rel="stylesheet" href="assets/modules/apexcharts/apexcharts.css">
+  
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --primary-light: #34495e;
+      --accent-color: #3498db;
+      --success-color: #27ae60;
+      --warning-color: #f39c12;
+      --danger-color: #e74c3c;
+      --border-color: #e0e0e0;
+      --bg-light: #f8f9fa;
+      --text-dark: #2c3e50;
+      --text-muted: #7f8c8d;
+    }
+
+    body {
+      background: #f5f7fa;
+    }
+
+    .content-header h1 {
+      color: var(--primary-color);
+      font-weight: 600;
+      font-size: 1.8rem;
+    }
+
+    .content-header p {
+      color: var(--text-muted);
+    }
+
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .card-header {
+      background-color: white;
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 20px;
+    }
+
+    .card-header h4 {
+      color: var(--primary-color);
+      font-weight: 600;
+      margin: 0;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .card-header h4 i {
+      color: var(--accent-color);
+      margin-right: 10px;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .stat-card {
+      border: none;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .stat-card .icon-home {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+    }
+
+    .stat-card h4 {
+      color: var(--primary-color);
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+
+    .stat-card p {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .filter-bar {
+      background: white;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .filter-select {
+      min-width: 200px;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+
+    .btn {
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+      border: none;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+    }
+
+    .btn-outline-primary {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    .btn-outline-primary:hover {
+      background-color: var(--accent-color);
+      color: white;
+    }
+
+    .table th {
+      background-color: var(--primary-color) !important;
+      color: white !important;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-align: center;
+      padding: 12px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .table td {
+      padding: 10px 8px;
+      vertical-align: middle;
+      border-color: var(--border-color);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    .table tfoot td {
+      background-color: var(--bg-light);
+      font-weight: 600;
+    }
+
+    .badge {
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 0.75rem;
+    }
+
+    .chart-container {
+      min-height: 300px;
+    }
+
+    .report-tabs .nav-link {
+      color: var(--text-dark);
+      padding: 10px 16px;
+      border-radius: 8px;
+      margin-right: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .report-tabs .nav-link:hover {
+      background-color: var(--bg-light);
+    }
+
+    .report-tabs .nav-link.active {
+      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+      color: white;
+    }
+
+    .month-selector {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .month-btn {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      border: 1px solid var(--border-color);
+      background: white;
+      color: var(--text-dark);
+      transition: all 0.2s ease;
+    }
+
+    .month-btn:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    .month-btn.active {
+      background: var(--accent-color);
+      color: white;
+      border-color: var(--accent-color);
+    }
+
+    .custom-toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 500;
+      z-index: 9999;
+      animation: slideIn 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .custom-toast.success { background: var(--success-color); }
+    .custom-toast.error { background: var(--danger-color); }
+    .custom-toast.info { background: var(--accent-color); }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .trend-up { color: var(--success-color); }
+    .trend-down { color: var(--danger-color); }
+
+    footer .footer {
+      background: transparent;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      padding-top: 20px;
+      margin-top: 20px;
+    }
+
+    .export-btn-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .filter-info {
+      background: var(--bg-light);
+      border-radius: 20px;
+      padding: 4px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .filter-info i {
+      color: var(--accent-color);
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar transition">
+  <div class="bars">
+    <button type="button" class="btn transition" id="sidebar-toggle"><i class="fa fa-bars"></i></button>
+  </div>
+  <div class="menu">
+    <ul>
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
+          <img src="assets/images/avatar/avatar-1.png" alt="">
+          <span id="userDisplayName" class="ms-2 text-white">Loading...</span>
+        </a>
+        <ul class="dropdown-menu" id="userDropdownMenu">
+          <div class="dropdown-item-text" id="userRoleDisplay">
+            <i class="fa fa-user me-2"></i> Loading...
+          </div>
+          <hr class="dropdown-divider">
+          <a class="dropdown-item text-danger" href="#" onclick="handleSignOut()"><i class="fa fa-sign-out-alt me-2"></i> Sign Out</a>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar transition overlay-scrollbars animate__animated animate__slideInLeft">
+  <div class="sidebar-content">
+    <div id="sidebar">
+      <div class="logo">
+        <h2 class="mb-0"><img src="assets/images/logo.png"> FundTrack</h2>
+      </div>
+
+      <ul class="side-menu" id="sideMenu">
+        <li>
+          <a href="index.html" >
+            <i class='bx bxs-dashboard icon'></i> Dashboard
+          </a>
+        </li>
+
+        <li class="divider" data-text="MAIN">MAIN</li>
+
+        <li id="fundsMenuItem">
+          <a href="funds.html">
+            <i class='bx bx-wallet icon'></i> Funds
+          </a>
+        </li>
+
+        <li id="transactionsMenuItem">
+          <a href="transactions.html">
+            <i class='bx bx-transfer-alt icon'></i> Transactions
+          </a>
+        </li>
+
+        <li class="divider" data-text="REPORTS">REPORTS</li>
+
+        <li>
+          <a href="monthly-reports.html" class="active">
+            <i class='bx bx-bar-chart-alt-2 icon'></i>
+            Monthly Reports
+          </a>
+        </li>
+
+        <li class="divider" data-text="ADMIN">ADMIN</li>
+
+        <li id="settingsMenuItem">
+          <a href="settings.html">
+            <i class='bx bxs-cog icon'></i>
+            Settings
+          </a>
+        </li>
+      </ul>
+
+      <div class="ads">
+  <div class="wrapper">
+    <div class="help-icon"><i class="fa fa-chart-pie fa-3x"></i></div>
+    <p><strong>Budget Utilization</strong><br><span id="utilizationRateWidget">0%</span></p>
+    <div class="progress mt-2 mb-2" style="height: 6px; background: rgba(255,255,255,0.2);">
+      <div class="progress-bar" id="utilizationProgressBar" style="width: 0%; background: #27ae60;"></div>
+    </div>
+    <a href="#" class="btn-upgrade" onclick="refreshSidebarWidget(); return false;">
+      <i class="fas fa-sync-alt me-1"></i> Refresh Data
+    </a>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+<div class="sidebar-overlay"></div>
+
+<!-- Content Start -->
+<div class="content-start transition">
+  <div class="container-fluid dashboard">
+    <div class="content-header">
+      <h1>Monthly Reports</h1>
+      <p>View and analyze monthly financial data</p>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <div class="row align-items-center">
+        <div class="col-md-3">
+          <div class="d-flex align-items-center">
+            <i class="fas fa-filter me-3" style="color: var(--accent-color);"></i>
+            <select class="form-select filter-select" id="fundFilterSelect" style="width: 100%;">
+              <option value="ALL">All Budgets (All Funds)</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="d-flex align-items-center">
+            <i class="fas fa-calendar-alt me-3" style="color: var(--accent-color);"></i>
+            <select class="form-select filter-select" id="yearSelect" style="width: auto;">
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="month-selector">
+            <button class="month-btn active" data-month="all">All</button>
+            <button class="month-btn" data-month="Q1">Q1</button>
+            <button class="month-btn" data-month="Q2">Q2</button>
+            <button class="month-btn" data-month="Q3">Q3</button>
+            <button class="month-btn" data-month="Q4">Q4</button>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="d-flex justify-content-end align-items-center">
+            <span class="filter-info me-3" id="filterInfo">
+              <i class="fas fa-info-circle"></i> Showing all funds
+            </span>
+            <div class="export-btn-group">
+              <button class="btn btn-outline-primary btn-sm" onclick="exportReport('pdf')">
+                <i class="fas fa-file-pdf"></i>
+              </button>
+              <button class="btn btn-outline-primary btn-sm" onclick="exportReport('excel')">
+                <i class="fas fa-file-excel"></i>
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="printReport()">
+                <i class="fas fa-print"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card stat-card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="icon-home me-3">
+                <i class="fas fa-coins text-white"></i>
+              </div>
+              <div>
+                <p class="mb-1">Total Budget</p>
+                <h4 id="reportTotalBudget">₱0.00</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stat-card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="icon-home me-3" style="background: linear-gradient(135deg, var(--success-color), #2ecc71);">
+                <i class="fas fa-check-circle text-white"></i>
+              </div>
+              <div>
+                <p class="mb-1">Total Disbursed</p>
+                <h4 id="reportTotalDisbursed">₱0.00</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stat-card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="icon-home me-3" style="background: linear-gradient(135deg, var(--warning-color), #e67e22);">
+                <i class="fas fa-clock text-white"></i>
+              </div>
+              <div>
+                <p class="mb-1">Pending</p>
+                <h4 id="reportPending">₱0.00</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stat-card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="icon-home me-3" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+                <i class="fas fa-percent text-white"></i>
+              </div>
+              <div>
+                <p class="mb-1">Utilization Rate</p>
+                <h4 id="reportUtilization">0%</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Report Tabs -->
+    <ul class="nav report-tabs mb-4" id="reportTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button">
+          <i class="fas fa-chart-line me-2"></i>Overview
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="monthly-tab" data-bs-toggle="tab" data-bs-target="#monthly" type="button">
+          <i class="fas fa-calendar-alt me-2"></i>Monthly Breakdown
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="component-tab" data-bs-toggle="tab" data-bs-target="#component" type="button">
+          <i class="fas fa-layer-group me-2"></i>By Component
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="comparison-tab" data-bs-toggle="tab" data-bs-target="#comparison" type="button">
+          <i class="fas fa-balance-scale me-2"></i>Year Comparison
+        </button>
+      </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="reportTabContent">
+      
+      <!-- Overview Tab -->
+      <div class="tab-pane fade show active" id="overview" role="tabpanel">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-header">
+                <h4><i class="fas fa-chart-bar me-2"></i>Monthly Obligations Trend</h4>
+              </div>
+              <div class="card-body chart-container">
+                <div id="monthlyTrendChart"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-header">
+                <h4><i class="fas fa-chart-pie me-2"></i>Component Distribution</h4>
+              </div>
+              <div class="card-body chart-container">
+                <div id="componentPieChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4><i class="fas fa-table me-2"></i>Monthly Summary</h4>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table" id="monthlySummaryTable">
+                    <thead>
+                      <tr>
+                        <th>Month</th>
+                        <th>Budget</th>
+                        <th>Obligations</th>
+                        <th>Disbursed</th>
+                        <th>Pending</th>
+                        <th>Utilization</th>
+                        <th>Trend</th>
+                      </tr>
+                    </thead>
+                    <tbody id="monthlySummaryBody">
+                      <tr><td colspan="7" class="text-center py-4 text-muted">Loading data...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monthly Breakdown Tab -->
+      <div class="tab-pane fade" id="monthly" role="tabpanel">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4><i class="fas fa-calendar-alt me-2"></i>Detailed Monthly Breakdown</h4>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table" id="detailedMonthlyTable">
+                    <thead>
+                      <tr>
+                        <th>Month</th>
+                        <th>I-PLAN (1.1)</th>
+                        <th>I-PLAN (1.2)</th>
+                        <th>I-BUILD (2.1)</th>
+                        <th>I-BUILD (2.2)</th>
+                        <th>I-REAP (3.1)</th>
+                        <th>I-REAP (3.2)</th>
+                        <th>I-SUPPORT</th>
+                        <th>GOP</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody id="detailedMonthlyBody">
+                      <tr><td colspan="10" class="text-center py-4 text-muted">Loading data...</td></tr>
+                    </tbody>
+                    <tfoot id="detailedMonthlyFoot"></tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- By Component Tab -->
+      <div class="tab-pane fade" id="component" role="tabpanel">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4><i class="fas fa-layer-group me-2"></i>Component Performance</h4>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table" id="componentTable">
+                    <thead>
+                      <tr>
+                        <th>Component</th>
+                        <th>Budget Allocation</th>
+                        <th>Obligations</th>
+                        <th>Disbursed</th>
+                        <th>Pending</th>
+                        <th>Utilization</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="componentTableBody">
+                      <tr><td colspan="7" class="text-center py-4 text-muted">Loading data...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4><i class="fas fa-chart-bar me-2"></i>Component Comparison</h4>
+              </div>
+              <div class="card-body chart-container">
+                <div id="componentBarChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Year Comparison Tab -->
+      <div class="tab-pane fade" id="comparison" role="tabpanel">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4><i class="fas fa-balance-scale me-2"></i>Year-over-Year Comparison</h4>
+              </div>
+              <div class="card-body chart-container">
+                <div id="yearComparisonChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4><i class="fas fa-table me-2"></i>Yearly Comparison Table</h4>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table" id="comparisonTable">
+                    <thead>
+                      <tr>
+                        <th>Metric</th>
+                        <th>2024</th>
+                        <th>2025</th>
+                        <th>2026</th>
+                        <th>Change (YoY)</th>
+                      </tr>
+                    </thead>
+                    <tbody id="comparisonTableBody">
+                      <tr><td colspan="5" class="text-center py-4 text-muted">Loading data...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer">
+    <div class="float-start"><p>2026 &copy; FundTrack · Financial Management System</p></div>
+    <div class="float-end"><p>Crafted with <span class="text-danger"><i class="fa fa-heart"></i></span> by FundTrack Team</p></div>
+  </div>
+</footer>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<script src="assets/js/atrana.js"></script>
+<script src="assets/modules/jquery/jquery.min.js"></script>
+<script src="assets/modules/bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="assets/modules/apexcharts/apexcharts.js"></script>
+
+<script>
+  // Toast function
+  function showToast(message, type = 'success') {
+    const existingToast = document.querySelector('.custom-toast');
+    if (existingToast) existingToast.remove();
+    
+    const toast = document.createElement('div');
+    toast.className = `custom-toast ${type}`;
+    toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} me-2"></i>${message}`;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s';
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
+  // Firebase Configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAtduM2t1jzgVs0TfPD48t3LJB5UJ90BrQ",
+    authDomain: "fundmonitoring-3c89f.firebaseapp.com",
+    projectId: "fundmonitoring-3c89f",
+    storageBucket: "fundmonitoring-3c89f.firebasestorage.app",
+    messagingSenderId: "630221204555",
+    appId: "1:630221204555:web:fa5116e95ad993093bb1ce",
+    measurementId: "G-MQ35CGE6EB"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const auth = firebase.auth();
+
+  let currentUser = null;
+  let userRole = 'viewer';
+  let allTransactions = [];
+  let allFunds = [];
+  let currentFundFilter = 'ALL';
+  let currentMonthFilter = 'all';
+  let trendChart = null;
+  let pieChart = null;
+  let barChart = null;
+  let comparisonChart = null;
+
+  // ==================== AUTHENTICATION ====================
+  
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) {
+      window.location.href = 'auth-login.html';
+      return;
+    }
+    
+    currentUser = user;
+    document.getElementById('userDisplayName').textContent = user.displayName || user.email?.split('@')[0] || 'User';
+    
+    try {
+      const userDoc = await db.collection('users').doc(user.uid).get();
+      if (userDoc.exists) {
+        userRole = userDoc.data().role || 'viewer';
+      }
+      
+      document.getElementById('userRoleDisplay').innerHTML = userRole === 'admin' 
+        ? '<i class="fa fa-shield-alt me-2 text-success"></i> Administrator'
+        : '<i class="fa fa-eye me-2 text-info"></i> Viewer';
+      
+      await loadFundsDropdown();
+      loadReportData();
+      
+    } catch (error) {
+      console.error('Error getting user role:', error);
+    }
+  });
+
+  async function handleSignOut() {
+    try {
+      await auth.signOut();
+      window.location.href = 'auth-login.html';
+    } catch (error) {
+      showToast('Error signing out', 'error');
+    }
+  }
+
+  // ==================== FUND FILTER ====================
+  
+  async function loadFundsDropdown() {
+    try {
+      const snapshot = await db.collection('funds').orderBy('name').get();
+      allFunds = [];
+      snapshot.forEach(doc => allFunds.push({ id: doc.id, ...doc.data() }));
+      
+      const select = document.getElementById('fundFilterSelect');
+      select.innerHTML = '<option value="ALL">All Budgets (All Funds)</option>';
+      
+      const fundsByYear = {};
+      allFunds.forEach(fund => {
+        const year = fund.year || 'Unknown';
+        if (!fundsByYear[year]) fundsByYear[year] = [];
+        fundsByYear[year].push(fund);
+      });
+      
+      const years = Object.keys(fundsByYear).sort((a, b) => b - a);
+      
+      years.forEach(year => {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = `Year ${year}`;
+        
+        fundsByYear[year].forEach(fund => {
+          const option = document.createElement('option');
+          option.value = fund.id;
+          option.textContent = `${fund.name} (₱${formatNumber(fund.allocated)})`;
+          optgroup.appendChild(option);
+        });
+        
+        select.appendChild(optgroup);
+      });
+    } catch (error) {
+      console.error('Error loading funds:', error);
+    }
+  }
+
+  function getFilteredData() {
+    const selectedYear = document.getElementById('yearSelect').value;
+    
+    // Filter by fund
+    let filteredTransactions = allTransactions;
+    let filteredFunds = allFunds;
+    
+    if (currentFundFilter !== 'ALL') {
+      const selectedFund = allFunds.find(f => f.id === currentFundFilter);
+      if (selectedFund) {
+        filteredTransactions = allTransactions.filter(t => t.fund === selectedFund.name);
+        filteredFunds = allFunds.filter(f => f.id === currentFundFilter);
+        document.getElementById('filterInfo').innerHTML = `<i class="fas fa-filter"></i> Filtered by: ${selectedFund.name}`;
+      }
+    } else {
+      document.getElementById('filterInfo').innerHTML = `<i class="fas fa-info-circle"></i> Showing all funds`;
+    }
+    
+    // Filter by year
+    let yearTransactions = filteredTransactions.filter(t => t.year == selectedYear);
+    
+    // Filter by month/quarter
+    if (currentMonthFilter !== 'all') {
+      const quarterMonths = {
+        'Q1': ['January', 'February', 'March'],
+        'Q2': ['April', 'May', 'June'],
+        'Q3': ['July', 'August', 'September'],
+        'Q4': ['October', 'November', 'December']
+      };
+      
+      if (quarterMonths[currentMonthFilter]) {
+        yearTransactions = yearTransactions.filter(t => 
+          quarterMonths[currentMonthFilter].includes(t.month)
+        );
+      }
+    }
+    
+    return { filteredTransactions: yearTransactions, filteredFunds };
+  }
+
+  // ==================== REPORT DATA ====================
+  
+  async function loadReportData() {
+    try {
+      // Load transactions
+      const txSnapshot = await db.collection('transactions').orderBy('createdAt', 'desc').get();
+      allTransactions = [];
+      txSnapshot.forEach(doc => allTransactions.push({ id: doc.id, ...doc.data() }));
+      
+      // Refresh UI
+      refreshAllReports();
+      
+    } catch (error) {
+      console.error('Error loading report data:', error);
+      showToast('Error loading report data', 'error');
+    }
+  }
+
+  function refreshAllReports() {
+    updateSummaryCards();
+    renderMonthlyTrendChart();
+    renderComponentPieChart();
+    renderMonthlySummaryTable();
+    renderDetailedMonthlyTable();
+    renderComponentTable();
+    renderComponentBarChart();
+    renderComparisonChart();
+    renderComparisonTable();
+  }
+
+  function formatCurrency(amount) {
+    return '₱' + parseFloat(amount || 0).toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function formatNumber(amount) {
+    return parseFloat(amount || 0).toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  // Update summary cards
+  function updateSummaryCards() {
+    const { filteredTransactions, filteredFunds } = getFilteredData();
+    
+    const totalBudget = filteredFunds.reduce((sum, f) => sum + (f.allocated || 0), 0);
+    const totalDisbursed = filteredTransactions
+      .filter(t => t.status === 'Disbursed' || t.status === 'PAID')
+      .reduce((sum, t) => sum + (t.obligation || 0), 0);
+    const pending = filteredTransactions
+      .filter(t => t.status === 'UNPAID' || t.status === 'Pending' || t.status === 'Obligated')
+      .reduce((sum, t) => sum + (t.obligation || 0), 0);
+    const utilization = totalBudget > 0 ? ((totalDisbursed / totalBudget) * 100).toFixed(1) : '0.0';
+    
+    document.getElementById('reportTotalBudget').textContent = formatCurrency(totalBudget);
+    document.getElementById('reportTotalDisbursed').textContent = formatCurrency(totalDisbursed);
+    document.getElementById('reportPending').textContent = formatCurrency(pending);
+    document.getElementById('reportUtilization').textContent = utilization + '%';
+  }
+
+  // Monthly Trend Chart
+  function renderMonthlyTrendChart() {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const { filteredTransactions } = getFilteredData();
+    
+    const monthlyData = months.map((_, i) => {
+      const monthName = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][i];
+      return filteredTransactions
+        .filter(t => t.month === monthName)
+        .reduce((sum, t) => sum + (t.obligation || 0), 0);
+    });
+    
+    const options = {
+      series: [{ name: 'Obligations', data: monthlyData }],
+      chart: { type: 'area', height: 280, toolbar: { show: false } },
+      colors: ['#3498db'],
+      fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.7, opacityTo: 0.2 } },
+      dataLabels: { enabled: false },
+      stroke: { curve: 'smooth', width: 3 },
+      xaxis: { categories: months },
+      yaxis: { labels: { formatter: (val) => formatCurrency(val) } },
+      tooltip: { y: { formatter: (val) => formatCurrency(val) } }
+    };
+    
+    if (trendChart) trendChart.destroy();
+    trendChart = new ApexCharts(document.querySelector("#monthlyTrendChart"), options);
+    trendChart.render();
+  }
+
+  // Component Pie Chart
+  function renderComponentPieChart() {
+    const components = ['I-PLAN (1.1)', 'I-PLAN (1.2)', 'I-BUILD (2.1)', 'I-BUILD (2.2)', 'I-REAP (3.1)', 'I-REAP (3.2)', 'I-SUPPORT', 'GOP'];
+    const colors = ['#3498db', '#2980b9', '#27ae60', '#2ecc71', '#f39c12', '#e67e22', '#9b59b6', '#95a5a6'];
+    
+    const { filteredTransactions } = getFilteredData();
+    
+    const series = components.map(c => 
+      filteredTransactions
+        .filter(t => t.component === c || t.fundSource === c)
+        .reduce((sum, t) => sum + (t.obligation || 0), 0)
+    ).filter(v => v > 0);
+    
+    const labels = components.filter((c, i) => 
+      filteredTransactions.filter(t => t.component === c || t.fundSource === c)
+        .reduce((sum, t) => sum + (t.obligation || 0), 0) > 0
+    );
+    
+    const options = {
+      series: series,
+      chart: { type: 'donut', height: 250 },
+      labels: labels,
+      colors: colors.slice(0, labels.length),
+      plotOptions: { pie: { donut: { size: '60%' } } },
+      dataLabels: { enabled: true, formatter: (val) => val.toFixed(1) + '%' },
+      legend: { position: 'bottom' },
+      tooltip: { y: { formatter: (val) => formatCurrency(val) } }
+    };
+    
+    if (pieChart) pieChart.destroy();
+    if (series.length > 0) {
+      pieChart = new ApexCharts(document.querySelector("#componentPieChart"), options);
+      pieChart.render();
+    } else {
+      document.querySelector("#componentPieChart").innerHTML = '<p class="text-center text-muted py-5">No data available</p>';
+    }
+  }
+
+  // Monthly Summary Table
+  function renderMonthlySummaryTable() {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const { filteredTransactions, filteredFunds } = getFilteredData();
+    const totalBudget = filteredFunds.reduce((sum, f) => sum + (f.allocated || 0), 0);
+    const monthlyBudget = totalBudget / 12;
+    
+    let html = '';
+    let prevObligation = 0;
+    
+    months.forEach((month, i) => {
+      const obligations = filteredTransactions
+        .filter(t => t.month === month)
+        .reduce((sum, t) => sum + (t.obligation || 0), 0);
+      
+      const disbursed = filteredTransactions
+        .filter(t => t.month === month && (t.status === 'Disbursed' || t.status === 'PAID'))
+        .reduce((sum, t) => sum + (t.obligation || 0), 0);
+      
+      const pending = filteredTransactions
+        .filter(t => t.month === month && (t.status === 'UNPAID' || t.status === 'Pending'))
+        .reduce((sum, t) => sum + (t.obligation || 0), 0);
+      
+      const utilization = monthlyBudget > 0 ? ((disbursed / monthlyBudget) * 100).toFixed(1) : '0.0';
+      
+      let trendIcon = '';
+      if (i > 0) {
+        if (obligations > prevObligation) trendIcon = '<i class="fas fa-arrow-up trend-up"></i>';
+        else if (obligations < prevObligation) trendIcon = '<i class="fas fa-arrow-down trend-down"></i>';
+        else trendIcon = '<i class="fas fa-minus text-muted"></i>';
+      }
+      prevObligation = obligations;
+      
+      html += `<tr>
+        <td><strong>${month.substring(0, 3)}</strong></td>
+        <td>${formatCurrency(monthlyBudget)}</td>
+        <td>${formatCurrency(obligations)}</td>
+        <td>${formatCurrency(disbursed)}</td>
+        <td>${formatCurrency(pending)}</td>
+        <td>${utilization}%</td>
+        <td>${trendIcon}</td>
+      </tr>`;
+    });
+    
+    document.getElementById('monthlySummaryBody').innerHTML = html || '<tr><td colspan="7" class="text-center py-4 text-muted">No data available</td></tr>';
+  }
+
+  // Detailed Monthly Table
+  function renderDetailedMonthlyTable() {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const components = ['I-PLAN (1.1)', 'I-PLAN (1.2)', 'I-BUILD (2.1)', 'I-BUILD (2.2)', 'I-REAP (3.1)', 'I-REAP (3.2)', 'I-SUPPORT', 'GOP'];
+    const { filteredTransactions } = getFilteredData();
+    
+    let html = '';
+    const componentTotals = components.map(() => 0);
+    let grandTotal = 0;
+    
+    months.forEach((month, i) => {
+      let rowTotal = 0;
+      html += `<tr><td><strong>${month.substring(0, 3)}</strong></td>`;
+      
+      components.forEach((comp, j) => {
+        const amount = filteredTransactions
+          .filter(t => t.month === month && (t.component === comp || t.fundSource === comp))
+          .reduce((sum, t) => sum + (t.obligation || 0), 0);
+        componentTotals[j] += amount;
+        rowTotal += amount;
+        html += `<td>${amount > 0 ? formatNumber(amount) : '-'}</td>`;
+      });
+      
+      grandTotal += rowTotal;
+      html += `<td><strong>${formatNumber(rowTotal)}</strong></td></tr>`;
+    });
+    
+    let footHtml = `<tr><td><strong>TOTAL</strong></td>`;
+    components.forEach((_, j) => {
+      footHtml += `<td><strong>${formatNumber(componentTotals[j])}</strong></td>`;
+    });
+    footHtml += `<td><strong>${formatNumber(grandTotal)}</strong></td></tr>`;
+    
+    document.getElementById('detailedMonthlyBody').innerHTML = html || '<tr><td colspan="10" class="text-center py-4 text-muted">No data available</td></tr>';
+    document.getElementById('detailedMonthlyFoot').innerHTML = footHtml;
+  }
+
+  // Component Table
+  function renderComponentTable() {
+    const components = ['I-PLAN (1.1)', 'I-PLAN (1.2)', 'I-BUILD (2.1)', 'I-BUILD (2.2)', 'I-REAP (3.1)', 'I-REAP (3.2)', 'I-SUPPORT', 'GOP'];
+    const { filteredTransactions, filteredFunds } = getFilteredData();
+    const totalBudget = filteredFunds.reduce((sum, f) => sum + (f.allocated || 0), 0);
+    
+    let html = '';
+    
+    components.forEach(comp => {
+      const budget = totalBudget / components.length;
+      const obligations = filteredTransactions
+        .filter(t => t.component === comp || t.fundSource === comp)
+        .reduce((sum, t) => sum + (t.obligation || 0), 0);
+      const disbursed = filteredTransactions
+        .filter(t => (t.component === comp || t.fundSource === comp) && (t.status === 'Disbursed' || t.status === 'PAID'))
+        .reduce((sum, t) => sum + (t.obligation || 0), 0);
+      const pending = obligations - disbursed;
+      const utilization = budget > 0 ? ((disbursed / budget) * 100).toFixed(1) : '0.0';
+      
+      let statusBadge = '';
+      if (parseFloat(utilization) >= 80) statusBadge = '<span class="badge bg-success">On Track</span>';
+      else if (parseFloat(utilization) >= 50) statusBadge = '<span class="badge bg-warning">In Progress</span>';
+      else statusBadge = '<span class="badge bg-danger">Behind</span>';
+      
+      if (obligations > 0) {
+        html += `<tr>
+          <td><strong>${comp}</strong></td>
+          <td>${formatCurrency(budget)}</td>
+          <td>${formatCurrency(obligations)}</td>
+          <td>${formatCurrency(disbursed)}</td>
+          <td>${formatCurrency(pending)}</td>
+          <td>${utilization}%</td>
+          <td>${statusBadge}</td>
+        </tr>`;
+      }
+    });
+    
+    document.getElementById('componentTableBody').innerHTML = html || '<tr><td colspan="7" class="text-center py-4 text-muted">No data available</td></tr>';
+  }
+
+  // Component Bar Chart
+  function renderComponentBarChart() {
+    const components = ['I-PLAN (1.1)', 'I-PLAN (1.2)', 'I-BUILD (2.1)', 'I-BUILD (2.2)', 'I-REAP (3.1)', 'I-REAP (3.2)', 'I-SUPPORT', 'GOP'];
+    const { filteredTransactions } = getFilteredData();
+    
+    const data = components.map(comp => ({
+      component: comp,
+      obligations: filteredTransactions
+        .filter(t => t.component === comp || t.fundSource === comp)
+        .reduce((sum, t) => sum + (t.obligation || 0), 0),
+      disbursed: filteredTransactions
+        .filter(t => (t.component === comp || t.fundSource === comp) && (t.status === 'Disbursed' || t.status === 'PAID'))
+        .reduce((sum, t) => sum + (t.obligation || 0), 0)
+    })).filter(d => d.obligations > 0);
+    
+    if (data.length === 0) {
+      document.querySelector("#componentBarChart").innerHTML = '<p class="text-center text-muted py-5">No data available</p>';
+      return;
+    }
+    
+    const options = {
+      series: [
+        { name: 'Obligations', data: data.map(d => d.obligations) },
+        { name: 'Disbursed', data: data.map(d => d.disbursed) }
+      ],
+      chart: { type: 'bar', height: 300, toolbar: { show: false } },
+      colors: ['#3498db', '#27ae60'],
+      plotOptions: { bar: { horizontal: false, columnWidth: '55%' } },
+      dataLabels: { enabled: false },
+      xaxis: { categories: data.map(d => d.component) },
+      yaxis: { labels: { formatter: (val) => formatCurrency(val) } },
+      tooltip: { y: { formatter: (val) => formatCurrency(val) } },
+      legend: { position: 'top' }
+    };
+    
+    if (barChart) barChart.destroy();
+    barChart = new ApexCharts(document.querySelector("#componentBarChart"), options);
+    barChart.render();
+  }
+
+  // Comparison Chart
+  function renderComparisonChart() {
+    const years = [2024, 2025, 2026];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const { filteredFunds } = getFilteredData();
+    
+    const series = years.map(year => ({
+      name: year.toString(),
+      data: months.map((_, i) => {
+        const monthName = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][i];
+        
+        let yearTransactions = allTransactions.filter(t => t.year == year);
+        if (currentFundFilter !== 'ALL') {
+          const selectedFund = allFunds.find(f => f.id === currentFundFilter);
+          if (selectedFund) {
+            yearTransactions = yearTransactions.filter(t => t.fund === selectedFund.name);
+          }
+        }
+        
+        return yearTransactions
+          .filter(t => t.month === monthName)
+          .reduce((sum, t) => sum + (t.obligation || 0), 0);
+      })
+    }));
+    
+    const options = {
+      series: series,
+      chart: { type: 'line', height: 300, toolbar: { show: false } },
+      colors: ['#95a5a6', '#f39c12', '#3498db'],
+      stroke: { curve: 'smooth', width: [2, 2, 3] },
+      xaxis: { categories: months },
+      yaxis: { labels: { formatter: (val) => formatCurrency(val) } },
+      tooltip: { y: { formatter: (val) => formatCurrency(val) } },
+      legend: { position: 'top' }
+    };
+    
+    if (comparisonChart) comparisonChart.destroy();
+    comparisonChart = new ApexCharts(document.querySelector("#yearComparisonChart"), options);
+    comparisonChart.render();
+  }
+
+  // Comparison Table
+  function renderComparisonTable() {
+    const years = [2024, 2025, 2026];
+    const { filteredFunds } = getFilteredData();
+    
+    const yearData = years.map(year => {
+      let yearTransactions = allTransactions.filter(t => t.year == year);
+      if (currentFundFilter !== 'ALL') {
+        const selectedFund = allFunds.find(f => f.id === currentFundFilter);
+        if (selectedFund) {
+          yearTransactions = yearTransactions.filter(t => t.fund === selectedFund.name);
+        }
+      }
+      
+      const budget = filteredFunds.reduce((sum, f) => sum + (f.allocated || 0), 0);
+      const obligations = yearTransactions.reduce((sum, t) => sum + (t.obligation || 0), 0);
+      const disbursed = yearTransactions
+        .filter(t => t.status === 'Disbursed' || t.status === 'PAID')
+        .reduce((sum, t) => sum + (t.obligation || 0), 0);
+      const utilization = budget > 0 ? ((disbursed / budget) * 100).toFixed(1) : '0.0';
+      
+      return { budget, obligations, disbursed, utilization };
+    });
+    
+    const metrics = ['Total Budget', 'Total Obligations', 'Total Disbursed', 'Utilization Rate'];
+    
+    let html = '';
+    
+    metrics.forEach((metric, i) => {
+      const values = yearData.map(d => {
+        if (i === 0) return formatCurrency(d.budget);
+        if (i === 1) return formatCurrency(d.obligations);
+        if (i === 2) return formatCurrency(d.disbursed);
+        return d.utilization + '%';
+      });
+      
+      const current = yearData[2];
+      const previous = yearData[1];
+      let change = '';
+      let changeClass = '';
+      
+      if (i === 0 && previous.budget > 0) {
+        const diff = ((current.budget - previous.budget) / previous.budget * 100).toFixed(1);
+        change = (diff > 0 ? '+' : '') + diff + '%';
+        changeClass = diff >= 0 ? 'trend-up' : 'trend-down';
+      } else if (i === 1 && previous.obligations > 0) {
+        const diff = ((current.obligations - previous.obligations) / previous.obligations * 100).toFixed(1);
+        change = (diff > 0 ? '+' : '') + diff + '%';
+        changeClass = diff >= 0 ? 'trend-up' : 'trend-down';
+      } else if (i === 2 && previous.disbursed > 0) {
+        const diff = ((current.disbursed - previous.disbursed) / previous.disbursed * 100).toFixed(1);
+        change = (diff > 0 ? '+' : '') + diff + '%';
+        changeClass = diff >= 0 ? 'trend-up' : 'trend-down';
+      } else if (i === 3) {
+        const diff = parseFloat(current.utilization) - parseFloat(previous.utilization);
+        change = (diff > 0 ? '+' : '') + diff.toFixed(1) + '%';
+        changeClass = diff >= 0 ? 'trend-up' : 'trend-down';
+      } else {
+        change = 'N/A';
+        changeClass = '';
+      }
+      
+      html += `<tr>
+        <td><strong>${metric}</strong></td>
+        <td>${values[0]}</td>
+        <td>${values[1]}</td>
+        <td>${values[2]}</td>
+        <td class="${changeClass}">${change !== 'N/A' ? `<i class="fas fa-${change.includes('+') ? 'arrow-up' : 'arrow-down'} me-1"></i>${change}` : '-'}</td>
+      </tr>`;
+    });
+    
+    document.getElementById('comparisonTableBody').innerHTML = html || '<tr><td colspan="5" class="text-center py-4 text-muted">No data available</td></tr>';
+  }
+
+  // Event Listeners
+  document.getElementById('fundFilterSelect').addEventListener('change', function() {
+    currentFundFilter = this.value;
+    refreshAllReports();
+  });
+
+  document.getElementById('yearSelect').addEventListener('change', refreshAllReports);
+
+  document.querySelectorAll('.month-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      currentMonthFilter = this.dataset.month;
+      refreshAllReports();
+    });
+  });
+
+  // Export functions
+  function exportReport(format) {
+    showToast(`Exporting report as ${format.toUpperCase()}...`, 'info');
+  }
+
+  function printReport() {
+    window.print();
+  }
+
+  // Make functions globally available
+  window.handleSignOut = handleSignOut;
+  window.exportReport = exportReport;
+  window.printReport = printReport;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const loader = document.querySelector('.loader');
+    const loaderOverlay = document.querySelector('.loader-overlay');
+    if (loader) loader.style.display = 'none';
+    if (loaderOverlay) loaderOverlay.style.display = 'none';
+  });
+</script>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/custom.js"></script>
+</body>
+</html>

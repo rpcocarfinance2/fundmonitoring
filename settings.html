@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Settings · FundTrack</title>
+
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="assets/modules/bootstrap-5.1.3/css/bootstrap.css">
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- FontAwesome CSS-->
+  <link rel="stylesheet" href="assets/modules/fontawesome6.1.1/css/all.css">
+  <!-- Boxicons CSS-->
+  <link rel="stylesheet" href="assets/modules/boxicons/css/boxicons.min.css">
+  
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --primary-light: #34495e;
+      --accent-color: #3498db;
+      --success-color: #27ae60;
+      --warning-color: #f39c12;
+      --danger-color: #e74c3c;
+      --border-color: #e0e0e0;
+      --bg-light: #f8f9fa;
+      --text-dark: #2c3e50;
+      --text-muted: #7f8c8d;
+    }
+
+    body {
+      background: #f5f7fa;
+    }
+
+    .content-header h1 {
+      color: var(--primary-color);
+      font-weight: 600;
+      font-size: 1.8rem;
+    }
+
+    .content-header p {
+      color: var(--text-muted);
+    }
+
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      overflow: hidden;
+      margin-bottom: 24px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-header {
+      background-color: white;
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 20px;
+    }
+
+    .card-header h4 {
+      color: var(--primary-color);
+      font-weight: 600;
+      margin: 0;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .card-header h4 i {
+      color: var(--accent-color);
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+
+    .card-body {
+      padding: 24px;
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: var(--primary-light);
+      margin-bottom: 6px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .form-control, .form-select {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      padding: 10px 14px;
+      background-color: white;
+      transition: all 0.2s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
+
+    .form-control[readonly] {
+      background-color: var(--bg-light);
+      cursor: default;
+    }
+
+    .btn {
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+      border: none;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+    }
+
+    .btn-outline-secondary {
+      border-color: var(--border-color);
+      color: var(--text-dark);
+    }
+
+    .btn-outline-secondary:hover {
+      background-color: var(--bg-light);
+      border-color: var(--text-muted);
+    }
+
+    .btn-outline-danger {
+      border-color: var(--danger-color);
+      color: var(--danger-color);
+    }
+
+    .btn-outline-danger:hover {
+      background-color: var(--danger-color);
+      color: white;
+    }
+
+    .settings-nav {
+      background: white;
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .settings-nav .nav-link {
+      color: var(--text-dark);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .settings-nav .nav-link i {
+      width: 24px;
+      color: var(--text-muted);
+    }
+
+    .settings-nav .nav-link:hover {
+      background-color: var(--bg-light);
+    }
+
+    .settings-nav .nav-link.active {
+      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+      color: white;
+    }
+
+    .settings-nav .nav-link.active i {
+      color: white;
+    }
+
+    .avatar-upload {
+      position: relative;
+      max-width: 120px;
+      margin: 0 auto;
+    }
+
+    .avatar-preview {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent-color);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .avatar-edit {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: var(--accent-color);
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .avatar-edit:hover {
+      background: var(--primary-color);
+      transform: scale(1.05);
+    }
+
+    .custom-toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 500;
+      z-index: 9999;
+      animation: slideIn 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .custom-toast.success { background: var(--success-color); }
+    .custom-toast.error { background: var(--danger-color); }
+    .custom-toast.info { background: var(--accent-color); }
+    .custom-toast.warning { background: var(--warning-color); }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .user-info-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .user-info-item:last-child {
+      border-bottom: none;
+    }
+
+    .user-info-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      margin-right: 15px;
+    }
+
+    .user-info-content {
+      flex: 1;
+    }
+
+    .user-info-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .user-info-value {
+      font-weight: 600;
+      color: var(--text-dark);
+      font-size: 1rem;
+    }
+
+    .badge-role {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .badge-role.admin {
+      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+      color: white;
+    }
+
+    .badge-role.viewer {
+      background: var(--bg-light);
+      color: var(--text-muted);
+    }
+
+    .switch-label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .switch-label input {
+      margin-right: 12px;
+      transform: scale(1.2);
+    }
+
+    .divider {
+      border-top: 1px solid var(--border-color);
+      margin: 24px 0;
+    }
+
+    footer .footer {
+      background: transparent;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      padding-top: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar transition">
+  <div class="bars">
+    <button type="button" class="btn transition" id="sidebar-toggle"><i class="fa fa-bars"></i></button>
+  </div>
+  <div class="menu">
+    <ul>
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
+          <img src="assets/images/avatar/avatar-1.png" alt="">
+          <span id="userDisplayName" class="ms-2 text-white">Loading...</span>
+        </a>
+        <ul class="dropdown-menu" id="userDropdownMenu">
+          <div class="dropdown-item-text" id="userRoleDisplay">
+            <i class="fa fa-user me-2"></i> Loading...
+          </div>
+          <hr class="dropdown-divider">
+          <a class="dropdown-item text-danger" href="#" onclick="handleSignOut()"><i class="fa fa-sign-out-alt me-2"></i> Sign Out</a>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar transition overlay-scrollbars animate__animated animate__slideInLeft">
+  <div class="sidebar-content">
+    <div id="sidebar">
+      <div class="logo">
+        <h2 class="mb-0"><img src="assets/images/logo.png"> FundTrack</h2>
+      </div>
+
+      <ul class="side-menu" id="sideMenu">
+        <li>
+          <a href="index.html" class="active">
+            <i class='bx bxs-dashboard icon'></i> Dashboard
+          </a>
+        </li>
+
+        <li class="divider" data-text="MAIN">MAIN</li>
+
+        <li id="fundsMenuItem">
+          <a href="funds.html">
+            <i class='bx bx-wallet icon'></i> Funds
+          </a>
+        </li>
+
+        <li id="transactionsMenuItem">
+          <a href="transactions.html">
+            <i class='bx bx-transfer-alt icon'></i> Transactions
+          </a>
+        </li>
+
+        <li class="divider" data-text="REPORTS">REPORTS</li>
+
+        <li>
+          <a href="monthly-reports.html">
+            <i class='bx bx-bar-chart-alt-2 icon'></i>
+            Monthly Reports
+          </a>
+        </li>
+
+        <li class="divider" data-text="ADMIN">ADMIN</li>
+
+        <li id="settingsMenuItem">
+          <a href="settings.html"  class="active">
+            <i class='bx bxs-cog icon'></i>
+            Settings
+          </a>
+        </li>
+      </ul>
+
+      <div class="ads">
+        <div class="wrapper">
+          <div class="help-icon"><i class="fa fa-chart-pie fa-3x"></i></div>
+          <p><strong>Budget Utilization</strong><br><span id="utilizationRateWidget">0%</span></p>
+          <a href="#" class="btn-upgrade" onclick="syncData()">Refresh Data</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="sidebar-overlay"></div>
+
+<!-- Content Start -->
+<div class="content-start transition">
+  <div class="container-fluid dashboard">
+    <div class="content-header">
+      <h1>Settings</h1>
+      <p>Manage your account and system preferences</p>
+    </div>
+
+    <div class="row">
+      <!-- Settings Navigation -->
+      <div class="col-md-3">
+        <div class="settings-nav">
+          <div class="nav flex-column nav-pills" id="settingsTab" role="tablist">
+            <a class="nav-link active" id="profile-tab" data-bs-toggle="pill" href="#profile" role="tab">
+              <i class="fas fa-user-circle me-3"></i> Profile
+            </a>
+            <a class="nav-link" id="account-tab" data-bs-toggle="pill" href="#account" role="tab">
+              <i class="fas fa-shield-alt me-3"></i> Account
+            </a>
+            <a class="nav-link" id="preferences-tab" data-bs-toggle="pill" href="#preferences" role="tab">
+              <i class="fas fa-sliders-h me-3"></i> Preferences
+            </a>
+            <a class="nav-link" id="data-tab" data-bs-toggle="pill" href="#data" role="tab">
+              <i class="fas fa-database me-3"></i> Data Management
+            </a>
+            <a class="nav-link" id="users-tab" data-bs-toggle="pill" href="#users" role="tab">
+              <i class="fas fa-users me-3"></i> User Management
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings Content -->
+      <div class="col-md-9">
+        <div class="tab-content" id="settingsTabContent">
+          
+          <!-- Profile Settings -->
+          <div class="tab-pane fade show active" id="profile" role="tabpanel">
+            <div class="card">
+              <div class="card-header">
+                <h4><i class="fas fa-user-circle me-2"></i>Profile Information</h4>
+              </div>
+              <div class="card-body">
+                <div class="text-center mb-4">
+                  <div class="avatar-upload">
+                    <img src="assets/images/avatar/avatar-1.png" alt="Avatar" class="avatar-preview" id="avatarPreview">
+                    <div class="avatar-edit" onclick="document.getElementById('avatarUpload').click()">
+                      <i class="fas fa-camera"></i>
+                    </div>
+                    <input type="file" id="avatarUpload" accept="image/*" style="display: none;" onchange="previewAvatar(event)">
+                  </div>
+                </div>
+
+                <form id="profileForm">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label">Display Name</label>
+                      <input type="text" class="form-control" id="displayName" placeholder="Your name">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Email Address</label>
+                      <input type="email" class="form-control" id="profileEmail" readonly>
+                    </div>
+                  </div>
+                  <div class="row g-3 mt-2">
+                    <div class="col-md-6">
+                      <label class="form-label">Phone Number</label>
+                      <input type="tel" class="form-control" id="phoneNumber" placeholder="+63 XXX XXX XXXX">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Department/Unit</label>
+                      <input type="text" class="form-control" id="department" placeholder="e.g., Finance, Admin">
+                    </div>
+                  </div>
+                  <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">
+                      <i class="fas fa-save me-2"></i>Save Changes
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Account Settings -->
+          <div class="tab-pane fade" id="account" role="tabpanel">
+            <div class="card">
+              <div class="card-header">
+                <h4><i class="fas fa-shield-alt me-2"></i>Account Security</h4>
+              </div>
+              <div class="card-body">
+                <div class="user-info-item">
+                  <div class="user-info-icon">
+                    <i class="fas fa-envelope"></i>
+                  </div>
+                  <div class="user-info-content">
+                    <div class="user-info-label">Email Address</div>
+                    <div class="user-info-value" id="accountEmail">Loading...</div>
+                  </div>
+                </div>
+                <div class="user-info-item">
+                  <div class="user-info-icon">
+                    <i class="fas fa-user-tag"></i>
+                  </div>
+                  <div class="user-info-content">
+                    <div class="user-info-label">Account Role</div>
+                    <div class="user-info-value">
+                      <span class="badge-role admin" id="accountRole">Administrator</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="user-info-item">
+                  <div class="user-info-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                  </div>
+                  <div class="user-info-content">
+                    <div class="user-info-label">Account Created</div>
+                    <div class="user-info-value" id="accountCreated">Loading...</div>
+                  </div>
+                </div>
+                <div class="user-info-item">
+                  <div class="user-info-icon">
+                    <i class="fas fa-clock"></i>
+                  </div>
+                  <div class="user-info-content">
+                    <div class="user-info-label">Last Login</div>
+                    <div class="user-info-value" id="lastLogin">Loading...</div>
+                  </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h5 class="mb-3">Change Password</h5>
+                <form id="passwordForm">
+                  <div class="mb-3">
+                    <label class="form-label">Current Password</label>
+                    <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">New Password</label>
+                    <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Confirm New Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
+                  </div>
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-key me-2"></i>Update Password
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preferences Settings -->
+          <div class="tab-pane fade" id="preferences" role="tabpanel">
+            <div class="card">
+              <div class="card-header">
+                <h4><i class="fas fa-sliders-h me-2"></i>System Preferences</h4>
+              </div>
+              <div class="card-body">
+                <h5 class="mb-3">Display Settings</h5>
+                <div class="mb-3">
+                  <label class="switch-label">
+                    <input type="checkbox" id="darkMode" checked> Enable Dark Mode (Coming Soon)
+                  </label>
+                </div>
+                <div class="mb-3">
+                  <label class="switch-label">
+                    <input type="checkbox" id="compactView"> Compact View
+                  </label>
+                </div>
+
+                <div class="divider"></div>
+
+                <h5 class="mb-3">Notification Settings</h5>
+                <div class="mb-3">
+                  <label class="switch-label">
+                    <input type="checkbox" id="emailNotifications" checked> Email Notifications
+                  </label>
+                </div>
+                <div class="mb-3">
+                  <label class="switch-label">
+                    <input type="checkbox" id="transactionAlerts" checked> Transaction Alerts
+                  </label>
+                </div>
+                <div class="mb-3">
+                  <label class="switch-label">
+                    <input type="checkbox" id="budgetAlerts" checked> Budget Threshold Alerts
+                  </label>
+                </div>
+
+                <div class="divider"></div>
+
+                <h5 class="mb-3">Currency Settings</h5>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Currency</label>
+                    <select class="form-select" id="currency">
+                      <option value="PHP" selected>Philippine Peso (₱)</option>
+                      <option value="USD">US Dollar ($)</option>
+                      <option value="EUR">Euro (€)</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Date Format</label>
+                    <select class="form-select" id="dateFormat">
+                      <option value="MM/DD/YYYY" selected>MM/DD/YYYY</option>
+                      <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                      <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="mt-4">
+                  <button type="button" class="btn btn-primary" onclick="savePreferences()">
+                    <i class="fas fa-save me-2"></i>Save Preferences
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Data Management -->
+          <div class="tab-pane fade" id="data" role="tabpanel">
+            <div class="card">
+              <div class="card-header">
+                <h4><i class="fas fa-database me-2"></i>Data Management</h4>
+              </div>
+              <div class="card-body">
+                <div class="alert alert-warning">
+                  <i class="fas fa-exclamation-triangle me-2"></i>
+                  <strong>Warning:</strong> These actions cannot be undone. Please proceed with caution.
+                </div>
+
+                <h5 class="mb-3">Export Data</h5>
+                <p class="text-muted">Download all your data in various formats.</p>
+                <div class="mb-4">
+                  <button class="btn btn-outline-primary me-2" onclick="exportData('csv')">
+                    <i class="fas fa-file-csv me-2"></i>Export as CSV
+                  </button>
+                  <button class="btn btn-outline-primary me-2" onclick="exportData('json')">
+                    <i class="fas fa-file-code me-2"></i>Export as JSON
+                  </button>
+                  <button class="btn btn-outline-primary" onclick="exportData('pdf')">
+                    <i class="fas fa-file-pdf me-2"></i>Export as PDF
+                  </button>
+                </div>
+
+                <div class="divider"></div>
+
+                <h5 class="mb-3">Import Data</h5>
+                <p class="text-muted">Import transactions from a file.</p>
+                <div class="mb-4">
+                  <input type="file" id="importFile" accept=".csv,.json" style="display: none;" onchange="importData(event)">
+                  <button class="btn btn-outline-success" onclick="document.getElementById('importFile').click()">
+                    <i class="fas fa-upload me-2"></i>Import Data
+                  </button>
+                </div>
+
+                <div class="divider"></div>
+
+                <h5 class="mb-3 text-danger">Danger Zone</h5>
+                <p class="text-muted">Permanently delete your data.</p>
+                <div class="mb-3">
+                  <button class="btn btn-outline-danger me-2" onclick="clearAllTransactions()">
+                    <i class="fas fa-trash me-2"></i>Clear All Transactions
+                  </button>
+                  <button class="btn btn-outline-danger" onclick="clearAllFunds()">
+                    <i class="fas fa-trash me-2"></i>Clear All Funds
+                  </button>
+                </div>
+                <div>
+                  <button class="btn btn-danger" onclick="resetAllData()">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Reset All Data
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- User Management (Admin Only) -->
+          <div class="tab-pane fade" id="users" role="tabpanel">
+            <div class="card">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <h4><i class="fas fa-users me-2"></i>User Management</h4>
+                <button class="btn btn-sm btn-primary" onclick="showAddUserModal()">
+                  <i class="fas fa-plus me-2"></i>Add User
+                </button>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Last Active</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                      <tr><td colspan="6" class="text-center py-4 text-muted">Loading users...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer">
+    <div class="float-start"><p>2026 &copy; FundTrack · Financial Management System</p></div>
+    <div class="float-end"><p>Crafted with <span class="text-danger"><i class="fa fa-heart"></i></span> by FundTrack Team</p></div>
+  </div>
+</footer>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<script src="assets/js/atrana.js"></script>
+<script src="assets/modules/jquery/jquery.min.js"></script>
+<script src="assets/modules/bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="assets/modules/popper/popper.min.js"></script>
+
+<script>
+  // Toast function
+  function showToast(message, type = 'success') {
+    const existingToast = document.querySelector('.custom-toast');
+    if (existingToast) existingToast.remove();
+    
+    const toast = document.createElement('div');
+    toast.className = `custom-toast ${type}`;
+    toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} me-2"></i>${message}`;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s';
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
+  // Firebase Configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAtduM2t1jzgVs0TfPD48t3LJB5UJ90BrQ",
+    authDomain: "fundmonitoring-3c89f.firebaseapp.com",
+    projectId: "fundmonitoring-3c89f",
+    storageBucket: "fundmonitoring-3c89f.firebasestorage.app",
+    messagingSenderId: "630221204555",
+    appId: "1:630221204555:web:fa5116e95ad993093bb1ce",
+    measurementId: "G-MQ35CGE6EB"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const auth = firebase.auth();
+
+  let currentUser = null;
+  let userRole = 'viewer';
+
+  // ==================== AUTHENTICATION ====================
+  
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) {
+      window.location.href = 'auth-login.html';
+      return;
+    }
+    
+    currentUser = user;
+    document.getElementById('userDisplayName').textContent = user.displayName || user.email?.split('@')[0] || 'User';
+    
+    try {
+      const userDoc = await db.collection('users').doc(user.uid).get();
+      if (userDoc.exists) {
+        userRole = userDoc.data().role || 'viewer';
+      }
+      
+      const roleDisplay = document.getElementById('userRoleDisplay');
+      const accountRole = document.getElementById('accountRole');
+      
+      if (userRole === 'admin') {
+        roleDisplay.innerHTML = '<i class="fa fa-shield-alt me-2 text-success"></i> Administrator';
+        accountRole.textContent = 'Administrator';
+        accountRole.className = 'badge-role admin';
+      } else {
+        roleDisplay.innerHTML = '<i class="fa fa-eye me-2 text-info"></i> Viewer';
+        accountRole.textContent = 'Viewer';
+        accountRole.className = 'badge-role viewer';
+      }
+      
+      // Load user profile
+      loadUserProfile(user, userDoc.data());
+      
+      // Load users list if admin
+      if (userRole === 'admin') {
+        loadUsersList();
+      }
+      
+    } catch (error) {
+      console.error('Error getting user role:', error);
+    }
+  });
+
+  function loadUserProfile(user, userData = {}) {
+    document.getElementById('displayName').value = user.displayName || userData.displayName || '';
+    document.getElementById('profileEmail').value = user.email || '';
+    document.getElementById('accountEmail').textContent = user.email || '';
+    document.getElementById('phoneNumber').value = userData.phoneNumber || '';
+    document.getElementById('department').value = userData.department || '';
+    
+    const createdAt = user.metadata?.creationTime;
+    if (createdAt) {
+      document.getElementById('accountCreated').textContent = new Date(createdAt).toLocaleDateString('en-US', {
+        year: 'numeric', month: 'long', day: 'numeric'
+      });
+    }
+    
+    const lastLogin = user.metadata?.lastSignInTime;
+    if (lastLogin) {
+      document.getElementById('lastLogin').textContent = new Date(lastLogin).toLocaleDateString('en-US', {
+        year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
+    }
+  }
+
+  async function handleSignOut() {
+    try {
+      await auth.signOut();
+      window.location.href = 'auth-login.html';
+    } catch (error) {
+      showToast('Error signing out', 'error');
+    }
+  }
+
+  // ==================== PROFILE FORM ====================
+  
+  document.getElementById('profileForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    try {
+      const displayName = document.getElementById('displayName').value;
+      const phoneNumber = document.getElementById('phoneNumber').value;
+      const department = document.getElementById('department').value;
+      
+      await currentUser.updateProfile({ displayName });
+      
+      await db.collection('users').doc(currentUser.uid).update({
+        displayName,
+        phoneNumber,
+        department,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      
+      document.getElementById('userDisplayName').textContent = displayName || currentUser.email?.split('@')[0];
+      showToast('Profile updated successfully');
+    } catch (error) {
+      showToast('Error updating profile: ' + error.message, 'error');
+    }
+  });
+
+  // ==================== PASSWORD FORM ====================
+  
+  document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const currentPassword = document.getElementById('currentPassword').value;
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      showToast('Please fill in all password fields', 'error');
+      return;
+    }
+    
+    if (newPassword !== confirmPassword) {
+      showToast('New passwords do not match', 'error');
+      return;
+    }
+    
+    if (newPassword.length < 6) {
+      showToast('Password must be at least 6 characters', 'error');
+      return;
+    }
+    
+    try {
+      const credential = firebase.auth.EmailAuthProvider.credential(currentUser.email, currentPassword);
+      await currentUser.reauthenticateWithCredential(credential);
+      await currentUser.updatePassword(newPassword);
+      
+      document.getElementById('passwordForm').reset();
+      showToast('Password updated successfully');
+    } catch (error) {
+      if (error.code === 'auth/wrong-password') {
+        showToast('Current password is incorrect', 'error');
+      } else {
+        showToast('Error updating password: ' + error.message, 'error');
+      }
+    }
+  });
+
+  // ==================== AVATAR PREVIEW ====================
+  
+  window.previewAvatar = function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        document.getElementById('avatarPreview').src = e.target.result;
+        showToast('Avatar updated (demo only - not saved to server)', 'info');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // ==================== PREFERENCES ====================
+  
+  function savePreferences() {
+    const preferences = {
+      darkMode: document.getElementById('darkMode').checked,
+      compactView: document.getElementById('compactView').checked,
+      emailNotifications: document.getElementById('emailNotifications').checked,
+      transactionAlerts: document.getElementById('transactionAlerts').checked,
+      budgetAlerts: document.getElementById('budgetAlerts').checked,
+      currency: document.getElementById('currency').value,
+      dateFormat: document.getElementById('dateFormat').value
+    };
+    
+    localStorage.setItem('fundtrack_preferences', JSON.stringify(preferences));
+    showToast('Preferences saved successfully');
+  }
+
+  function loadPreferences() {
+    const saved = localStorage.getItem('fundtrack_preferences');
+    if (saved) {
+      const prefs = JSON.parse(saved);
+      document.getElementById('darkMode').checked = prefs.darkMode || false;
+      document.getElementById('compactView').checked = prefs.compactView || false;
+      document.getElementById('emailNotifications').checked = prefs.emailNotifications !== false;
+      document.getElementById('transactionAlerts').checked = prefs.transactionAlerts !== false;
+      document.getElementById('budgetAlerts').checked = prefs.budgetAlerts !== false;
+      document.getElementById('currency').value = prefs.currency || 'PHP';
+      document.getElementById('dateFormat').value = prefs.dateFormat || 'MM/DD/YYYY';
+    }
+  }
+
+  // ==================== DATA MANAGEMENT ====================
+  
+  function exportData(format) {
+    showToast(`Exporting data as ${format.toUpperCase()}... (Demo)`, 'info');
+  }
+
+  function importData(event) {
+    const file = event.target.files[0];
+    if (file) {
+      showToast(`Importing from ${file.name}... (Demo)`, 'info');
+    }
+  }
+
+  async function clearAllTransactions() {
+    if (!confirm('Are you sure you want to delete ALL transactions? This cannot be undone!')) return;
+    
+    try {
+      const snapshot = await db.collection('transactions').get();
+      const batch = db.batch();
+      snapshot.docs.forEach(doc => batch.delete(doc.ref));
+      await batch.commit();
+      showToast(`Deleted ${snapshot.size} transactions`);
+    } catch (error) {
+      showToast('Error clearing transactions: ' + error.message, 'error');
+    }
+  }
+
+  async function clearAllFunds() {
+    if (!confirm('Are you sure you want to delete ALL funds? This cannot be undone!')) return;
+    
+    try {
+      const snapshot = await db.collection('funds').get();
+      const batch = db.batch();
+      snapshot.docs.forEach(doc => batch.delete(doc.ref));
+      await batch.commit();
+      showToast(`Deleted ${snapshot.size} funds`);
+    } catch (error) {
+      showToast('Error clearing funds: ' + error.message, 'error');
+    }
+  }
+
+  async function resetAllData() {
+    if (!confirm('WARNING: This will delete ALL funds and transactions. This cannot be undone! Are you absolutely sure?')) return;
+    if (!confirm('FINAL WARNING: All data will be permanently lost. Continue?')) return;
+    
+    try {
+      await clearAllFunds();
+      await clearAllTransactions();
+      showToast('All data has been reset');
+    } catch (error) {
+      showToast('Error resetting data: ' + error.message, 'error');
+    }
+  }
+
+  // ==================== USER MANAGEMENT ====================
+  
+  async function loadUsersList() {
+    try {
+      const snapshot = await db.collection('users').orderBy('createdAt', 'desc').get();
+      const tbody = document.getElementById('usersTableBody');
+      
+      if (snapshot.empty) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">No users found</td></tr>';
+        return;
+      }
+      
+      tbody.innerHTML = '';
+      snapshot.forEach(doc => {
+        const user = doc.data();
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="me-2"><i class="fas fa-user-circle fa-2x text-muted"></i></div>
+              <div>
+                <strong>${user.displayName || 'N/A'}</strong>
+              </div>
+            </div>
+          </td>
+          <td>${user.email || 'N/A'}</td>
+          <td><span class="badge-role ${user.role || 'viewer'}">${user.role || 'viewer'}</span></td>
+          <td><span class="text-success"><i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i>Active</span></td>
+          <td><small class="text-muted">-</small></td>
+          <td>
+            <button class="btn btn-sm btn-outline-primary me-1" onclick="editUserRole('${doc.id}', '${user.role}')">
+              <i class="fas fa-edit"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    } catch (error) {
+      console.error('Error loading users:', error);
+    }
+  }
+
+  function showAddUserModal() {
+    showToast('Add user functionality coming soon', 'info');
+  }
+
+  window.editUserRole = function(userId, currentRole) {
+    const newRole = currentRole === 'admin' ? 'viewer' : 'admin';
+    if (confirm(`Change user role to "${newRole}"?`)) {
+      db.collection('users').doc(userId).update({ role: newRole })
+        .then(() => {
+          showToast('User role updated');
+          loadUsersList();
+        })
+        .catch(error => showToast('Error updating role: ' + error.message, 'error'));
+    }
+  };
+
+  // ==================== INITIALIZATION ====================
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    loadPreferences();
+    
+    const loader = document.querySelector('.loader');
+    const loaderOverlay = document.querySelector('.loader-overlay');
+    if (loader) loader.style.display = 'none';
+    if (loaderOverlay) loaderOverlay.style.display = 'none';
+  });
+
+  // Make functions globally available
+  window.handleSignOut = handleSignOut;
+  window.savePreferences = savePreferences;
+  window.exportData = exportData;
+  window.importData = importData;
+  window.clearAllTransactions = clearAllTransactions;
+  window.clearAllFunds = clearAllFunds;
+  window.resetAllData = resetAllData;
+  window.showAddUserModal = showAddUserModal;
+</script>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/custom.js"></script>
+</body>
+</html>
