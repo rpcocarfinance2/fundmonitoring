@@ -1,204 +1,319 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Settings · FundTrack</title>
+  <title>Settings · DA-PRDP RPCO CAR</title>
 
-  <!-- Bootstrap CSS-->
   <link rel="stylesheet" href="assets/modules/bootstrap-5.1.3/css/bootstrap.css">
-  <!-- Style CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
-  <!-- FontAwesome CSS-->
   <link rel="stylesheet" href="assets/modules/fontawesome6.1.1/css/all.css">
-  <!-- Boxicons CSS-->
   <link rel="stylesheet" href="assets/modules/boxicons/css/boxicons.min.css">
   
   <style>
     :root {
-      --primary-color: #2c3e50;
-      --primary-light: #34495e;
-      --accent-color: #3498db;
-      --success-color: #27ae60;
-      --warning-color: #f39c12;
-      --danger-color: #e74c3c;
-      --border-color: #e0e0e0;
-      --bg-light: #f8f9fa;
-      --text-dark: #2c3e50;
-      --text-muted: #7f8c8d;
+      --da-green: #2b5e2b;
+      --da-gold: #c9a03d;
+      --da-light-green: #e8f0e8;
+      --da-dark: #1e3a1e;
+      --accent-blue: #2c7da0;
+      --success-color: #2e7d32;
+      --warning-color: #ed6c02;
+      --danger-color: #d32f2f;
+      --border-color: #e2e8f0;
+      --bg-light: #f8fafc;
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --sidebar-width: 280px;
     }
 
     body {
-      background: #f5f7fa;
+      background: #f1f5f9;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    /* Sidebar Premium Redesign - DA Theme */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: linear-gradient(180deg, #0f2e1f 0%, #1a3a2a 100%);
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
+      border-right: none;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      z-index: 1030;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      overflow-y: auto;
+    }
+
+    .sidebar .logo {
+      padding: 1.5rem 1.2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar .logo h2 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.3px;
+    }
+
+    .sidebar .logo h2 img {
+      width: 42px;
+      height: 42px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      background: #f5b042;
+      border-radius: 12px;
+      padding: 6px;
+    }
+
+    .agency-badge {
+      font-size: 0.7rem;
+      background: rgba(255,215,0,0.2);
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-top: 6px;
+      color: #f5d742;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    .side-menu {
+      list-style: none;
+      padding: 0 1rem;
+    }
+
+    .side-menu li {
+      margin-bottom: 8px;
+    }
+
+    .side-menu li a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+      transition: all 0.2s;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .side-menu li a i, 
+    .side-menu li a .icon {
+      font-size: 1.25rem;
+      width: 28px;
+      text-align: center;
+    }
+
+    .side-menu li a:hover {
+      background: rgba(255,255,255,0.12);
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .side-menu li a.active {
+      background: var(--da-gold);
+      color: #1e3a1e;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+    .side-menu .divider {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 1rem 0.5rem 0.5rem;
+      color: rgba(255,255,255,0.4);
+      font-weight: 600;
+    }
+
+    .sidebar .ads {
+      margin: 2rem 1rem;
+      background: rgba(0,0,0,0.25);
+      border-radius: 20px;
+      backdrop-filter: blur(2px);
+      padding: 1rem;
+      border: 1px solid rgba(255,215,0,0.2);
+    }
+
+    .sidebar .ads .wrapper {
+      text-align: center;
+    }
+
+    .sidebar .ads .help-icon i {
+      color: var(--da-gold);
+      opacity: 0.9;
+    }
+
+    .sidebar .ads p {
+      color: white;
+      margin-top: 8px;
+    }
+
+    .btn-upgrade {
+      background: var(--da-gold);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: #1e3a1e;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-upgrade:hover {
+      background: #e6b342;
+      transform: scale(1.02);
+    }
+
+    .topbar {
+      background: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      padding: 0.8rem 2rem;
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: var(--sidebar-width);
+      z-index: 1020;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .content-start {
+      margin-left: var(--sidebar-width);
+      margin-top: 70px;
+      padding: 1.5rem 2rem;
+      transition: 0.3s;
     }
 
     .content-header h1 {
-      color: var(--primary-color);
-      font-weight: 600;
+      color: var(--da-dark);
+      font-weight: 700;
       font-size: 1.8rem;
-    }
-
-    .content-header p {
-      color: var(--text-muted);
     }
 
     .card {
       border: none;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
       overflow: hidden;
-      margin-bottom: 24px;
-      animation: fadeIn 0.4s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      margin-bottom: 1.5rem;
     }
 
     .card-header {
-      background-color: white;
+      background: white;
       border-bottom: 1px solid var(--border-color);
-      padding: 16px 20px;
+      padding: 1rem 1.5rem;
     }
 
     .card-header h4 {
-      color: var(--primary-color);
-      font-weight: 600;
+      color: var(--da-dark);
+      font-weight: 700;
       margin: 0;
-      font-size: 1.1rem;
+      font-size: 1rem;
       display: flex;
       align-items: center;
     }
 
-    .card-header h4 i {
-      color: var(--accent-color);
-      margin-right: 10px;
-      font-size: 1.2rem;
-    }
-
-    .card-body {
-      padding: 24px;
-    }
-
     .form-label {
-      font-weight: 500;
-      color: var(--primary-light);
+      font-weight: 600;
+      color: var(--da-dark);
       margin-bottom: 6px;
-      font-size: 0.85rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
 
     .form-control, .form-select {
       border: 1px solid var(--border-color);
-      border-radius: 8px;
-      font-size: 0.95rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
       padding: 10px 14px;
-      background-color: white;
-      transition: all 0.2s ease;
     }
 
     .form-control:focus, .form-select:focus {
-      border-color: var(--accent-color);
-      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-    }
-
-    .form-control[readonly] {
-      background-color: var(--bg-light);
-      cursor: default;
-    }
-
-    .btn {
-      border-radius: 8px;
-      padding: 10px 20px;
-      font-weight: 500;
-      transition: all 0.2s ease;
+      border-color: var(--da-gold);
+      box-shadow: 0 0 0 3px rgba(201, 160, 61, 0.1);
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+      background: linear-gradient(135deg, var(--da-green), var(--da-dark));
       border: none;
+      border-radius: 40px;
     }
-
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+      background: linear-gradient(135deg, #1e4a1e, #0f2e1f);
+      transform: translateY(-1px);
     }
-
-    .btn-outline-secondary {
-      border-color: var(--border-color);
-      color: var(--text-dark);
+    .btn-outline-primary {
+      border-color: var(--da-green);
+      color: var(--da-green);
+      border-radius: 40px;
     }
-
-    .btn-outline-secondary:hover {
-      background-color: var(--bg-light);
-      border-color: var(--text-muted);
+    .btn-outline-primary:hover {
+      background-color: var(--da-green);
+      color: white;
     }
-
     .btn-outline-danger {
       border-color: var(--danger-color);
       color: var(--danger-color);
+      border-radius: 40px;
     }
-
-    .btn-outline-danger:hover {
-      background-color: var(--danger-color);
-      color: white;
+    .btn-danger {
+      background: var(--danger-color);
+      border: none;
+      border-radius: 40px;
     }
 
     .settings-nav {
       background: white;
-      border-radius: 12px;
-      padding: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      border-radius: 20px;
+      padding: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
-
     .settings-nav .nav-link {
       color: var(--text-dark);
       padding: 12px 16px;
-      border-radius: 8px;
+      border-radius: 12px;
       margin-bottom: 4px;
-      transition: all 0.2s ease;
     }
-
-    .settings-nav .nav-link i {
-      width: 24px;
-      color: var(--text-muted);
-    }
-
-    .settings-nav .nav-link:hover {
-      background-color: var(--bg-light);
-    }
-
+    .settings-nav .nav-link i { width: 28px; color: var(--text-muted); }
     .settings-nav .nav-link.active {
-      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+      background: linear-gradient(135deg, var(--da-green), var(--da-dark));
       color: white;
     }
-
-    .settings-nav .nav-link.active i {
-      color: white;
-    }
+    .settings-nav .nav-link.active i { color: white; }
 
     .avatar-upload {
       position: relative;
       max-width: 120px;
       margin: 0 auto;
     }
-
     .avatar-preview {
       width: 120px;
       height: 120px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid var(--accent-color);
+      border: 3px solid var(--da-gold);
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-
     .avatar-edit {
       position: absolute;
       bottom: 0;
       right: 0;
-      background: var(--accent-color);
+      background: var(--da-green);
       color: white;
       width: 36px;
       height: 36px;
@@ -207,37 +322,9 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: all 0.2s;
     }
-
-    .avatar-edit:hover {
-      background: var(--primary-color);
-      transform: scale(1.05);
-    }
-
-    .custom-toast {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 12px 20px;
-      border-radius: 10px;
-      color: white;
-      font-weight: 500;
-      z-index: 9999;
-      animation: slideIn 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-
-    .custom-toast.success { background: var(--success-color); }
-    .custom-toast.error { background: var(--danger-color); }
-    .custom-toast.info { background: var(--accent-color); }
-    .custom-toast.warning { background: var(--warning-color); }
-
-    @keyframes slideIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
+    .avatar-edit:hover { background: var(--da-gold); transform: scale(1.05); }
 
     .user-info-item {
       display: flex;
@@ -245,79 +332,66 @@
       padding: 12px 0;
       border-bottom: 1px solid var(--border-color);
     }
-
-    .user-info-item:last-child {
-      border-bottom: none;
-    }
-
     .user-info-icon {
       width: 40px;
       height: 40px;
       border-radius: 10px;
-      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+      background: linear-gradient(135deg, var(--da-green), var(--da-dark));
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
       margin-right: 15px;
     }
-
-    .user-info-content {
-      flex: 1;
-    }
-
-    .user-info-label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .user-info-value {
-      font-weight: 600;
-      color: var(--text-dark);
-      font-size: 1rem;
-    }
-
     .badge-role {
       padding: 4px 10px;
       border-radius: 20px;
       font-size: 0.75rem;
-      font-weight: 500;
     }
-
-    .badge-role.admin {
-      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
-      color: white;
-    }
-
-    .badge-role.viewer {
-      background: var(--bg-light);
-      color: var(--text-muted);
-    }
+    .badge-role.admin { background: linear-gradient(135deg, var(--da-green), var(--da-dark)); color: white; }
+    .badge-role.viewer { background: var(--bg-light); color: var(--text-muted); }
 
     .switch-label {
       display: flex;
       align-items: center;
+      gap: 12px;
       cursor: pointer;
     }
+    .switch-label input { transform: scale(1.2); }
+    .divider { border-top: 1px solid var(--border-color); margin: 1.5rem 0; }
 
-    .switch-label input {
-      margin-right: 12px;
-      transform: scale(1.2);
+    .custom-toast {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      color: white;
+      font-weight: 500;
+      z-index: 9999;
+      animation: slideIn 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     }
+    .custom-toast.success { background: var(--da-green); }
+    .custom-toast.error { background: var(--danger-color); }
+    .custom-toast.info { background: var(--accent-blue); }
+    .custom-toast.warning { background: var(--warning-color); }
 
-    .divider {
-      border-top: 1px solid var(--border-color);
-      margin: 24px 0;
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
     }
 
     footer .footer {
+      margin-left: var(--sidebar-width);
       background: transparent;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border-color);
-      padding-top: 20px;
-      margin-top: 20px;
+      padding: 1rem 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); }
+      .topbar, .content-start, footer .footer { margin-left: 0; }
+      .sidebar.open { transform: translateX(0); }
     }
   </style>
 </head>
@@ -326,81 +400,53 @@
 <!-- Topbar -->
 <div class="topbar transition">
   <div class="bars">
-    <button type="button" class="btn transition" id="sidebar-toggle"><i class="fa fa-bars"></i></button>
+    <button type="button" class="btn btn-light" id="sidebarToggleBtn"><i class="fa fa-bars"></i></button>
   </div>
   <div class="menu">
-    <ul>
+    <ul class="nav">
       <li class="nav-item dropdown">
-        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
-          <img src="assets/images/avatar/avatar-1.png" alt="">
-          <span id="userDisplayName" class="ms-2 text-white">Loading...</span>
+        <a class="nav-link d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+          <img src="assets/images/avatar/avatar-1.png" alt="avatar" width="38" class="rounded-circle">
+          <span id="userDisplayName" class="ms-2 fw-semibold">Loading...</span>
         </a>
-        <ul class="dropdown-menu" id="userDropdownMenu">
-          <div class="dropdown-item-text" id="userRoleDisplay">
-            <i class="fa fa-user me-2"></i> Loading...
-          </div>
-          <hr class="dropdown-divider">
-          <a class="dropdown-item text-danger" href="#" onclick="handleSignOut()"><i class="fa fa-sign-out-alt me-2"></i> Sign Out</a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><span class="dropdown-item-text" id="userRoleDisplay"><i class="fa fa-shield-alt me-2"></i> Role</span></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item text-danger" href="#" onclick="handleSignOut()"><i class="fa fa-sign-out-alt me-2"></i> Sign Out</a></li>
         </ul>
       </li>
     </ul>
   </div>
 </div>
 
-<!-- Sidebar -->
-<div class="sidebar transition overlay-scrollbars animate__animated animate__slideInLeft">
+<!-- Sidebar - DA-PRDP Styled -->
+<div class="sidebar transition" id="mainSidebar">
   <div class="sidebar-content">
-    <div id="sidebar">
-      <div class="logo">
-        <h2 class="mb-0"><img src="assets/images/logo.png"> FundTrack</h2>
-      </div>
-
-      <ul class="side-menu" id="sideMenu">
-        <li>
-          <a href="index.html" class="active">
-            <i class='bx bxs-dashboard icon'></i> Dashboard
-          </a>
-        </li>
-
-        <li class="divider" data-text="MAIN">MAIN</li>
-
-        <li id="fundsMenuItem">
-          <a href="funds.html">
-            <i class='bx bx-wallet icon'></i> Funds
-          </a>
-        </li>
-
-        <li id="transactionsMenuItem">
-          <a href="transactions.html">
-            <i class='bx bx-transfer-alt icon'></i> Transactions
-          </a>
-        </li>
-
-        <li class="divider" data-text="REPORTS">REPORTS</li>
-
-        <li>
-          <a href="monthly-reports.html">
-            <i class='bx bx-bar-chart-alt-2 icon'></i>
-            Monthly Reports
-          </a>
-        </li>
-
-        <li class="divider" data-text="ADMIN">ADMIN</li>
-
-        <li id="settingsMenuItem">
-          <a href="settings.html"  class="active">
-            <i class='bx bxs-cog icon'></i>
-            Settings
-          </a>
-        </li>
-      </ul>
-
-      <div class="ads">
-        <div class="wrapper">
-          <div class="help-icon"><i class="fa fa-chart-pie fa-3x"></i></div>
-          <p><strong>Budget Utilization</strong><br><span id="utilizationRateWidget">0%</span></p>
-          <a href="#" class="btn-upgrade" onclick="syncData()">Refresh Data</a>
+    <div class="logo">
+      <h2>
+        <img src="assets/images/logo.png" alt="DA Logo" onerror="this.src='https://placehold.co/42x42?text=DA'">
+        <span>DA-PRDP<br><small style="font-size: 0.7rem;">RPCO CAR</small></span>
+      </h2>
+      <div class="agency-badge"><i class="fas fa-leaf me-1"></i> Philippine Rural Development Project</div>
+    </div>
+    <ul class="side-menu">
+      <li><a href="index.html"><i class='bx bxs-dashboard'></i> Dashboard</a></li>
+      <li class="divider" data-text="FINANCE">FINANCE</li>
+      <li id="fundsMenuItem"><a href="funds.html"><i class='bx bx-wallet'></i> Funds & Budgets</a></li>
+      <li id="transactionsMenuItem"><a href="transactions.html"><i class='bx bx-transfer-alt'></i> Transactions</a></li>
+      <li class="divider" data-text="INSIGHTS">INSIGHTS</li>
+      <li><a href="monthly-reports.html"><i class='bx bx-bar-chart-alt-2'></i> Monthly Reports</a></li>
+      <li class="divider" data-text="ADMIN">ADMIN</li>
+      <li id="settingsMenuItem"><a href="settings.html" class="active"><i class='bx bxs-cog'></i> System Settings</a></li>
+    </ul>
+    <div class="ads">
+      <div class="wrapper">
+        <div class="help-icon"><i class="fas fa-chart-line fa-3x"></i></div>
+        <p><strong>Overall Utilization</strong><br><span id="utilizationRateWidget" style="font-size: 1.4rem; font-weight: bold;">0%</span></p>
+        <div class="progress mt-2 mb-2" style="height: 8px; background: rgba(255,255,255,0.2); border-radius: 10px;">
+          <div class="progress-bar" id="utilizationProgressBar" style="width: 0%; background: #c9a03d;"></div>
         </div>
+        <a href="#" class="btn-upgrade" onclick="refreshSidebarWidget(); return false;"><i class="fas fa-sync-alt me-1"></i> Sync Now</a>
       </div>
     </div>
   </div>
@@ -410,1073 +456,243 @@
 <!-- Content Start -->
 <div class="content-start transition">
   <div class="container-fluid dashboard">
-    <div class="content-header">
+    <div class="content-header mb-3">
       <h1>Settings</h1>
-      <p>Manage your account and system preferences</p>
+      <p>DA-PRDP RPCO CAR · Manage account, users & system preferences</p>
     </div>
 
     <div class="row">
-      <!-- Settings Navigation -->
       <div class="col-md-3">
         <div class="settings-nav">
           <div class="nav flex-column nav-pills" id="settingsTab" role="tablist">
-            <a class="nav-link active" id="profile-tab" data-bs-toggle="pill" href="#profile" role="tab">
-              <i class="fas fa-user-circle me-3"></i> Profile
-            </a>
-            <a class="nav-link" id="account-tab" data-bs-toggle="pill" href="#account" role="tab">
-              <i class="fas fa-shield-alt me-3"></i> Account
-            </a>
-            <a class="nav-link" id="preferences-tab" data-bs-toggle="pill" href="#preferences" role="tab">
-              <i class="fas fa-sliders-h me-3"></i> Preferences
-            </a>
-            <a class="nav-link" id="data-tab" data-bs-toggle="pill" href="#data" role="tab">
-              <i class="fas fa-database me-3"></i> Data Management
-            </a>
-            <a class="nav-link" id="users-tab" data-bs-toggle="pill" href="#users" role="tab">
-              <i class="fas fa-users me-3"></i> User Management
-            </a>
+            <a class="nav-link active" id="profile-tab" data-bs-toggle="pill" href="#profile"><i class="fas fa-user-circle me-3"></i> Profile</a>
+            <a class="nav-link" id="account-tab" data-bs-toggle="pill" href="#account"><i class="fas fa-shield-alt me-3"></i> Account</a>
+            <a class="nav-link" id="preferences-tab" data-bs-toggle="pill" href="#preferences"><i class="fas fa-sliders-h me-3"></i> Preferences</a>
+            <a class="nav-link" id="data-tab" data-bs-toggle="pill" href="#data"><i class="fas fa-database me-3"></i> Data Management</a>
+            <a class="nav-link" id="users-tab" data-bs-toggle="pill" href="#users"><i class="fas fa-users me-3"></i> User Management</a>
           </div>
         </div>
       </div>
 
-      <!-- Settings Content -->
       <div class="col-md-9">
-        <div class="tab-content" id="settingsTabContent">
-          
+        <div class="tab-content">
           <!-- Profile Settings -->
-          <div class="tab-pane fade show active" id="profile" role="tabpanel">
+          <div class="tab-pane fade show active" id="profile">
             <div class="card">
-              <div class="card-header">
-                <h4><i class="fas fa-user-circle me-2"></i>Profile Information</h4>
-              </div>
+              <div class="card-header"><h4><i class="fas fa-user-circle me-2 text-success"></i>Profile Information</h4></div>
               <div class="card-body">
                 <div class="text-center mb-4">
                   <div class="avatar-upload">
                     <img src="assets/images/avatar/avatar-1.png" alt="Avatar" class="avatar-preview" id="avatarPreview">
-                    <div class="avatar-edit" onclick="document.getElementById('avatarUpload').click()">
-                      <i class="fas fa-camera"></i>
-                    </div>
+                    <div class="avatar-edit" onclick="document.getElementById('avatarUpload').click()"><i class="fas fa-camera"></i></div>
                     <input type="file" id="avatarUpload" accept="image/*" style="display: none;" onchange="previewAvatar(event)">
                   </div>
                 </div>
-
                 <form id="profileForm">
                   <div class="row g-3">
-                    <div class="col-md-6">
-                      <label class="form-label">Display Name</label>
-                      <input type="text" class="form-control" id="displayName" placeholder="Your name">
-                    </div>
-                    <div class="col-md-6">
-                      <label class="form-label">Email Address</label>
-                      <input type="email" class="form-control" id="profileEmail" readonly>
-                    </div>
+                    <div class="col-md-6"><label class="form-label">Display Name</label><input type="text" class="form-control" id="displayName" placeholder="Your name"></div>
+                    <div class="col-md-6"><label class="form-label">Email Address</label><input type="email" class="form-control" id="profileEmail" readonly></div>
                   </div>
                   <div class="row g-3 mt-2">
-                    <div class="col-md-6">
-                      <label class="form-label">Phone Number</label>
-                      <input type="tel" class="form-control" id="phoneNumber" placeholder="+63 XXX XXX XXXX">
-                    </div>
-                    <div class="col-md-6">
-                      <label class="form-label">Department/Unit</label>
-                      <input type="text" class="form-control" id="department" placeholder="e.g., Finance, Admin">
-                    </div>
+                    <div class="col-md-6"><label class="form-label">Phone Number</label><input type="tel" class="form-control" id="phoneNumber" placeholder="+63 XXX XXX XXXX"></div>
+                    <div class="col-md-6"><label class="form-label">Department/Unit</label><input type="text" class="form-control" id="department" placeholder="e.g., Finance, Admin"></div>
                   </div>
-                  <div class="mt-4">
-                    <button type="submit" class="btn btn-primary">
-                      <i class="fas fa-save me-2"></i>Save Changes
-                    </button>
-                  </div>
+                  <div class="mt-4"><button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Changes</button></div>
                 </form>
               </div>
             </div>
           </div>
 
-          <!-- Account Settings -->
-          <div class="tab-pane fade" id="account" role="tabpanel">
+          <!-- Account Security -->
+          <div class="tab-pane fade" id="account">
             <div class="card">
-              <div class="card-header">
-                <h4><i class="fas fa-shield-alt me-2"></i>Account Security</h4>
-              </div>
+              <div class="card-header"><h4><i class="fas fa-shield-alt me-2 text-success"></i>Account Security</h4></div>
               <div class="card-body">
-                <div class="user-info-item">
-                  <div class="user-info-icon">
-                    <i class="fas fa-envelope"></i>
-                  </div>
-                  <div class="user-info-content">
-                    <div class="user-info-label">Email Address</div>
-                    <div class="user-info-value" id="accountEmail">Loading...</div>
-                  </div>
-                </div>
-                <div class="user-info-item">
-                  <div class="user-info-icon">
-                    <i class="fas fa-user-tag"></i>
-                  </div>
-                  <div class="user-info-content">
-                    <div class="user-info-label">Account Role</div>
-                    <div class="user-info-value">
-                      <span class="badge-role admin" id="accountRole">Administrator</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="user-info-item">
-                  <div class="user-info-icon">
-                    <i class="fas fa-calendar-alt"></i>
-                  </div>
-                  <div class="user-info-content">
-                    <div class="user-info-label">Account Created</div>
-                    <div class="user-info-value" id="accountCreated">Loading...</div>
-                  </div>
-                </div>
-                <div class="user-info-item">
-                  <div class="user-info-icon">
-                    <i class="fas fa-clock"></i>
-                  </div>
-                  <div class="user-info-content">
-                    <div class="user-info-label">Last Login</div>
-                    <div class="user-info-value" id="lastLogin">Loading...</div>
-                  </div>
-                </div>
-
+                <div class="user-info-item"><div class="user-info-icon"><i class="fas fa-envelope"></i></div><div class="user-info-content"><div class="user-info-label">Email Address</div><div class="user-info-value" id="accountEmail">Loading...</div></div></div>
+                <div class="user-info-item"><div class="user-info-icon"><i class="fas fa-user-tag"></i></div><div class="user-info-content"><div class="user-info-label">Account Role</div><div class="user-info-value"><span class="badge-role admin" id="accountRole">Administrator</span></div></div></div>
+                <div class="user-info-item"><div class="user-info-icon"><i class="fas fa-calendar-alt"></i></div><div class="user-info-content"><div class="user-info-label">Account Created</div><div class="user-info-value" id="accountCreated">Loading...</div></div></div>
+                <div class="user-info-item"><div class="user-info-icon"><i class="fas fa-clock"></i></div><div class="user-info-content"><div class="user-info-label">Last Login</div><div class="user-info-value" id="lastLogin">Loading...</div></div></div>
                 <div class="divider"></div>
-
                 <h5 class="mb-3">Change Password</h5>
                 <form id="passwordForm">
-                  <div class="mb-3">
-                    <label class="form-label">Current Password</label>
-                    <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password">
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label">New Password</label>
-                    <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label">Confirm New Password</label>
-                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
-                  </div>
-                  <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-key me-2"></i>Update Password
-                  </button>
+                  <div class="mb-3"><label class="form-label">Current Password</label><input type="password" class="form-control" id="currentPassword" placeholder="Enter current password"></div>
+                  <div class="mb-3"><label class="form-label">New Password</label><input type="password" class="form-control" id="newPassword" placeholder="Enter new password"></div>
+                  <div class="mb-3"><label class="form-label">Confirm New Password</label><input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password"></div>
+                  <button type="submit" class="btn btn-primary"><i class="fas fa-key me-2"></i>Update Password</button>
                 </form>
               </div>
             </div>
           </div>
 
-          <!-- Preferences Settings -->
-          <div class="tab-pane fade" id="preferences" role="tabpanel">
+          <!-- Preferences -->
+          <div class="tab-pane fade" id="preferences">
             <div class="card">
-              <div class="card-header">
-                <h4><i class="fas fa-sliders-h me-2"></i>System Preferences</h4>
-              </div>
+              <div class="card-header"><h4><i class="fas fa-sliders-h me-2 text-success"></i>System Preferences</h4></div>
               <div class="card-body">
                 <h5 class="mb-3">Display Settings</h5>
-                <div class="mb-3">
-                  <label class="switch-label">
-                    <input type="checkbox" id="darkMode" checked> Enable Dark Mode (Coming Soon)
-                  </label>
-                </div>
-                <div class="mb-3">
-                  <label class="switch-label">
-                    <input type="checkbox" id="compactView"> Compact View
-                  </label>
-                </div>
-
+                <div class="mb-3"><label class="switch-label"><input type="checkbox" id="darkMode"> Enable Dark Mode (Coming Soon)</label></div>
+                <div class="mb-3"><label class="switch-label"><input type="checkbox" id="compactView"> Compact View</label></div>
                 <div class="divider"></div>
-
                 <h5 class="mb-3">Notification Settings</h5>
-                <div class="mb-3">
-                  <label class="switch-label">
-                    <input type="checkbox" id="emailNotifications" checked> Email Notifications
-                  </label>
-                </div>
-                <div class="mb-3">
-                  <label class="switch-label">
-                    <input type="checkbox" id="transactionAlerts" checked> Transaction Alerts
-                  </label>
-                </div>
-                <div class="mb-3">
-                  <label class="switch-label">
-                    <input type="checkbox" id="budgetAlerts" checked> Budget Threshold Alerts
-                  </label>
-                </div>
-
+                <div class="mb-3"><label class="switch-label"><input type="checkbox" id="emailNotifications" checked> Email Notifications</label></div>
+                <div class="mb-3"><label class="switch-label"><input type="checkbox" id="transactionAlerts" checked> Transaction Alerts</label></div>
+                <div class="mb-3"><label class="switch-label"><input type="checkbox" id="budgetAlerts" checked> Budget Threshold Alerts</label></div>
                 <div class="divider"></div>
-
-                <h5 class="mb-3">Currency Settings</h5>
+                <h5 class="mb-3">Regional Settings</h5>
                 <div class="row g-3">
-                  <div class="col-md-6">
-                    <label class="form-label">Currency</label>
-                    <select class="form-select" id="currency">
-                      <option value="PHP" selected>Philippine Peso (₱)</option>
-                      <option value="USD">US Dollar ($)</option>
-                      <option value="EUR">Euro (€)</option>
-                    </select>
-                  </div>
-                  <div class="col-md-6">
-                    <label class="form-label">Date Format</label>
-                    <select class="form-select" id="dateFormat">
-                      <option value="MM/DD/YYYY" selected>MM/DD/YYYY</option>
-                      <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                      <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                    </select>
-                  </div>
+                  <div class="col-md-6"><label class="form-label">Currency</label><select class="form-select" id="currency"><option value="PHP" selected>Philippine Peso (₱)</option><option value="USD">US Dollar ($)</option></select></div>
+                  <div class="col-md-6"><label class="form-label">Date Format</label><select class="form-select" id="dateFormat"><option value="MM/DD/YYYY" selected>MM/DD/YYYY</option><option value="DD/MM/YYYY">DD/MM/YYYY</option></select></div>
                 </div>
-
-                <div class="mt-4">
-                  <button type="button" class="btn btn-primary" onclick="savePreferences()">
-                    <i class="fas fa-save me-2"></i>Save Preferences
-                  </button>
-                </div>
+                <div class="mt-4"><button type="button" class="btn btn-primary" onclick="savePreferences()"><i class="fas fa-save me-2"></i>Save Preferences</button></div>
               </div>
             </div>
           </div>
 
- <!-- Data Management -->
-<div class="tab-pane fade" id="data" role="tabpanel">
-  <div class="card">
-    <div class="card-header">
-      <h4><i class="fas fa-database me-2"></i>Data Management</h4>
-    </div>
-    <div class="card-body">
-      <div class="alert alert-warning">
-        <i class="fas fa-exclamation-triangle me-2"></i>
-        <strong>Warning:</strong> These actions cannot be undone. Please proceed with caution.
-      </div>
-
-      <h5 class="mb-3">Export Data</h5>
-      <p class="text-muted">Download all your data in various formats.</p>
-      <div class="mb-4">
-        <button class="btn btn-outline-primary me-2" onclick="exportData('csv')">
-          <i class="fas fa-file-csv me-2"></i>Export as CSV
-        </button>
-        <button class="btn btn-outline-primary me-2" onclick="exportData('json')">
-          <i class="fas fa-file-code me-2"></i>Export as JSON
-        </button>
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- IMPORT SECTION -->
-      <h5 class="mb-3">Import Transactions</h5>
-      <p class="text-muted">Import transactions from CSV or Excel file.</p>
-      
-      <!-- Template Download -->
-      <div class="alert alert-info mb-3">
-        <i class="fas fa-download me-2"></i>
-        <strong>Download Template:</strong>
-        <button class="btn btn-sm btn-outline-primary ms-2" onclick="downloadCSVTemplate()">
-          <i class="fas fa-file-csv me-1"></i>CSV Template
-        </button>
-        <button class="btn btn-sm btn-outline-success ms-2" onclick="downloadSampleData()">
-          <i class="fas fa-file me-1"></i>Sample Data
-        </button>
-      </div>
-      
-      <!-- File Upload Area -->
-      <div class="mb-3">
-        <label class="form-label fw-bold">Select File to Import:</label>
-        <input type="file" id="importFileInput" class="form-control" accept=".csv,.json,.xlsx,.xls" onchange="previewImportFile(event)">
-      </div>
-      
-      <!-- Preview Section -->
-      <div id="importPreviewSection" style="display: none;" class="mb-3">
-        <label class="form-label fw-bold">Data Preview:</label>
-        <div style="max-height: 250px; overflow: auto; border: 1px solid var(--border-color); border-radius: 8px;">
-          <table id="importPreviewTable" class="table table-sm table-striped mb-0">
-            <thead><tr><th colspan="5" class="text-center">Loading preview...</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <small class="text-muted mt-1">Showing first 5 rows. Total: <span id="importRowCount">0</span> records</small>
-      </div>
-      
-      <!-- Import Progress -->
-      <div id="importProgressSection" style="display: none;" class="mb-3">
-        <label class="form-label">Import Progress:</label>
-        <div class="progress">
-          <div id="importProgressBar" class="progress-bar progress-bar-striped progress-bar-animated" 
-               role="progressbar" style="width: 0%">0%</div>
-        </div>
-        <div id="importStatus" class="mt-2"></div>
-      </div>
-      
-      <!-- Import Actions -->
-      <div class="mb-4">
-        <button class="btn btn-success" id="startImportBtn" onclick="startImport()" disabled>
-          <i class="fas fa-upload me-2"></i>Start Import
-        </button>
-        <button class="btn btn-outline-secondary ms-2" onclick="cancelImport()" id="cancelImportBtn" style="display: none;">
-          <i class="fas fa-times me-2"></i>Cancel
-        </button>
-      </div>
-
-      <div class="divider"></div>
-
-      <h5 class="mb-3 text-danger">Danger Zone</h5>
-      <p class="text-muted">Permanently delete your data.</p>
-      <div class="mb-3">
-        <button class="btn btn-outline-danger me-2" onclick="clearAllTransactions()">
-          <i class="fas fa-trash me-2"></i>Clear All Transactions
-        </button>
-        <button class="btn btn-outline-danger" onclick="clearAllFunds()">
-          <i class="fas fa-trash me-2"></i>Clear All Funds
-        </button>
-      </div>
-      <div>
-        <button class="btn btn-danger" onclick="resetAllData()">
-          <i class="fas fa-exclamation-triangle me-2"></i>Reset All Data
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-            </div>
-          </div>
-
-          <!-- User Management (Admin Only) -->
-          <div class="tab-pane fade" id="users" role="tabpanel">
+          <!-- Data Management with Import/Export -->
+          <div class="tab-pane fade" id="data">
             <div class="card">
-              <div class="card-header d-flex justify-content-between align-items-center">
-                <h4><i class="fas fa-users me-2"></i>User Management</h4>
-                <button class="btn btn-sm btn-primary" onclick="showAddUserModal()">
-                  <i class="fas fa-plus me-2"></i>Add User
-                </button>
-              </div>
-              <div class="card-body p-0">
-                <div class="table-responsive">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>User</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Last Active</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody id="usersTableBody">
-                      <tr><td colspan="6" class="text-center py-4 text-muted">Loading users...</td></tr>
-                    </tbody>
-                  </table>
-                </div>
+              <div class="card-header"><h4><i class="fas fa-database me-2 text-success"></i>Data Management</h4></div>
+              <div class="card-body">
+                <div class="alert alert-warning"><i class="fas fa-exclamation-triangle me-2"></i><strong>Warning:</strong> These actions cannot be undone. Please proceed with caution.</div>
+                
+                <h5 class="mb-3">Export Data</h5>
+                <p class="text-muted">Download all transactions data.</p>
+                <div class="mb-4"><button class="btn btn-outline-primary me-2" onclick="exportData('csv')"><i class="fas fa-file-csv me-2"></i>Export CSV</button><button class="btn btn-outline-primary" onclick="exportData('json')"><i class="fas fa-file-code me-2"></i>Export JSON</button></div>
+                <div class="divider"></div>
+                
+                <h5 class="mb-3">Import Transactions</h5>
+                <p class="text-muted">Import transactions from CSV or JSON file.</p>
+                <div class="alert alert-info mb-3"><i class="fas fa-download me-2"></i><strong>Download Template:</strong> <button class="btn btn-sm btn-outline-primary ms-2" onclick="downloadCSVTemplate()"><i class="fas fa-file-csv me-1"></i>CSV Template</button> <button class="btn btn-sm btn-outline-success ms-2" onclick="downloadSampleData()"><i class="fas fa-file me-1"></i>Sample Data</button></div>
+                
+                <div class="mb-3"><label class="form-label fw-bold">Select File to Import:</label><input type="file" id="importFileInput" class="form-control" accept=".csv,.json" onchange="previewImportFile(event)"></div>
+                <div id="importPreviewSection" style="display: none;" class="mb-3"><label class="form-label fw-bold">Data Preview:</label><div style="max-height: 200px; overflow: auto; border: 1px solid var(--border-color); border-radius: 8px;"><table id="importPreviewTable" class="table table-sm table-striped mb-0"><thead><tr><th colspan="5" class="text-center">Loading preview...</th></tr></thead><tbody></tbody></table></div><small class="text-muted">Total: <span id="importRowCount">0</span> records</small></div>
+                <div id="importProgressSection" style="display: none;" class="mb-3"><label class="form-label">Import Progress:</label><div class="progress"><div id="importProgressBar" class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%">0%</div></div><div id="importStatus" class="mt-2"></div></div>
+                <div class="mb-4"><button class="btn btn-success" id="startImportBtn" onclick="startImport()" disabled><i class="fas fa-upload me-2"></i>Start Import</button><button class="btn btn-outline-secondary ms-2" onclick="cancelImport()" id="cancelImportBtn" style="display: none;"><i class="fas fa-times me-2"></i>Cancel</button></div>
+                <div class="divider"></div>
+                
+                <h5 class="mb-3 text-danger">Danger Zone</h5>
+                <p class="text-muted">Permanently delete your data.</p>
+                <div class="mb-3"><button class="btn btn-outline-danger me-2" onclick="clearAllTransactions()"><i class="fas fa-trash me-2"></i>Clear All Transactions</button><button class="btn btn-outline-danger" onclick="clearAllFunds()"><i class="fas fa-trash me-2"></i>Clear All Funds</button></div>
+                <div><button class="btn btn-danger" onclick="resetAllData()"><i class="fas fa-exclamation-triangle me-2"></i>Reset All Data</button></div>
               </div>
             </div>
           </div>
 
+          <!-- User Management -->
+          <div class="tab-pane fade" id="users">
+            <div class="card">
+              <div class="card-header d-flex justify-content-between align-items-center"><h4><i class="fas fa-users me-2 text-success"></i>User Management</h4><button class="btn btn-sm btn-primary" onclick="showAddUserModal()"><i class="fas fa-plus me-2"></i>Add User</button></div>
+              <div class="card-body p-0"><div class="table-responsive"><table class="table table-hover"><thead><tr><th>User</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody id="usersTableBody"><tr><td colspan="5" class="text-center py-4 text-muted">Loading users...</td></tr></tbody></table></div></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<footer>
-  <div class="footer">
-    <div class="float-start"><p>2026 &copy; FundTrack · Financial Management System</p></div>
-    <div class="float-end"><p>Crafted with <span class="text-danger"><i class="fa fa-heart"></i></span> by FundTrack Team</p></div>
-  </div>
-</footer>
+<footer><div class="footer"><div class="float-start"><p>2026 &copy; Department of Agriculture · PRDP RPCO CAR</p></div><div class="float-end"><p><i class="fa fa-heart text-danger"></i> System Settings</p></div></div></footer>
 
 <!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-
-<script src="assets/js/atrana.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore-compat.js"></script>
 <script src="assets/modules/jquery/jquery.min.js"></script>
 <script src="assets/modules/bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script>
-<script src="assets/modules/popper/popper.min.js"></script>
 
 <script>
-  // Toast function
-  function showToast(message, type = 'success') {
-    const existingToast = document.querySelector('.custom-toast');
-    if (existingToast) existingToast.remove();
-    
-    const toast = document.createElement('div');
-    toast.className = `custom-toast ${type}`;
-    toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} me-2"></i>${message}`;
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.transition = 'opacity 0.3s';
-      setTimeout(() => toast.remove(), 300);
-    }, 3000);
-  }
-
-  // Firebase Configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyAtduM2t1jzgVs0TfPD48t3LJB5UJ90BrQ",
-    authDomain: "fundmonitoring-3c89f.firebaseapp.com",
-    projectId: "fundmonitoring-3c89f",
-    storageBucket: "fundmonitoring-3c89f.firebasestorage.app",
-    messagingSenderId: "630221204555",
-    appId: "1:630221204555:web:fa5116e95ad993093bb1ce",
-    measurementId: "G-MQ35CGE6EB"
-  };
-
+  const firebaseConfig = { apiKey: "AIzaSyAtduM2t1jzgVs0TfPD48t3LJB5UJ90BrQ", authDomain: "fundmonitoring-3c89f.firebaseapp.com", projectId: "fundmonitoring-3c89f", storageBucket: "fundmonitoring-3c89f.firebasestorage.app", messagingSenderId: "630221204555", appId: "1:630221204555:web:fa5116e95ad993093bb1ce" };
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
   const auth = firebase.auth();
+  db.enablePersistence().catch(console.warn);
 
-  let currentUser = null;
-  let userRole = 'viewer';
+  let currentUser = null, userRole = 'viewer';
+  let importDataArray = [], isImporting = false;
 
-  // ==================== AUTHENTICATION ====================
-  
+  function showToast(msg, type='success') { const t=document.createElement('div'); t.className=`custom-toast ${type}`; t.innerHTML=`<i class="fas fa-${type==='success'?'check-circle':type==='error'?'exclamation-circle':'info-circle'} me-2"></i>${msg}`; document.body.appendChild(t); setTimeout(()=>{t.style.opacity='0'; setTimeout(()=>t.remove(),300);},3000); }
+
   auth.onAuthStateChanged(async (user) => {
-    if (!user) {
-      window.location.href = 'auth-login.html';
-      return;
-    }
-    
+    if (!user) { window.location.href = 'auth-login.html'; return; }
     currentUser = user;
-    document.getElementById('userDisplayName').textContent = user.displayName || user.email?.split('@')[0] || 'User';
-    
-    try {
-      const userDoc = await db.collection('users').doc(user.uid).get();
-      if (userDoc.exists) {
-        userRole = userDoc.data().role || 'viewer';
-      }
-      
-      const roleDisplay = document.getElementById('userRoleDisplay');
-      const accountRole = document.getElementById('accountRole');
-      
-      if (userRole === 'admin') {
-        roleDisplay.innerHTML = '<i class="fa fa-shield-alt me-2 text-success"></i> Administrator';
-        accountRole.textContent = 'Administrator';
-        accountRole.className = 'badge-role admin';
-      } else {
-        roleDisplay.innerHTML = '<i class="fa fa-eye me-2 text-info"></i> Viewer';
-        accountRole.textContent = 'Viewer';
-        accountRole.className = 'badge-role viewer';
-      }
-      
-      // Load user profile
-      loadUserProfile(user, userDoc.data());
-      
-      // Load users list if admin
-      if (userRole === 'admin') {
-        loadUsersList();
-      }
-      
-    } catch (error) {
-      console.error('Error getting user role:', error);
-    }
+    document.getElementById('userDisplayName').innerText = user.displayName || user.email?.split('@')[0] || 'User';
+    const userDoc = await db.collection('users').doc(user.uid).get();
+    userRole = userDoc.exists ? (userDoc.data().role || 'viewer') : 'viewer';
+    const roleSpan = document.getElementById('userRoleDisplay');
+    roleSpan.innerHTML = userRole === 'admin' ? '<i class="fa fa-shield-alt me-2 text-success"></i> Administrator' : '<i class="fa fa-eye me-2 text-info"></i> Viewer';
+    document.getElementById('accountRole').innerHTML = userRole === 'admin' ? '<span class="badge-role admin">Administrator</span>' : '<span class="badge-role viewer">Viewer</span>';
+    loadUserProfile(user, userDoc.data());
+    if (userRole === 'admin') loadUsersList();
+    loadPreferences();
   });
 
-  function loadUserProfile(user, userData = {}) {
+  function loadUserProfile(user, userData) {
     document.getElementById('displayName').value = user.displayName || userData.displayName || '';
     document.getElementById('profileEmail').value = user.email || '';
     document.getElementById('accountEmail').textContent = user.email || '';
     document.getElementById('phoneNumber').value = userData.phoneNumber || '';
     document.getElementById('department').value = userData.department || '';
-    
-    const createdAt = user.metadata?.creationTime;
-    if (createdAt) {
-      document.getElementById('accountCreated').textContent = new Date(createdAt).toLocaleDateString('en-US', {
-        year: 'numeric', month: 'long', day: 'numeric'
-      });
-    }
-    
-    const lastLogin = user.metadata?.lastSignInTime;
-    if (lastLogin) {
-      document.getElementById('lastLogin').textContent = new Date(lastLogin).toLocaleDateString('en-US', {
-        year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
-      });
-    }
+    if (user.metadata?.creationTime) document.getElementById('accountCreated').textContent = new Date(user.metadata.creationTime).toLocaleDateString();
+    if (user.metadata?.lastSignInTime) document.getElementById('lastLogin').textContent = new Date(user.metadata.lastSignInTime).toLocaleString();
   }
 
-  async function handleSignOut() {
-    try {
-      await auth.signOut();
-      window.location.href = 'auth-login.html';
-    } catch (error) {
-      showToast('Error signing out', 'error');
-    }
-  }
-
-  // ==================== PROFILE FORM ====================
-  
   document.getElementById('profileForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    
     try {
-      const displayName = document.getElementById('displayName').value;
-      const phoneNumber = document.getElementById('phoneNumber').value;
-      const department = document.getElementById('department').value;
-      
-      await currentUser.updateProfile({ displayName });
-      
-      await db.collection('users').doc(currentUser.uid).update({
-        displayName,
-        phoneNumber,
-        department,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      
-      document.getElementById('userDisplayName').textContent = displayName || currentUser.email?.split('@')[0];
-      showToast('Profile updated successfully');
-    } catch (error) {
-      showToast('Error updating profile: ' + error.message, 'error');
-    }
+      await currentUser.updateProfile({ displayName: document.getElementById('displayName').value });
+      await db.collection('users').doc(currentUser.uid).update({ displayName: document.getElementById('displayName').value, phoneNumber: document.getElementById('phoneNumber').value, department: document.getElementById('department').value, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+      document.getElementById('userDisplayName').innerText = document.getElementById('displayName').value || currentUser.email?.split('@')[0];
+      showToast('Profile updated');
+    } catch(err) { showToast(err.message, 'error'); }
   });
 
-  // ==================== PASSWORD FORM ====================
-  
   document.getElementById('passwordForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    
-    const currentPassword = document.getElementById('currentPassword').value;
-    const newPassword = document.getElementById('newPassword').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-    
-    if (!currentPassword || !newPassword || !confirmPassword) {
-      showToast('Please fill in all password fields', 'error');
-      return;
-    }
-    
-    if (newPassword !== confirmPassword) {
-      showToast('New passwords do not match', 'error');
-      return;
-    }
-    
-    if (newPassword.length < 6) {
-      showToast('Password must be at least 6 characters', 'error');
-      return;
-    }
-    
+    const cur = document.getElementById('currentPassword').value, newPw = document.getElementById('newPassword').value, confirm = document.getElementById('confirmPassword').value;
+    if (!cur || !newPw || !confirm) return showToast('Fill all fields', 'error');
+    if (newPw !== confirm) return showToast('Passwords do not match', 'error');
+    if (newPw.length < 6) return showToast('Password must be at least 6 chars', 'error');
     try {
-      const credential = firebase.auth.EmailAuthProvider.credential(currentUser.email, currentPassword);
-      await currentUser.reauthenticateWithCredential(credential);
-      await currentUser.updatePassword(newPassword);
-      
+      const cred = firebase.auth.EmailAuthProvider.credential(currentUser.email, cur);
+      await currentUser.reauthenticateWithCredential(cred);
+      await currentUser.updatePassword(newPw);
       document.getElementById('passwordForm').reset();
-      showToast('Password updated successfully');
-    } catch (error) {
-      if (error.code === 'auth/wrong-password') {
-        showToast('Current password is incorrect', 'error');
-      } else {
-        showToast('Error updating password: ' + error.message, 'error');
-      }
-    }
+      showToast('Password updated');
+    } catch(err) { showToast(err.code === 'auth/wrong-password' ? 'Current password incorrect' : err.message, 'error'); }
   });
 
-  // ==================== AVATAR PREVIEW ====================
-  
-  window.previewAvatar = function(event) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        document.getElementById('avatarPreview').src = e.target.result;
-        showToast('Avatar updated (demo only - not saved to server)', 'info');
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  window.previewAvatar = function(e) { const file=e.target.files[0]; if(file){ const reader=new FileReader(); reader.onload=(ev)=>document.getElementById('avatarPreview').src=ev.target.result; reader.readAsDataURL(file); showToast('Avatar updated (demo)', 'info'); } };
+  function savePreferences() { localStorage.setItem('fundtrack_prefs', JSON.stringify({ darkMode:document.getElementById('darkMode').checked, compactView:document.getElementById('compactView').checked, emailNotifications:document.getElementById('emailNotifications').checked, transactionAlerts:document.getElementById('transactionAlerts').checked, budgetAlerts:document.getElementById('budgetAlerts').checked, currency:document.getElementById('currency').value, dateFormat:document.getElementById('dateFormat').value })); showToast('Preferences saved'); }
+  function loadPreferences() { const saved=localStorage.getItem('fundtrack_prefs'); if(saved){ const p=JSON.parse(saved); document.getElementById('darkMode').checked=p.darkMode||false; document.getElementById('compactView').checked=p.compactView||false; document.getElementById('emailNotifications').checked=p.emailNotifications!==false; document.getElementById('transactionAlerts').checked=p.transactionAlerts!==false; document.getElementById('budgetAlerts').checked=p.budgetAlerts!==false; document.getElementById('currency').value=p.currency||'PHP'; document.getElementById('dateFormat').value=p.dateFormat||'MM/DD/YYYY'; } }
 
-  // ==================== PREFERENCES ====================
-  
-  function savePreferences() {
-    const preferences = {
-      darkMode: document.getElementById('darkMode').checked,
-      compactView: document.getElementById('compactView').checked,
-      emailNotifications: document.getElementById('emailNotifications').checked,
-      transactionAlerts: document.getElementById('transactionAlerts').checked,
-      budgetAlerts: document.getElementById('budgetAlerts').checked,
-      currency: document.getElementById('currency').value,
-      dateFormat: document.getElementById('dateFormat').value
-    };
-    
-    localStorage.setItem('fundtrack_preferences', JSON.stringify(preferences));
-    showToast('Preferences saved successfully');
-  }
-
-  function loadPreferences() {
-    const saved = localStorage.getItem('fundtrack_preferences');
-    if (saved) {
-      const prefs = JSON.parse(saved);
-      document.getElementById('darkMode').checked = prefs.darkMode || false;
-      document.getElementById('compactView').checked = prefs.compactView || false;
-      document.getElementById('emailNotifications').checked = prefs.emailNotifications !== false;
-      document.getElementById('transactionAlerts').checked = prefs.transactionAlerts !== false;
-      document.getElementById('budgetAlerts').checked = prefs.budgetAlerts !== false;
-      document.getElementById('currency').value = prefs.currency || 'PHP';
-      document.getElementById('dateFormat').value = prefs.dateFormat || 'MM/DD/YYYY';
-    }
-  }
-
-  // ==================== DATA MANAGEMENT ====================
-  
-  function exportData(format) {
-    showToast(`Exporting data as ${format.toUpperCase()}... (Demo)`, 'info');
-  }
-
-  function importData(event) {
-    const file = event.target.files[0];
-    if (file) {
-      showToast(`Importing from ${file.name}... (Demo)`, 'info');
-    }
-  }
-
-  async function clearAllTransactions() {
-    if (!confirm('Are you sure you want to delete ALL transactions? This cannot be undone!')) return;
-    
-    try {
-      const snapshot = await db.collection('transactions').get();
-      const batch = db.batch();
-      snapshot.docs.forEach(doc => batch.delete(doc.ref));
-      await batch.commit();
-      showToast(`Deleted ${snapshot.size} transactions`);
-    } catch (error) {
-      showToast('Error clearing transactions: ' + error.message, 'error');
-    }
-  }
-
-  async function clearAllFunds() {
-    if (!confirm('Are you sure you want to delete ALL funds? This cannot be undone!')) return;
-    
-    try {
-      const snapshot = await db.collection('funds').get();
-      const batch = db.batch();
-      snapshot.docs.forEach(doc => batch.delete(doc.ref));
-      await batch.commit();
-      showToast(`Deleted ${snapshot.size} funds`);
-    } catch (error) {
-      showToast('Error clearing funds: ' + error.message, 'error');
-    }
-  }
-
-  async function resetAllData() {
-    if (!confirm('WARNING: This will delete ALL funds and transactions. This cannot be undone! Are you absolutely sure?')) return;
-    if (!confirm('FINAL WARNING: All data will be permanently lost. Continue?')) return;
-    
-    try {
-      await clearAllFunds();
-      await clearAllTransactions();
-      showToast('All data has been reset');
-    } catch (error) {
-      showToast('Error resetting data: ' + error.message, 'error');
-    }
-  }
-
-  // ==================== USER MANAGEMENT ====================
-  
   async function loadUsersList() {
-    try {
-      const snapshot = await db.collection('users').orderBy('createdAt', 'desc').get();
-      const tbody = document.getElementById('usersTableBody');
-      
-      if (snapshot.empty) {
-        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">No users found</td></tr>';
-        return;
-      }
-      
-      tbody.innerHTML = '';
-      snapshot.forEach(doc => {
-        const user = doc.data();
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="me-2"><i class="fas fa-user-circle fa-2x text-muted"></i></div>
-              <div>
-                <strong>${user.displayName || 'N/A'}</strong>
-              </div>
-            </div>
-          </td>
-          <td>${user.email || 'N/A'}</td>
-          <td><span class="badge-role ${user.role || 'viewer'}">${user.role || 'viewer'}</span></td>
-          <td><span class="text-success"><i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i>Active</span></td>
-          <td><small class="text-muted">-</small></td>
-          <td>
-            <button class="btn btn-sm btn-outline-primary me-1" onclick="editUserRole('${doc.id}', '${user.role}')">
-              <i class="fas fa-edit"></i>
-            </button>
-          </td>
-        `;
-        tbody.appendChild(row);
-      });
-    } catch (error) {
-      console.error('Error loading users:', error);
-    }
+    const snap = await db.collection('users').orderBy('createdAt','desc').get();
+    const tbody = document.getElementById('usersTableBody');
+    if(snap.empty){ tbody.innerHTML='<tr><td colspan="5" class="text-center text-muted">No users</td></tr>'; return; }
+    tbody.innerHTML = snap.docs.map(doc => `<tr><td><i class="fas fa-user-circle me-2 text-muted"></i><strong>${doc.data().displayName || 'N/A'}</strong></td><td>${doc.data().email || ''}</td><td><span class="badge-role ${doc.data().role||'viewer'}">${doc.data().role||'viewer'}</span></td><td><span class="text-success"><i class="fas fa-circle me-1" style="font-size:0.5rem;"></i>Active</span></td><td><button class="btn btn-sm btn-outline-primary" onclick="editUserRole('${doc.id}','${doc.data().role||'viewer'}')"><i class="fas fa-edit"></i></button></td></tr>`).join('');
   }
+  window.editUserRole = function(id, role) { const newRole = role==='admin'?'viewer':'admin'; if(confirm(`Change role to ${newRole}?`)) db.collection('users').doc(id).update({role:newRole}).then(()=>{showToast('Role updated'); loadUsersList();}).catch(e=>showToast(e.message,'error')); };
+  window.showAddUserModal = () => showToast('User management via Firebase Console', 'info');
+  window.handleSignOut = () => auth.signOut().then(()=>window.location.href='auth-login.html');
 
-  function showAddUserModal() {
-    showToast('Add user functionality coming soon', 'info');
-  }
+  // Import/Export functions
+  const CSV_HEADERS = ['orsNo','payee','fund','component','month','year','obligation','status','particulars','accountTitle','uacs'];
+  window.downloadCSVTemplate = function() { const csv = CSV_HEADERS.join(',')+'\n'+'02-02101163-2026-02-000001,ARNEL V. GAGUJAS,LP,I-PLAN (1.1),February,2026,536800.00,UNPAID,"OTHER PROFESSIONAL SERVICES",Other Professional Services,50211990-00'; downloadFile(csv,'prdp_transactions_template.csv','text/csv'); showToast('Template downloaded'); };
+  window.downloadSampleData = function() { const rows=['02-02101163-2026-02-000001,ARNEL V. GAGUJAS,LP,I-PLAN (1.1),February,2026,536800.00,UNPAID,"PROFESSIONAL SERVICES",Other Professional Services,50211990-00','02-02101163-2026-02-000003,EDWIN B. CAMHIT,LP,I-BUILD (2.2),February,2026,536800.00,UNPAID,"INFRA SERVICES",Other Professional Services,50211990-00']; const csv=CSV_HEADERS.join(',')+'\n'+rows.join('\n'); downloadFile(csv,'prdp_sample_data.csv','text/csv'); showToast('Sample data downloaded'); };
+  function downloadFile(content,filename,mime){ const blob=new Blob([content],{type:mime}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename; a.click(); URL.revokeObjectURL(a.href); }
+  window.exportData = async function(format) { const snap=await db.collection('transactions').get(); const data=snap.docs.map(d=>({id:d.id,...d.data()})); if(data.length===0) return showToast('No data','warning'); if(format==='csv'){ let csv=CSV_HEADERS.join(',')+'\n'; data.forEach(r=>{ csv+=CSV_HEADERS.map(h=>{ let v=r[h]; if(typeof v==='string'&&v.includes(',')) v=`"${v}"`; return v||''; }).join(',')+'\n'; }); downloadFile(csv,`transactions_${new Date().toISOString().slice(0,10)}.csv`,'text/csv'); } else { downloadFile(JSON.stringify(data,null,2),`transactions_${new Date().toISOString().slice(0,10)}.json`,'application/json'); } showToast(`Exported ${data.length} records`); };
+  window.previewImportFile = function(e) { const file=e.target.files[0]; if(!file) return; const reader=new FileReader(); reader.onload=(ev)=>{ const content=ev.target.result; if(file.name.endsWith('.json')){ try{ importDataArray=JSON.parse(content); if(!Array.isArray(importDataArray)) importDataArray=[importDataArray]; }catch(err){ showToast('Invalid JSON','error'); return; } } else { const lines=content.split('\n').filter(l=>l.trim()); if(lines.length<2) return; const headers=lines[0].split(',').map(h=>h.trim()); importDataArray=[]; for(let i=1;i<lines.length;i++){ const vals=lines[i].split(','); if(vals.length!==headers.length) continue; const row={}; headers.forEach((h,idx)=>{ let val=vals[idx]; if(['obligation','adjustment'].includes(h)) val=parseFloat(val)||0; row[h]=val; }); importDataArray.push(row); } } document.getElementById('importPreviewSection').style.display='block'; document.getElementById('importRowCount').innerText=importDataArray.length; const preview=importDataArray.slice(0,5); let html='<thead><tr><th>ORS No.</th><th>Payee</th><th>Fund</th><th>Obligation</th><th>Status</th></tr></thead><tbody>'; preview.forEach(r=>{ html+=`<tr><td>${r.orsNo||''}</td><td>${r.payee||''}</td><td>${r.fund||''}</td><td>₱${(r.obligation||0).toLocaleString()}</td><td>${r.status||''}</td></tr>`; }); html+='</tbody>'; document.getElementById('importPreviewTable').innerHTML=html; document.getElementById('startImportBtn').disabled=false; }; reader.readAsText(file); };
+  window.startImport = async function() { if(importDataArray.length===0) return showToast('No data','error'); if(!confirm(`Import ${importDataArray.length} records?`)) return; isImporting=true; document.getElementById('startImportBtn').disabled=true; document.getElementById('cancelImportBtn').style.display='inline-block'; document.getElementById('importFileInput').disabled=true; document.getElementById('importProgressSection').style.display='block'; const progressBar=document.getElementById('importProgressBar'); const statusDiv=document.getElementById('importStatus'); let imported=0,failed=0; for(let i=0;i<importDataArray.length;i++){ if(!isImporting) break; try{ const data={...importDataArray[i], createdAt:firebase.firestore.FieldValue.serverTimestamp(), updatedAt:firebase.firestore.FieldValue.serverTimestamp()}; await db.collection('transactions').add(data); imported++; }catch(err){ failed++; } const percent=Math.round(((imported+failed)/importDataArray.length)*100); progressBar.style.width=percent+'%'; progressBar.innerText=percent+'%'; statusDiv.innerHTML=`Imported: ${imported}, Failed: ${failed}`; await new Promise(r=>setTimeout(r,30)); } progressBar.classList.remove('progress-bar-animated'); if(failed===0) progressBar.classList.add('bg-success'); showToast(`Import complete: ${imported} added, ${failed} failed`,'success'); document.getElementById('cancelImportBtn').style.display='none'; document.getElementById('importFileInput').disabled=false; document.getElementById('importFileInput').value=''; importDataArray=[]; isImporting=false; };
+  window.cancelImport = function() { isImporting=false; showToast('Import cancelled','info'); };
+  async function clearAllTransactions() { if(confirm('Delete ALL transactions?')){ const snap=await db.collection('transactions').get(); const batch=db.batch(); snap.docs.forEach(d=>batch.delete(d.ref)); await batch.commit(); showToast(`Deleted ${snap.size} transactions`); } }
+  async function clearAllFunds() { if(confirm('Delete ALL funds?')){ const snap=await db.collection('funds').get(); const batch=db.batch(); snap.docs.forEach(d=>batch.delete(d.ref)); await batch.commit(); showToast(`Deleted ${snap.size} funds`); } }
+  async function resetAllData() { if(confirm('WARNING: This will delete ALL data! Continue?')){ await clearAllFunds(); await clearAllTransactions(); showToast('All data reset'); } }
+  window.clearAllTransactions=clearAllTransactions; window.clearAllFunds=clearAllFunds; window.resetAllData=resetAllData;
 
-  window.editUserRole = function(userId, currentRole) {
-    const newRole = currentRole === 'admin' ? 'viewer' : 'admin';
-    if (confirm(`Change user role to "${newRole}"?`)) {
-      db.collection('users').doc(userId).update({ role: newRole })
-        .then(() => {
-          showToast('User role updated');
-          loadUsersList();
-        })
-        .catch(error => showToast('Error updating role: ' + error.message, 'error'));
-    }
-  };
-
-  // ==================== INITIALIZATION ====================
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    loadPreferences();
-    
-    const loader = document.querySelector('.loader');
-    const loaderOverlay = document.querySelector('.loader-overlay');
-    if (loader) loader.style.display = 'none';
-    if (loaderOverlay) loaderOverlay.style.display = 'none';
-  });
-
-  // Make functions globally available
-  window.handleSignOut = handleSignOut;
-  window.savePreferences = savePreferences;
-  window.exportData = exportData;
-  window.importData = importData;
-  window.clearAllTransactions = clearAllTransactions;
-  window.clearAllFunds = clearAllFunds;
-  window.resetAllData = resetAllData;
-  window.showAddUserModal = showAddUserModal;
-
-  // ==================== IMPORT FUNCTIONALITY ====================
-
-let importDataArray = [];
-let isImporting = false;
-let importAbortController = null;
-
-// CSV Template Structure
-const CSV_HEADERS = [
-  'year', 'moNo', 'month', 'transactionDate', 'asaNo', 'pap', 'rc', 'orsNo', 
-  'fund', 'payee', 'fundSource', 'component', 'componentNo', 'unit', 'category',
-  'accountTitle', 'uacs', 'particulars', 'obligation', 'adjustment', 
-  'adjustedObligation', 'unpaidObligation', 'status',
-  'allocations_lp', 'allocations_gop', 'allocations_iplan11', 'allocations_iplan12',
-  'allocations_ibuild21', 'allocations_ibuild22', 'allocations_ireap31', 
-  'allocations_ireap32', 'allocations_isupport',
-  'expenseComponent', 'expenseCategory', 'expenseUACS', 'expenseAmount'
-];
-
-// Download CSV Template
-window.downloadCSVTemplate = function() {
-  const csvContent = CSV_HEADERS.join(',') + '\n' +
-    '2026,2,February,02/20,ASA No. 2026-000013,310500300010000 PRDP SCALE-UP,' +
-    '05-001-03-00014-24-01 PRDP SU,02-02101163-2026-02-000001,LP,ARNEL V. GAGUJAS,' +
-    'I-PLAN (1.1),I-PLAN (1.1),1.1,,IOC,Other Professional Services,50211990-00,' +
-    '"OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026",536800.00,0,536800.00,0,UNPAID,' +
-    '0,0,536800,0,0,0,0,0,0,I-PLAN (1.1),Other Professional Services,50211990-00,536800.00';
-  
-  downloadFile(csvContent, 'fundtrack_transactions_template.csv', 'text/csv');
-  showToast('CSV template downloaded', 'success');
-};
-
-// Download Sample Data
-window.downloadSampleData = function() {
-  const sampleRows = [
-    '2026,2,February,02/20,ASA No. 2026-000013,310500300010000 PRDP SCALE-UP,05-001-03-00014-24-01 PRDP SU,02-02101163-2026-02-000001,LP,ARNEL V. GAGUJAS,I-PLAN (1.1),I-PLAN (1.1),1.1,,IOC,Other Professional Services,50211990-00,"OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026",536800.00,0,536800.00,0,UNPAID,0,0,536800,0,0,0,0,0,0,I-PLAN (1.1),Other Professional Services,50211990-00,536800.00',
-    '2026,2,February,02/20,ASA No. 2026-000013,310500300010000 PRDP SCALE-UP,05-001-03-00014-24-01 PRDP SU,02-02101163-2026-02-000003,LP,EDWIN B. CAMHIT,I-BUILD (2.2),I-BUILD (2.2),2.2,,IOC,Other Professional Services,50211990-00,"OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026",536800.00,0,536800.00,0,UNPAID,0,0,0,0,0,536800,0,0,0,I-BUILD (2.2),Other Professional Services,50211990-00,536800.00',
-    '2026,2,February,02/20,ASA No. 2026-000013,310500300010000 PRDP SCALE-UP,05-001-03-00014-24-01 PRDP SU,02-02101163-2026-02-000008,LP,JOHNSON D. CEA,I-REAP (3.2),I-REAP (3.2),3.2,,IOC,Other Professional Services,50211990-00,"OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026",593824.00,0,593824.00,0,UNPAID,0,0,0,0,0,0,0,593824,0,I-REAP (3.2),Other Professional Services,50211990-00,593824.00',
-    '2026,2,February,02/20,ASA No. 2026-000013,310500300010000 PRDP SCALE-UP,05-001-03-00014-24-01 PRDP SU,02-02101163-2026-02-000013,LP,RIGI MAY COPATAN,I-SUPPORT,I-SUPPORT,4,,IOC,Other Professional Services,50211990-00,"OTHER PROFESSIONAL SERVICES - FEBRUARY 2026 TO DECEMBER 2026",536800.00,0,536800.00,0,UNPAID,0,0,0,0,0,0,0,0,536800,I-SUPPORT,Other Professional Services,50211990-00,536800.00'
-  ];
-  
-  const csvContent = CSV_HEADERS.join(',') + '\n' + sampleRows.join('\n');
-  downloadFile(csvContent, 'fundtrack_sample_transactions.csv', 'text/csv');
-  showToast('Sample data downloaded', 'success');
-};
-
-function downloadFile(content, filename, mimeType) {
-  const blob = new Blob([content], { type: mimeType });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(link.href);
-}
-
-// Preview Import File
-window.previewImportFile = function(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const content = e.target.result;
-    
-    if (file.name.endsWith('.json')) {
-      try {
-        importDataArray = JSON.parse(content);
-        if (!Array.isArray(importDataArray)) importDataArray = [importDataArray];
-      } catch (err) {
-        showToast('Invalid JSON file', 'error');
-        return;
-      }
-    } else {
-      // Parse CSV
-      importDataArray = parseCSV(content);
-    }
-    
-    displayPreview();
-    document.getElementById('startImportBtn').disabled = importDataArray.length === 0;
-  };
-  
-  if (file.name.endsWith('.json')) {
-    reader.readAsText(file);
-  } else {
-    reader.readAsText(file);
-  }
-};
-
-function parseCSV(csvText) {
-  const lines = csvText.split('\n').filter(line => line.trim());
-  if (lines.length < 2) return [];
-  
-  const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
-  const data = [];
-  
-  for (let i = 1; i < lines.length; i++) {
-    const values = parseCSVLine(lines[i]);
-    if (values.length !== headers.length) continue;
-    
-    const row = {};
-    headers.forEach((header, index) => {
-      let value = values[index];
-      
-      // Convert numeric fields
-      const numericFields = ['obligation', 'adjustment', 'adjustedObligation', 'unpaidObligation', 
-        'allocations_lp', 'allocations_gop', 'allocations_iplan11', 'allocations_iplan12',
-        'allocations_ibuild21', 'allocations_ibuild22', 'allocations_ireap31', 
-        'allocations_ireap32', 'allocations_isupport', 'expenseAmount'];
-      
-      if (numericFields.includes(header)) {
-        row[header] = parseFloat(value) || 0;
-      } else {
-        row[header] = value;
-      }
-    });
-    
-    // Build allocations object
-    row.allocations = {
-      lp: row.allocations_lp || 0,
-      gop: row.allocations_gop || 0,
-      iplan11: row.allocations_iplan11 || 0,
-      iplan12: row.allocations_iplan12 || 0,
-      ibuild21: row.allocations_ibuild21 || 0,
-      ibuild22: row.allocations_ibuild22 || 0,
-      ireap31: row.allocations_ireap31 || 0,
-      ireap32: row.allocations_ireap32 || 0,
-      isupport: row.allocations_isupport || 0
-    };
-    
-    data.push(row);
-  }
-  
-  return data;
-}
-
-function parseCSVLine(line) {
-  const result = [];
-  let current = '';
-  let inQuotes = false;
-  
-  for (let i = 0; i < line.length; i++) {
-    const char = line[i];
-    
-    if (char === '"') {
-      inQuotes = !inQuotes;
-    } else if (char === ',' && !inQuotes) {
-      result.push(current.trim());
-      current = '';
-    } else {
-      current += char;
-    }
-  }
-  result.push(current.trim());
-  
-  return result;
-}
-
-function displayPreview() {
-  const section = document.getElementById('importPreviewSection');
-  const table = document.getElementById('importPreviewTable');
-  const rowCount = document.getElementById('importRowCount');
-  
-  section.style.display = 'block';
-  rowCount.textContent = importDataArray.length;
-  
-  if (importDataArray.length === 0) {
-    table.innerHTML = '<thead><tr><th colspan="5" class="text-center text-danger">No valid data found</th></tr></thead><tbody></tbody>';
-    return;
-  }
-  
-  // Build preview table (show first 5 rows, key columns)
-  const previewColumns = ['orsNo', 'payee', 'fundSource', 'obligation', 'status'];
-  const previewData = importDataArray.slice(0, 5);
-  
-  let html = '<thead><tr>';
-  previewColumns.forEach(col => html += `<th>${col}</th>`);
-  html += '</tr></thead><tbody>';
-  
-  previewData.forEach(row => {
-    html += '<tr>';
-    previewColumns.forEach(col => {
-      let value = row[col] || '';
-      if (col === 'obligation') value = '₱' + parseFloat(value).toLocaleString();
-      html += `<td>${value}</td>`;
-    });
-    html += '</tr>';
-  });
-  
-  if (importDataArray.length > 5) {
-    html += `<tr><td colspan="${previewColumns.length}" class="text-center text-muted">... and ${importDataArray.length - 5} more rows</td></tr>`;
-  }
-  
-  html += '</tbody>';
-  table.innerHTML = html;
-}
-
-// Start Import
-window.startImport = async function() {
-  if (importDataArray.length === 0) {
-    showToast('No data to import', 'error');
-    return;
-  }
-  
-  if (!confirm(`Import ${importDataArray.length} transaction(s) to Firestore?`)) return;
-  
-  isImporting = true;
-  importAbortController = new AbortController();
-  
-  // Show progress UI
-  document.getElementById('importProgressSection').style.display = 'block';
-  document.getElementById('startImportBtn').disabled = true;
-  document.getElementById('cancelImportBtn').style.display = 'inline-block';
-  document.getElementById('importFileInput').disabled = true;
-  
-  const progressBar = document.getElementById('importProgressBar');
-  const statusDiv = document.getElementById('importStatus');
-  
-  let imported = 0;
-  let failed = 0;
-  const total = importDataArray.length;
-  
-  statusDiv.innerHTML = `<span class="text-info"><i class="fas fa-spinner fa-spin me-2"></i>Importing...</span>`;
-  
-  for (let i = 0; i < importDataArray.length; i++) {
-    if (!isImporting) {
-      statusDiv.innerHTML = '<span class="text-warning">Import cancelled</span>';
-      break;
-    }
-    
-    const data = importDataArray[i];
-    
-    try {
-      // Add system fields
-      const enrichedData = {
-        ...data,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-        monthly: {
-          jan: 0, feb: data.obligation || 0, mar: 0, apr: 0, may: 0, jun: 0,
-          jul: 0, aug: 0, sep: 0, oct: 0, nov: 0, dec: 0
-        },
-        engasDate: data.engasDate || '',
-        boxDofDV: data.boxDofDV || '',
-        dvReceived: data.dvReceived || '',
-        lddapNo: data.lddapNo || '',
-        expendituresLPGross: data.expendituresLPGross || 0,
-        totalExpenditures: data.obligation || 0
-      };
-      
-      await db.collection('transactions').add(enrichedData);
-      imported++;
-    } catch (error) {
-      failed++;
-      console.error('Import error:', error);
-    }
-    
-    // Update progress
-    const percent = Math.round(((imported + failed) / total) * 100);
-    progressBar.style.width = percent + '%';
-    progressBar.textContent = percent + '%';
-    statusDiv.innerHTML = `<span class="text-info">Imported: ${imported}, Failed: ${failed}</span>`;
-    
-    // Small delay to avoid rate limiting
-    await new Promise(resolve => setTimeout(resolve, 50));
-  }
-  
-  // Complete
-  isImporting = false;
-  progressBar.classList.remove('progress-bar-animated');
-  
-  if (failed === 0) {
-    progressBar.classList.add('bg-success');
-    statusDiv.innerHTML = `<span class="text-success"><i class="fas fa-check-circle me-2"></i>Import complete! ${imported} records imported successfully.</span>`;
-    showToast(`Successfully imported ${imported} records`, 'success');
-  } else {
-    progressBar.classList.add('bg-warning');
-    statusDiv.innerHTML = `<span class="text-warning"><i class="fas fa-exclamation-triangle me-2"></i>Import completed with errors. Imported: ${imported}, Failed: ${failed}</span>`;
-    showToast(`Imported ${imported} records, ${failed} failed`, 'warning');
-  }
-  
-  // Reset UI
-  document.getElementById('cancelImportBtn').style.display = 'none';
-  document.getElementById('importFileInput').disabled = false;
-  document.getElementById('importFileInput').value = '';
-  importDataArray = [];
-  document.getElementById('importPreviewSection').style.display = 'none';
-};
-
-window.cancelImport = function() {
-  isImporting = false;
-  showToast('Import cancelled', 'info');
-};
-
-// Enhanced Export Function
-window.exportData = async function(format) {
-  try {
-    const snapshot = await db.collection('transactions').get();
-    const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    
-    if (format === 'csv') {
-      if (data.length === 0) {
-        showToast('No data to export', 'warning');
-        return;
-      }
-      
-      const headers = Object.keys(data[0]).filter(k => 
-        !['createdAt', 'updatedAt', 'allocations', 'monthly'].includes(k)
-      );
-      
-      let csv = headers.join(',') + '\n';
-      data.forEach(row => {
-        const values = headers.map(h => {
-          let val = row[h];
-          if (typeof val === 'string' && val.includes(',')) {
-            val = `"${val}"`;
-          }
-          return val !== undefined && val !== null ? val : '';
-        });
-        csv += values.join(',') + '\n';
-      });
-      
-      downloadFile(csv, `transactions_export_${new Date().toISOString().split('T')[0]}.csv`, 'text/csv');
-      showToast(`Exported ${data.length} records as CSV`, 'success');
-      
-    } else if (format === 'json') {
-      const jsonStr = JSON.stringify(data, null, 2);
-      downloadFile(jsonStr, `transactions_export_${new Date().toISOString().split('T')[0]}.json`, 'application/json');
-      showToast(`Exported ${data.length} records as JSON`, 'success');
-    }
-  } catch (error) {
-    showToast('Export failed: ' + error.message, 'error');
-  }
-};
+  async function updateSidebarWidget() { try{ let totalBudget=0; const fundsSnap=await db.collection('funds').get(); fundsSnap.forEach(d=>totalBudget+=d.data().allocated||0); const curYear=new Date().getFullYear().toString(); const txSnap=await db.collection('transactions').where('year','==',curYear).get(); let disburse=0; txSnap.forEach(d=>{ let t=d.data(); if(['Disbursed','PAID','LDDAP Processed'].includes(t.status)) disburse+=t.obligation||0; }); let rate=totalBudget>0?(disburse/totalBudget)*100:0; let span=document.getElementById('utilizationRateWidget'); if(span) span.innerText=rate.toFixed(1)+'%'; let bar=document.getElementById('utilizationProgressBar'); if(bar){ bar.style.width=Math.min(rate,100)+'%'; bar.style.background=rate>=90?'#d32f2f':rate>=75?'#ed6c02':'#c9a03d'; } }catch(e){} }
+  window.refreshSidebarWidget=async function(){ let btn=document.querySelector('.btn-upgrade'); if(btn){ let orig=btn.innerHTML; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i>'; btn.disabled=true; await updateSidebarWidget(); btn.innerHTML=orig; btn.disabled=false; showToast('Dashboard sync complete','success'); } };
+  document.getElementById('sidebarToggleBtn')?.addEventListener('click',()=>document.getElementById('mainSidebar').classList.toggle('open'));
+  updateSidebarWidget();
 </script>
-
-<script src="assets/js/script.js"></script>
-<script src="assets/js/custom.js"></script>
 </body>
 </html>

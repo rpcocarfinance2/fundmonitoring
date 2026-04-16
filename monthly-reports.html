@@ -3,288 +3,330 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Monthly Reports · FundTrack</title>
+  <title>Monthly Reports · DA-PRDP RPCO CAR</title>
 
-  <!-- Bootstrap CSS-->
   <link rel="stylesheet" href="assets/modules/bootstrap-5.1.3/css/bootstrap.css">
-  <!-- Style CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
-  <!-- FontAwesome CSS-->
   <link rel="stylesheet" href="assets/modules/fontawesome6.1.1/css/all.css">
-  <!-- Boxicons CSS-->
   <link rel="stylesheet" href="assets/modules/boxicons/css/boxicons.min.css">
-  <!-- Apexcharts CSS -->
   <link rel="stylesheet" href="assets/modules/apexcharts/apexcharts.css">
   
   <style>
     :root {
-      --primary-color: #2c3e50;
-      --primary-light: #34495e;
-      --accent-color: #3498db;
-      --success-color: #27ae60;
-      --warning-color: #f39c12;
-      --danger-color: #e74c3c;
-      --border-color: #e0e0e0;
-      --bg-light: #f8f9fa;
-      --text-dark: #2c3e50;
-      --text-muted: #7f8c8d;
+      --da-green: #2b5e2b;
+      --da-gold: #c9a03d;
+      --da-light-green: #e8f0e8;
+      --da-dark: #1e3a1e;
+      --accent-blue: #2c7da0;
+      --success-color: #2e7d32;
+      --warning-color: #ed6c02;
+      --danger-color: #d32f2f;
+      --border-color: #e2e8f0;
+      --bg-light: #f8fafc;
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --sidebar-width: 280px;
     }
 
     body {
-      background: #f5f7fa;
+      background: #f1f5f9;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    /* Sidebar Premium Redesign - DA Theme */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: linear-gradient(180deg, #0f2e1f 0%, #1a3a2a 100%);
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
+      border-right: none;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      z-index: 1030;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      overflow-y: auto;
+    }
+
+    .sidebar .logo {
+      padding: 1.5rem 1.2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar .logo h2 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.3px;
+    }
+
+    .sidebar .logo h2 img {
+      width: 42px;
+      height: 42px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      background: #f5b042;
+      border-radius: 12px;
+      padding: 6px;
+    }
+
+    .agency-badge {
+      font-size: 0.7rem;
+      background: rgba(255,215,0,0.2);
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-top: 6px;
+      color: #f5d742;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    .side-menu {
+      list-style: none;
+      padding: 0 1rem;
+    }
+
+    .side-menu li {
+      margin-bottom: 8px;
+    }
+
+    .side-menu li a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+      transition: all 0.2s;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .side-menu li a i, 
+    .side-menu li a .icon {
+      font-size: 1.25rem;
+      width: 28px;
+      text-align: center;
+    }
+
+    .side-menu li a:hover {
+      background: rgba(255,255,255,0.12);
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .side-menu li a.active {
+      background: var(--da-gold);
+      color: #1e3a1e;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+    .side-menu .divider {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 1rem 0.5rem 0.5rem;
+      color: rgba(255,255,255,0.4);
+      font-weight: 600;
+    }
+
+    .sidebar .ads {
+      margin: 2rem 1rem;
+      background: rgba(0,0,0,0.25);
+      border-radius: 20px;
+      backdrop-filter: blur(2px);
+      padding: 1rem;
+      border: 1px solid rgba(255,215,0,0.2);
+    }
+
+    .sidebar .ads .wrapper {
+      text-align: center;
+    }
+
+    .sidebar .ads .help-icon i {
+      color: var(--da-gold);
+      opacity: 0.9;
+    }
+
+    .sidebar .ads p {
+      color: white;
+      margin-top: 8px;
+    }
+
+    .btn-upgrade {
+      background: var(--da-gold);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: #1e3a1e;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-upgrade:hover {
+      background: #e6b342;
+      transform: scale(1.02);
+    }
+
+    .topbar {
+      background: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      padding: 0.8rem 2rem;
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: var(--sidebar-width);
+      z-index: 1020;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .content-start {
+      margin-left: var(--sidebar-width);
+      margin-top: 70px;
+      padding: 1.5rem 2rem;
+      transition: 0.3s;
     }
 
     .content-header h1 {
-      color: var(--primary-color);
-      font-weight: 600;
+      color: var(--da-dark);
+      font-weight: 700;
       font-size: 1.8rem;
-    }
-
-    .content-header p {
-      color: var(--text-muted);
     }
 
     .card {
       border: none;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
       overflow: hidden;
-      margin-bottom: 24px;
+      margin-bottom: 1.5rem;
     }
 
     .card-header {
-      background-color: white;
+      background: white;
       border-bottom: 1px solid var(--border-color);
-      padding: 16px 20px;
+      padding: 1rem 1.5rem;
     }
 
     .card-header h4 {
-      color: var(--primary-color);
-      font-weight: 600;
+      color: var(--da-dark);
+      font-weight: 700;
       margin: 0;
-      font-size: 1.1rem;
+      font-size: 1rem;
       display: flex;
       align-items: center;
-    }
-
-    .card-header h4 i {
-      color: var(--accent-color);
-      margin-right: 10px;
-    }
-
-    .card-body {
-      padding: 20px;
     }
 
     .stat-card {
       border: none;
-      border-radius: 12px;
-      transition: all 0.3s ease;
+      border-radius: 20px;
       background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
     }
-
-    .stat-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    }
-
-    .stat-card .icon-home {
-      width: 50px;
-      height: 50px;
-      border-radius: 12px;
+    .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0, 32, 0, 0.08); }
+    .icon-home {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--da-green), #1e4a1e);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
-      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+      font-size: 1.7rem;
+      color: white;
     }
-
-    .stat-card h4 {
-      color: var(--primary-color);
-      font-weight: 700;
-      font-size: 1.5rem;
-    }
-
-    .stat-card p {
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
     .filter-bar {
       background: white;
-      border-radius: 12px;
-      padding: 16px 20px;
-      margin-bottom: 24px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    }
-
-    .filter-select {
-      min-width: 200px;
       border-radius: 20px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      border: 1px solid #eef2f6;
+    }
+    .filter-select {
+      border-radius: 40px;
       border: 1px solid var(--border-color);
       padding: 8px 16px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
-
-    .btn {
-      border-radius: 8px;
-      padding: 10px 20px;
-      font-weight: 500;
-      transition: all 0.2s ease;
-    }
-
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+      background: linear-gradient(135deg, var(--da-green), var(--da-dark));
+      border: none;
+      border-radius: 40px;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #1e4a1e, #0f2e1f);
+      transform: translateY(-1px);
+    }
+    .btn-outline-primary {
+      border-color: var(--da-green);
+      color: var(--da-green);
+      border-radius: 40px;
+    }
+    .btn-outline-primary:hover {
+      background-color: var(--da-green);
+      color: white;
+    }
+    .table th {
+      background: var(--da-dark) !important;
+      color: white;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-align: center;
       border: none;
     }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
-    }
-
-    .btn-outline-primary {
-      border-color: var(--accent-color);
-      color: var(--accent-color);
-    }
-
-    .btn-outline-primary:hover {
-      background-color: var(--accent-color);
-      color: white;
-    }
-
-    .table th {
-      background-color: var(--primary-color) !important;
-      color: white !important;
-      font-size: 0.8rem;
-      font-weight: 500;
-      text-align: center;
-      padding: 12px 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
     .table td {
-      padding: 10px 8px;
-      vertical-align: middle;
-      border-color: var(--border-color);
-      font-size: 0.85rem;
       text-align: center;
-    }
-
-    .table tfoot td {
-      background-color: var(--bg-light);
-      font-weight: 600;
-    }
-
-    .badge {
-      padding: 6px 10px;
-      border-radius: 20px;
-      font-weight: 500;
-      font-size: 0.75rem;
-    }
-
-    .chart-container {
-      min-height: 300px;
-    }
-
-    .report-tabs .nav-link {
-      color: var(--text-dark);
-      padding: 10px 16px;
-      border-radius: 8px;
-      margin-right: 8px;
-      transition: all 0.2s ease;
-    }
-
-    .report-tabs .nav-link:hover {
-      background-color: var(--bg-light);
-    }
-
-    .report-tabs .nav-link.active {
-      background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
-      color: white;
-    }
-
-    .month-selector {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .month-btn {
-      padding: 8px 16px;
-      border-radius: 20px;
+      vertical-align: middle;
       font-size: 0.85rem;
+    }
+    .badge.bg-success { background-color: var(--da-green) !important; }
+    .badge.bg-warning { background-color: var(--da-gold) !important; color: #1e3a1e; }
+    .month-btn {
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-size: 0.8rem;
       border: 1px solid var(--border-color);
       background: white;
-      color: var(--text-dark);
-      transition: all 0.2s ease;
+      transition: all 0.2s;
     }
-
-    .month-btn:hover {
-      border-color: var(--accent-color);
-      color: var(--accent-color);
-    }
-
     .month-btn.active {
-      background: var(--accent-color);
+      background: var(--da-green);
       color: white;
-      border-color: var(--accent-color);
+      border-color: var(--da-green);
     }
-
-    .custom-toast {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 12px 20px;
-      border-radius: 10px;
-      color: white;
-      font-weight: 500;
-      z-index: 9999;
-      animation: slideIn 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-
-    .custom-toast.success { background: var(--success-color); }
-    .custom-toast.error { background: var(--danger-color); }
-    .custom-toast.info { background: var(--accent-color); }
-
-    @keyframes slideIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-
-    .trend-up { color: var(--success-color); }
+    .trend-up { color: var(--da-green); }
     .trend-down { color: var(--danger-color); }
-
     footer .footer {
+      margin-left: var(--sidebar-width);
       background: transparent;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border-color);
-      padding-top: 20px;
-      margin-top: 20px;
+      padding: 1rem 2rem;
     }
-
-    .export-btn-group {
-      display: flex;
-      gap: 8px;
+    .report-tabs .nav-link {
+      color: var(--text-dark);
+      border-radius: 40px;
+      padding: 8px 20px;
+      margin-right: 8px;
     }
-
-    .filter-info {
-      background: var(--bg-light);
-      border-radius: 20px;
-      padding: 4px 16px;
-      font-size: 0.85rem;
-      color: var(--text-muted);
+    .report-tabs .nav-link.active {
+      background: var(--da-green);
+      color: white;
     }
-
-    .filter-info i {
-      color: var(--accent-color);
-      margin-right: 6px;
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); }
+      .topbar, .content-start, footer .footer { margin-left: 0; }
+      .sidebar.open { transform: translateX(0); }
     }
   </style>
 </head>
@@ -293,87 +335,54 @@
 <!-- Topbar -->
 <div class="topbar transition">
   <div class="bars">
-    <button type="button" class="btn transition" id="sidebar-toggle"><i class="fa fa-bars"></i></button>
+    <button type="button" class="btn btn-light" id="sidebarToggleBtn"><i class="fa fa-bars"></i></button>
   </div>
   <div class="menu">
-    <ul>
+    <ul class="nav">
       <li class="nav-item dropdown">
-        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
-          <img src="assets/images/avatar/avatar-1.png" alt="">
-          <span id="userDisplayName" class="ms-2 text-white">Loading...</span>
+        <a class="nav-link d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+          <img src="assets/images/avatar/avatar-1.png" alt="avatar" width="38" class="rounded-circle">
+          <span id="userDisplayName" class="ms-2 fw-semibold">Loading...</span>
         </a>
-        <ul class="dropdown-menu" id="userDropdownMenu">
-          <div class="dropdown-item-text" id="userRoleDisplay">
-            <i class="fa fa-user me-2"></i> Loading...
-          </div>
-          <hr class="dropdown-divider">
-          <a class="dropdown-item text-danger" href="#" onclick="handleSignOut()"><i class="fa fa-sign-out-alt me-2"></i> Sign Out</a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><span class="dropdown-item-text" id="userRoleDisplay"><i class="fa fa-shield-alt me-2"></i> Role</span></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item text-danger" href="#" onclick="handleSignOut()"><i class="fa fa-sign-out-alt me-2"></i> Sign Out</a></li>
         </ul>
       </li>
     </ul>
   </div>
 </div>
 
-<!-- Sidebar -->
-<div class="sidebar transition overlay-scrollbars animate__animated animate__slideInLeft">
+<!-- Sidebar - DA-PRDP Styled -->
+<div class="sidebar transition" id="mainSidebar">
   <div class="sidebar-content">
-    <div id="sidebar">
-      <div class="logo">
-        <h2 class="mb-0"><img src="assets/images/logo.png"> FundTrack</h2>
-      </div>
-
-      <ul class="side-menu" id="sideMenu">
-        <li>
-          <a href="index.html" >
-            <i class='bx bxs-dashboard icon'></i> Dashboard
-          </a>
-        </li>
-
-        <li class="divider" data-text="MAIN">MAIN</li>
-
-        <li id="fundsMenuItem">
-          <a href="funds.html">
-            <i class='bx bx-wallet icon'></i> Funds
-          </a>
-        </li>
-
-        <li id="transactionsMenuItem">
-          <a href="transactions.html">
-            <i class='bx bx-transfer-alt icon'></i> Transactions
-          </a>
-        </li>
-
-        <li class="divider" data-text="REPORTS">REPORTS</li>
-
-        <li>
-          <a href="monthly-reports.html" class="active">
-            <i class='bx bx-bar-chart-alt-2 icon'></i>
-            Monthly Reports
-          </a>
-        </li>
-
-        <li class="divider" data-text="ADMIN">ADMIN</li>
-
-        <li id="settingsMenuItem">
-          <a href="settings.html">
-            <i class='bx bxs-cog icon'></i>
-            Settings
-          </a>
-        </li>
-      </ul>
-
-      <div class="ads">
-  <div class="wrapper">
-    <div class="help-icon"><i class="fa fa-chart-pie fa-3x"></i></div>
-    <p><strong>Budget Utilization</strong><br><span id="utilizationRateWidget">0%</span></p>
-    <div class="progress mt-2 mb-2" style="height: 6px; background: rgba(255,255,255,0.2);">
-      <div class="progress-bar" id="utilizationProgressBar" style="width: 0%; background: #27ae60;"></div>
+    <div class="logo">
+      <h2>
+        <img src="assets/images/logo.png" alt="DA Logo" onerror="this.src='https://placehold.co/42x42?text=DA'">
+        <span>DA-PRDP<br><small style="font-size: 0.7rem;">RPCO CAR</small></span>
+      </h2>
+      <div class="agency-badge"><i class="fas fa-leaf me-1"></i> Philippine Rural Development Project</div>
     </div>
-    <a href="#" class="btn-upgrade" onclick="refreshSidebarWidget(); return false;">
-      <i class="fas fa-sync-alt me-1"></i> Refresh Data
-    </a>
-  </div>
-</div>
+    <ul class="side-menu">
+      <li><a href="index.html"><i class='bx bxs-dashboard'></i> Dashboard</a></li>
+      <li class="divider" data-text="FINANCE">FINANCE</li>
+      <li id="fundsMenuItem"><a href="funds.html"><i class='bx bx-wallet'></i> Funds & Budgets</a></li>
+      <li id="transactionsMenuItem"><a href="transactions.html"><i class='bx bx-transfer-alt'></i> Transactions</a></li>
+      <li class="divider" data-text="INSIGHTS">INSIGHTS</li>
+      <li><a href="monthly-reports.html" class="active"><i class='bx bx-bar-chart-alt-2'></i> Monthly Reports</a></li>
+      <li class="divider" data-text="ADMIN">ADMIN</li>
+      <li id="settingsMenuItem"><a href="settings.html"><i class='bx bxs-cog'></i> System Settings</a></li>
+    </ul>
+    <div class="ads">
+      <div class="wrapper">
+        <div class="help-icon"><i class="fas fa-chart-line fa-3x"></i></div>
+        <p><strong>Overall Utilization</strong><br><span id="utilizationRateWidget" style="font-size: 1.4rem; font-weight: bold;">0%</span></p>
+        <div class="progress mt-2 mb-2" style="height: 8px; background: rgba(255,255,255,0.2); border-radius: 10px;">
+          <div class="progress-bar" id="utilizationProgressBar" style="width: 0%; background: #c9a03d;"></div>
+        </div>
+        <a href="#" class="btn-upgrade" onclick="refreshSidebarWidget(); return false;"><i class="fas fa-sync-alt me-1"></i> Sync Now</a>
+      </div>
     </div>
   </div>
 </div>
@@ -382,963 +391,254 @@
 <!-- Content Start -->
 <div class="content-start transition">
   <div class="container-fluid dashboard">
-    <div class="content-header">
+    <div class="content-header mb-3">
       <h1>Monthly Reports</h1>
-      <p>View and analyze monthly financial data</p>
+      <p>DA-PRDP RPCO CAR · Financial performance & utilization analytics</p>
     </div>
 
     <!-- Filter Bar -->
     <div class="filter-bar">
-      <div class="row align-items-center">
-        <div class="col-md-3">
-          <div class="d-flex align-items-center">
-            <i class="fas fa-filter me-3" style="color: var(--accent-color);"></i>
-            <select class="form-select filter-select" id="fundFilterSelect" style="width: 100%;">
-              <option value="ALL">All Budgets (All Funds)</option>
-            </select>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="d-flex align-items-center">
-            <i class="fas fa-calendar-alt me-3" style="color: var(--accent-color);"></i>
-            <select class="form-select filter-select" id="yearSelect" style="width: auto;">
-              <option value="2026">2026</option>
-              <option value="2025">2025</option>
-              <option value="2024">2024</option>
-            </select>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="month-selector">
-            <button class="month-btn active" data-month="all">All</button>
-            <button class="month-btn" data-month="Q1">Q1</button>
-            <button class="month-btn" data-month="Q2">Q2</button>
-            <button class="month-btn" data-month="Q3">Q3</button>
-            <button class="month-btn" data-month="Q4">Q4</button>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="d-flex justify-content-end align-items-center">
-            <span class="filter-info me-3" id="filterInfo">
-              <i class="fas fa-info-circle"></i> Showing all funds
-            </span>
-            <div class="export-btn-group">
-              <button class="btn btn-outline-primary btn-sm" onclick="exportReport('pdf')">
-                <i class="fas fa-file-pdf"></i>
-              </button>
-              <button class="btn btn-outline-primary btn-sm" onclick="exportReport('excel')">
-                <i class="fas fa-file-excel"></i>
-              </button>
-              <button class="btn btn-primary btn-sm" onclick="printReport()">
-                <i class="fas fa-print"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+      <div class="row align-items-center g-3">
+        <div class="col-md-3"><i class="fas fa-filter me-2 text-success"></i><select class="form-select filter-select" id="fundFilterSelect"><option value="ALL">All Budgets (All Funds)</option></select></div>
+        <div class="col-md-3"><i class="fas fa-calendar-alt me-2 text-success"></i><select class="form-select filter-select" id="yearSelect"><option value="2024">2024</option><option value="2025">2025</option><option value="2026" selected>2026</option></select></div>
+        <div class="col-md-3"><div class="month-selector d-flex gap-2"><button class="month-btn active" data-month="all">All</button><button class="month-btn" data-month="Q1">Q1</button><button class="month-btn" data-month="Q2">Q2</button><button class="month-btn" data-month="Q3">Q3</button><button class="month-btn" data-month="Q4">Q4</button></div></div>
+        <div class="col-md-3 text-end"><span class="filter-info me-2 text-muted small" id="filterInfo"><i class="fas fa-info-circle"></i> All funds</span><button class="btn btn-sm btn-outline-primary" onclick="printReport()"><i class="fas fa-print"></i> Print</button></div>
       </div>
     </div>
 
     <!-- Summary Cards -->
-    <div class="row">
-      <div class="col-md-3">
-        <div class="card stat-card">
-          <div class="card-body">
-            <div class="d-flex align-items-center">
-              <div class="icon-home me-3">
-                <i class="fas fa-coins text-white"></i>
-              </div>
-              <div>
-                <p class="mb-1">Total Budget</p>
-                <h4 id="reportTotalBudget">₱0.00</h4>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card stat-card">
-          <div class="card-body">
-            <div class="d-flex align-items-center">
-              <div class="icon-home me-3" style="background: linear-gradient(135deg, var(--success-color), #2ecc71);">
-                <i class="fas fa-check-circle text-white"></i>
-              </div>
-              <div>
-                <p class="mb-1">Total Disbursed</p>
-                <h4 id="reportTotalDisbursed">₱0.00</h4>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card stat-card">
-          <div class="card-body">
-            <div class="d-flex align-items-center">
-              <div class="icon-home me-3" style="background: linear-gradient(135deg, var(--warning-color), #e67e22);">
-                <i class="fas fa-clock text-white"></i>
-              </div>
-              <div>
-                <p class="mb-1">Pending</p>
-                <h4 id="reportPending">₱0.00</h4>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card stat-card">
-          <div class="card-body">
-            <div class="d-flex align-items-center">
-              <div class="icon-home me-3" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
-                <i class="fas fa-percent text-white"></i>
-              </div>
-              <div>
-                <p class="mb-1">Utilization Rate</p>
-                <h4 id="reportUtilization">0%</h4>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="row g-4 mb-4">
+      <div class="col-md-3"><div class="card stat-card"><div class="card-body"><div class="d-flex align-items-center"><div class="icon-home me-3"><i class="fas fa-coins"></i></div><div><p class="mb-1 text-muted">Total Budget</p><h4 id="reportTotalBudget">₱0.00</h4></div></div></div></div></div>
+      <div class="col-md-3"><div class="card stat-card"><div class="card-body"><div class="d-flex align-items-center"><div class="icon-home me-3" style="background: linear-gradient(135deg, var(--da-gold), #b8860b);"><i class="fas fa-check-circle"></i></div><div><p class="mb-1 text-muted">Total Disbursed</p><h4 id="reportTotalDisbursed">₱0.00</h4></div></div></div></div></div>
+      <div class="col-md-3"><div class="card stat-card"><div class="card-body"><div class="d-flex align-items-center"><div class="icon-home me-3" style="background: linear-gradient(135deg, var(--warning-color), #e67e22);"><i class="fas fa-clock"></i></div><div><p class="mb-1 text-muted">Pending</p><h4 id="reportPending">₱0.00</h4></div></div></div></div></div>
+      <div class="col-md-3"><div class="card stat-card"><div class="card-body"><div class="d-flex align-items-center"><div class="icon-home me-3" style="background: linear-gradient(135deg, var(--accent-blue), #1f5068);"><i class="fas fa-percent"></i></div><div><p class="mb-1 text-muted">Utilization Rate</p><h4 id="reportUtilization">0%</h4></div></div></div></div></div>
     </div>
 
     <!-- Report Tabs -->
     <ul class="nav report-tabs mb-4" id="reportTabs" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button">
-          <i class="fas fa-chart-line me-2"></i>Overview
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="monthly-tab" data-bs-toggle="tab" data-bs-target="#monthly" type="button">
-          <i class="fas fa-calendar-alt me-2"></i>Monthly Breakdown
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="component-tab" data-bs-toggle="tab" data-bs-target="#component" type="button">
-          <i class="fas fa-layer-group me-2"></i>By Component
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="comparison-tab" data-bs-toggle="tab" data-bs-target="#comparison" type="button">
-          <i class="fas fa-balance-scale me-2"></i>Year Comparison
-        </button>
-      </li>
+      <li class="nav-item"><button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview"><i class="fas fa-chart-line me-2"></i>Overview</button></li>
+      <li class="nav-item"><button class="nav-link" id="monthly-tab" data-bs-toggle="tab" data-bs-target="#monthly"><i class="fas fa-calendar-alt me-2"></i>Monthly Breakdown</button></li>
+      <li class="nav-item"><button class="nav-link" id="component-tab" data-bs-toggle="tab" data-bs-target="#component"><i class="fas fa-layer-group me-2"></i>By Component</button></li>
+      <li class="nav-item"><button class="nav-link" id="comparison-tab" data-bs-toggle="tab" data-bs-target="#comparison"><i class="fas fa-balance-scale me-2"></i>Year Comparison</button></li>
     </ul>
 
-    <!-- Tab Content -->
-    <div class="tab-content" id="reportTabContent">
-      
+    <div class="tab-content">
       <!-- Overview Tab -->
-      <div class="tab-pane fade show active" id="overview" role="tabpanel">
+      <div class="tab-pane fade show active" id="overview">
         <div class="row">
-          <div class="col-md-8">
-            <div class="card">
-              <div class="card-header">
-                <h4><i class="fas fa-chart-bar me-2"></i>Monthly Obligations Trend</h4>
-              </div>
-              <div class="card-body chart-container">
-                <div id="monthlyTrendChart"></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-header">
-                <h4><i class="fas fa-chart-pie me-2"></i>Component Distribution</h4>
-              </div>
-              <div class="card-body chart-container">
-                <div id="componentPieChart"></div>
-              </div>
-            </div>
-          </div>
+          <div class="col-md-8"><div class="card"><div class="card-header"><h4><i class="fas fa-chart-bar me-2 text-success"></i>Monthly Obligations Trend</h4></div><div class="card-body"><div id="monthlyTrendChart" style="height: 280px;"></div></div></div></div>
+          <div class="col-md-4"><div class="card"><div class="card-header"><h4><i class="fas fa-chart-pie me-2 text-success"></i>Component Distribution</h4></div><div class="card-body"><div id="componentPieChart" style="height: 280px;"></div></div></div></div>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4><i class="fas fa-table me-2"></i>Monthly Summary</h4>
-              </div>
-              <div class="card-body p-0">
-                <div class="table-responsive">
-                  <table class="table" id="monthlySummaryTable">
-                    <thead>
-                      <tr>
-                        <th>Month</th>
-                        <th>Budget</th>
-                        <th>Obligations</th>
-                        <th>Disbursed</th>
-                        <th>Pending</th>
-                        <th>Utilization</th>
-                        <th>Trend</th>
-                      </tr>
-                    </thead>
-                    <tbody id="monthlySummaryBody">
-                      <tr><td colspan="7" class="text-center py-4 text-muted">Loading data...</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="row"><div class="col-12"><div class="card"><div class="card-header"><h4><i class="fas fa-table me-2 text-success"></i>Monthly Summary</h4></div><div class="card-body p-0"><div class="table-responsive"><table class="table" id="monthlySummaryTable"><thead><tr><th>Month</th><th>Budget</th><th>Obligations</th><th>Disbursed</th><th>Pending</th><th>Utilization</th><th>Trend</th></tr></thead><tbody id="monthlySummaryBody"><tr><td colspan="7" class="text-center py-4 text-muted">Loading...</td></tr></tbody></table></div></div></div></div></div>
       </div>
 
       <!-- Monthly Breakdown Tab -->
-      <div class="tab-pane fade" id="monthly" role="tabpanel">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4><i class="fas fa-calendar-alt me-2"></i>Detailed Monthly Breakdown</h4>
-              </div>
-              <div class="card-body p-0">
-                <div class="table-responsive">
-                  <table class="table" id="detailedMonthlyTable">
-                    <thead>
-                      <tr>
-                        <th>Month</th>
-                        <th>I-PLAN (1.1)</th>
-                        <th>I-PLAN (1.2)</th>
-                        <th>I-BUILD (2.1)</th>
-                        <th>I-BUILD (2.2)</th>
-                        <th>I-REAP (3.1)</th>
-                        <th>I-REAP (3.2)</th>
-                        <th>I-SUPPORT</th>
-                        <th>GOP</th>
-                        <th>Total</th>
-                      </tr>
-                    </thead>
-                    <tbody id="detailedMonthlyBody">
-                      <tr><td colspan="10" class="text-center py-4 text-muted">Loading data...</td></tr>
-                    </tbody>
-                    <tfoot id="detailedMonthlyFoot"></tfoot>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="tab-pane fade" id="monthly">
+        <div class="card"><div class="card-header"><h4><i class="fas fa-calendar-alt me-2 text-success"></i>Detailed Monthly Breakdown by Component</h4></div><div class="card-body p-0"><div class="table-responsive"><table class="table" id="detailedMonthlyTable"><thead><tr><th>Month</th><th>I-PLAN 1.1</th><th>I-PLAN 1.2</th><th>I-BUILD 2.1</th><th>I-BUILD 2.2</th><th>I-REAP 3.1</th><th>I-REAP 3.2</th><th>I-SUPPORT</th><th>GOP</th><th>Total</th></tr></thead><tbody id="detailedMonthlyBody"><tr><td colspan="10" class="text-center py-4 text-muted">Loading...</td></tr><tfoot id="detailedMonthlyFoot"></tfoot></table></div></div></div>
       </div>
 
       <!-- By Component Tab -->
-      <div class="tab-pane fade" id="component" role="tabpanel">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4><i class="fas fa-layer-group me-2"></i>Component Performance</h4>
-              </div>
-              <div class="card-body p-0">
-                <div class="table-responsive">
-                  <table class="table" id="componentTable">
-                    <thead>
-                      <tr>
-                        <th>Component</th>
-                        <th>Budget Allocation</th>
-                        <th>Obligations</th>
-                        <th>Disbursed</th>
-                        <th>Pending</th>
-                        <th>Utilization</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody id="componentTableBody">
-                      <tr><td colspan="7" class="text-center py-4 text-muted">Loading data...</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4><i class="fas fa-chart-bar me-2"></i>Component Comparison</h4>
-              </div>
-              <div class="card-body chart-container">
-                <div id="componentBarChart"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="tab-pane fade" id="component">
+        <div class="row"><div class="col-12"><div class="card"><div class="card-header"><h4><i class="fas fa-layer-group me-2 text-success"></i>Component Performance</h4></div><div class="card-body p-0"><div class="table-responsive"><table class="table" id="componentTable"><thead><tr><th>Component</th><th>Budget Allocation</th><th>Obligations</th><th>Disbursed</th><th>Pending</th><th>Utilization</th><th>Status</th></tr></thead><tbody id="componentTableBody"><tr><td colspan="7" class="text-center py-4 text-muted">Loading...</td></tr></tbody></table></div></div></div></div></div>
+        <div class="row mt-4"><div class="col-12"><div class="card"><div class="card-header"><h4><i class="fas fa-chart-bar me-2 text-success"></i>Component Comparison</h4></div><div class="card-body"><div id="componentBarChart" style="height: 300px;"></div></div></div></div></div>
       </div>
 
       <!-- Year Comparison Tab -->
-      <div class="tab-pane fade" id="comparison" role="tabpanel">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4><i class="fas fa-balance-scale me-2"></i>Year-over-Year Comparison</h4>
-              </div>
-              <div class="card-body chart-container">
-                <div id="yearComparisonChart"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4><i class="fas fa-table me-2"></i>Yearly Comparison Table</h4>
-              </div>
-              <div class="card-body p-0">
-                <div class="table-responsive">
-                  <table class="table" id="comparisonTable">
-                    <thead>
-                      <tr>
-                        <th>Metric</th>
-                        <th>2024</th>
-                        <th>2025</th>
-                        <th>2026</th>
-                        <th>Change (YoY)</th>
-                      </tr>
-                    </thead>
-                    <tbody id="comparisonTableBody">
-                      <tr><td colspan="5" class="text-center py-4 text-muted">Loading data...</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="tab-pane fade" id="comparison">
+        <div class="row"><div class="col-12"><div class="card"><div class="card-header"><h4><i class="fas fa-balance-scale me-2 text-success"></i>Year-over-Year Comparison</h4></div><div class="card-body"><div id="yearComparisonChart" style="height: 300px;"></div></div></div></div></div>
+        <div class="row mt-4"><div class="col-12"><div class="card"><div class="card-header"><h4><i class="fas fa-table me-2 text-success"></i>Yearly Comparison Table</h4></div><div class="card-body p-0"><div class="table-responsive"><table class="table" id="comparisonTable"><thead><tr><th>Metric</th><th>2024</th><th>2025</th><th>2026</th><th>Change (YoY)</th></tr></thead><tbody id="comparisonTableBody"><tr><td colspan="5" class="text-center py-4 text-muted">Loading...</td></tr></tbody></table></div></div></div></div></div>
       </div>
-
     </div>
   </div>
 </div>
 
-<footer>
-  <div class="footer">
-    <div class="float-start"><p>2026 &copy; FundTrack · Financial Management System</p></div>
-    <div class="float-end"><p>Crafted with <span class="text-danger"><i class="fa fa-heart"></i></span> by FundTrack Team</p></div>
-  </div>
-</footer>
+<footer><div class="footer"><div class="float-start"><p>2026 &copy; Department of Agriculture · PRDP RPCO CAR</p></div><div class="float-end"><p><i class="fa fa-heart text-danger"></i> Financial Reports</p></div></div></footer>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-
-<script src="assets/js/atrana.js"></script>
+<!-- Firebase & Libs -->
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore-compat.js"></script>
 <script src="assets/modules/jquery/jquery.min.js"></script>
 <script src="assets/modules/bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script>
 <script src="assets/modules/apexcharts/apexcharts.js"></script>
 
 <script>
-  // Toast function
-  function showToast(message, type = 'success') {
-    const existingToast = document.querySelector('.custom-toast');
-    if (existingToast) existingToast.remove();
-    
-    const toast = document.createElement('div');
-    toast.className = `custom-toast ${type}`;
-    toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} me-2"></i>${message}`;
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.transition = 'opacity 0.3s';
-      setTimeout(() => toast.remove(), 300);
-    }, 3000);
-  }
-
-  // Firebase Configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyAtduM2t1jzgVs0TfPD48t3LJB5UJ90BrQ",
-    authDomain: "fundmonitoring-3c89f.firebaseapp.com",
-    projectId: "fundmonitoring-3c89f",
-    storageBucket: "fundmonitoring-3c89f.firebasestorage.app",
-    messagingSenderId: "630221204555",
-    appId: "1:630221204555:web:fa5116e95ad993093bb1ce",
-    measurementId: "G-MQ35CGE6EB"
-  };
-
+  const firebaseConfig = { apiKey: "AIzaSyAtduM2t1jzgVs0TfPD48t3LJB5UJ90BrQ", authDomain: "fundmonitoring-3c89f.firebaseapp.com", projectId: "fundmonitoring-3c89f", storageBucket: "fundmonitoring-3c89f.firebasestorage.app", messagingSenderId: "630221204555", appId: "1:630221204555:web:fa5116e95ad993093bb1ce" };
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
   const auth = firebase.auth();
+  db.enablePersistence().catch(console.warn);
 
-  let currentUser = null;
-  let userRole = 'viewer';
-  let allTransactions = [];
-  let allFunds = [];
-  let currentFundFilter = 'ALL';
-  let currentMonthFilter = 'all';
-  let trendChart = null;
-  let pieChart = null;
-  let barChart = null;
-  let comparisonChart = null;
+  let allTransactions = [], allFunds = [], currentFundFilter = 'ALL', currentMonthFilter = 'all';
+  let trendChart, pieChart, barChart, comparisonChart;
 
-  // ==================== AUTHENTICATION ====================
-  
   auth.onAuthStateChanged(async (user) => {
-    if (!user) {
-      window.location.href = 'auth-login.html';
-      return;
-    }
-    
-    currentUser = user;
-    document.getElementById('userDisplayName').textContent = user.displayName || user.email?.split('@')[0] || 'User';
-    
-    try {
-      const userDoc = await db.collection('users').doc(user.uid).get();
-      if (userDoc.exists) {
-        userRole = userDoc.data().role || 'viewer';
-      }
-      
-      document.getElementById('userRoleDisplay').innerHTML = userRole === 'admin' 
-        ? '<i class="fa fa-shield-alt me-2 text-success"></i> Administrator'
-        : '<i class="fa fa-eye me-2 text-info"></i> Viewer';
-      
-      await loadFundsDropdown();
-      loadReportData();
-      
-    } catch (error) {
-      console.error('Error getting user role:', error);
-    }
+    if (!user) { window.location.href = 'auth-login.html'; return; }
+    document.getElementById('userDisplayName').innerText = user.displayName || user.email?.split('@')[0] || 'User';
+    const userDoc = await db.collection('users').doc(user.uid).get();
+    const role = userDoc.exists ? (userDoc.data().role || 'viewer') : 'viewer';
+    document.getElementById('userRoleDisplay').innerHTML = role === 'admin' ? '<i class="fa fa-shield-alt me-2 text-success"></i> Administrator' : '<i class="fa fa-eye me-2 text-info"></i> Viewer';
+    await loadFundsDropdown();
+    loadReportData();
   });
 
-  async function handleSignOut() {
-    try {
-      await auth.signOut();
-      window.location.href = 'auth-login.html';
-    } catch (error) {
-      showToast('Error signing out', 'error');
-    }
-  }
-
-  // ==================== FUND FILTER ====================
-  
   async function loadFundsDropdown() {
-    try {
-      const snapshot = await db.collection('funds').orderBy('name').get();
-      allFunds = [];
-      snapshot.forEach(doc => allFunds.push({ id: doc.id, ...doc.data() }));
-      
-      const select = document.getElementById('fundFilterSelect');
-      select.innerHTML = '<option value="ALL">All Budgets (All Funds)</option>';
-      
-      const fundsByYear = {};
-      allFunds.forEach(fund => {
-        const year = fund.year || 'Unknown';
-        if (!fundsByYear[year]) fundsByYear[year] = [];
-        fundsByYear[year].push(fund);
-      });
-      
-      const years = Object.keys(fundsByYear).sort((a, b) => b - a);
-      
-      years.forEach(year => {
-        const optgroup = document.createElement('optgroup');
-        optgroup.label = `Year ${year}`;
-        
-        fundsByYear[year].forEach(fund => {
-          const option = document.createElement('option');
-          option.value = fund.id;
-          option.textContent = `${fund.name} (₱${formatNumber(fund.allocated)})`;
-          optgroup.appendChild(option);
-        });
-        
-        select.appendChild(optgroup);
-      });
-    } catch (error) {
-      console.error('Error loading funds:', error);
-    }
+    const snap = await db.collection('funds').orderBy('name').get();
+    allFunds = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const select = document.getElementById('fundFilterSelect');
+    select.innerHTML = '<option value="ALL">All Budgets (All Funds)</option>';
+    const byYear = {};
+    allFunds.forEach(f => { let y = f.year || 'Unknown'; if (!byYear[y]) byYear[y] = []; byYear[y].push(f); });
+    Object.keys(byYear).sort((a,b)=>b-a).forEach(y => { let group = document.createElement('optgroup'); group.label = `Year ${y}`; byYear[y].forEach(f => { let opt = document.createElement('option'); opt.value = f.id; opt.textContent = `${f.name} (₱${(f.allocated||0).toLocaleString()})`; group.appendChild(opt); }); select.appendChild(group); });
   }
 
   function getFilteredData() {
-    const selectedYear = document.getElementById('yearSelect').value;
-    
-    // Filter by fund
-    let filteredTransactions = allTransactions;
-    let filteredFunds = allFunds;
-    
-    if (currentFundFilter !== 'ALL') {
-      const selectedFund = allFunds.find(f => f.id === currentFundFilter);
-      if (selectedFund) {
-        filteredTransactions = allTransactions.filter(t => t.fund === selectedFund.name);
-        filteredFunds = allFunds.filter(f => f.id === currentFundFilter);
-        document.getElementById('filterInfo').innerHTML = `<i class="fas fa-filter"></i> Filtered by: ${selectedFund.name}`;
-      }
-    } else {
-      document.getElementById('filterInfo').innerHTML = `<i class="fas fa-info-circle"></i> Showing all funds`;
-    }
-    
-    // Filter by year
-    let yearTransactions = filteredTransactions.filter(t => t.year == selectedYear);
-    
-    // Filter by month/quarter
-    if (currentMonthFilter !== 'all') {
-      const quarterMonths = {
-        'Q1': ['January', 'February', 'March'],
-        'Q2': ['April', 'May', 'June'],
-        'Q3': ['July', 'August', 'September'],
-        'Q4': ['October', 'November', 'December']
-      };
-      
-      if (quarterMonths[currentMonthFilter]) {
-        yearTransactions = yearTransactions.filter(t => 
-          quarterMonths[currentMonthFilter].includes(t.month)
-        );
-      }
-    }
-    
-    return { filteredTransactions: yearTransactions, filteredFunds };
+    const year = document.getElementById('yearSelect').value;
+    let filteredTx = allTransactions;
+    if (currentFundFilter !== 'ALL') { const selected = allFunds.find(f => f.id === currentFundFilter); if (selected) filteredTx = filteredTx.filter(t => t.fund === selected.name); }
+    let yearTx = filteredTx.filter(t => t.year == year);
+    if (currentMonthFilter !== 'all') { const qMap = { Q1: ['January','February','March'], Q2: ['April','May','June'], Q3: ['July','August','September'], Q4: ['October','November','December'] }; if (qMap[currentMonthFilter]) yearTx = yearTx.filter(t => qMap[currentMonthFilter].includes(t.month)); }
+    let filteredFunds = (currentFundFilter !== 'ALL') ? allFunds.filter(f => f.id === currentFundFilter) : allFunds;
+    document.getElementById('filterInfo').innerHTML = currentFundFilter !== 'ALL' ? `<i class="fas fa-filter"></i> ${filteredFunds[0]?.name || 'Filtered'}` : '<i class="fas fa-info-circle"></i> All funds';
+    return { filteredTransactions: yearTx, filteredFunds };
   }
 
-  // ==================== REPORT DATA ====================
-  
   async function loadReportData() {
-    try {
-      // Load transactions
-      const txSnapshot = await db.collection('transactions').orderBy('createdAt', 'desc').get();
-      allTransactions = [];
-      txSnapshot.forEach(doc => allTransactions.push({ id: doc.id, ...doc.data() }));
-      
-      // Refresh UI
-      refreshAllReports();
-      
-    } catch (error) {
-      console.error('Error loading report data:', error);
-      showToast('Error loading report data', 'error');
-    }
+    const txSnap = await db.collection('transactions').orderBy('createdAt', 'desc').get();
+    allTransactions = txSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    refreshAllReports();
   }
 
-  function refreshAllReports() {
-    updateSummaryCards();
-    renderMonthlyTrendChart();
-    renderComponentPieChart();
-    renderMonthlySummaryTable();
-    renderDetailedMonthlyTable();
-    renderComponentTable();
-    renderComponentBarChart();
-    renderComparisonChart();
-    renderComparisonTable();
-  }
+  function formatCurrency(amt) { return '₱' + parseFloat(amt || 0).toLocaleString('en-PH', { minimumFractionDigits: 2 }); }
+  function formatNumber(amt) { return parseFloat(amt || 0).toLocaleString('en-PH', { minimumFractionDigits: 2 }); }
 
-  function formatCurrency(amount) {
-    return '₱' + parseFloat(amount || 0).toLocaleString('en-US', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    });
-  }
+  function refreshAllReports() { updateSummaryCards(); renderMonthlyTrendChart(); renderComponentPieChart(); renderMonthlySummaryTable(); renderDetailedMonthlyTable(); renderComponentTable(); renderComponentBarChart(); renderComparisonChart(); renderComparisonTable(); updateSidebarWidget(); }
 
-  function formatNumber(amount) {
-    return parseFloat(amount || 0).toLocaleString('en-US', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    });
-  }
-
-  // Update summary cards
   function updateSummaryCards() {
     const { filteredTransactions, filteredFunds } = getFilteredData();
-    
-    const totalBudget = filteredFunds.reduce((sum, f) => sum + (f.allocated || 0), 0);
-    const totalDisbursed = filteredTransactions
-      .filter(t => t.status === 'Disbursed' || t.status === 'PAID')
-      .reduce((sum, t) => sum + (t.obligation || 0), 0);
-    const pending = filteredTransactions
-      .filter(t => t.status === 'UNPAID' || t.status === 'Pending' || t.status === 'Obligated')
-      .reduce((sum, t) => sum + (t.obligation || 0), 0);
-    const utilization = totalBudget > 0 ? ((totalDisbursed / totalBudget) * 100).toFixed(1) : '0.0';
-    
-    document.getElementById('reportTotalBudget').textContent = formatCurrency(totalBudget);
-    document.getElementById('reportTotalDisbursed').textContent = formatCurrency(totalDisbursed);
-    document.getElementById('reportPending').textContent = formatCurrency(pending);
-    document.getElementById('reportUtilization').textContent = utilization + '%';
+    const totalBudget = filteredFunds.reduce((s,f) => s + (f.allocated||0), 0);
+    const totalDisbursed = filteredTransactions.filter(t => t.status === 'Disbursed' || t.status === 'PAID').reduce((s,t) => s + (t.obligation||0), 0);
+    const pending = filteredTransactions.filter(t => t.status === 'UNPAID' || t.status === 'Pending' || t.status === 'Obligated').reduce((s,t) => s + (t.obligation||0), 0);
+    const util = totalBudget > 0 ? ((totalDisbursed / totalBudget) * 100).toFixed(1) : '0.0';
+    document.getElementById('reportTotalBudget').innerText = formatCurrency(totalBudget);
+    document.getElementById('reportTotalDisbursed').innerText = formatCurrency(totalDisbursed);
+    document.getElementById('reportPending').innerText = formatCurrency(pending);
+    document.getElementById('reportUtilization').innerText = util + '%';
   }
 
-  // Monthly Trend Chart
   function renderMonthlyTrendChart() {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const { filteredTransactions } = getFilteredData();
-    
-    const monthlyData = months.map((_, i) => {
-      const monthName = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][i];
-      return filteredTransactions
-        .filter(t => t.month === monthName)
-        .reduce((sum, t) => sum + (t.obligation || 0), 0);
-    });
-    
-    const options = {
-      series: [{ name: 'Obligations', data: monthlyData }],
-      chart: { type: 'area', height: 280, toolbar: { show: false } },
-      colors: ['#3498db'],
-      fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.7, opacityTo: 0.2 } },
-      dataLabels: { enabled: false },
-      stroke: { curve: 'smooth', width: 3 },
-      xaxis: { categories: months },
-      yaxis: { labels: { formatter: (val) => formatCurrency(val) } },
-      tooltip: { y: { formatter: (val) => formatCurrency(val) } }
-    };
-    
+    const monthlyData = months.map((_,i) => { const m = ['January','February','March','April','May','June','July','August','September','October','November','December'][i]; return filteredTransactions.filter(t => t.month === m).reduce((s,t) => s + (t.obligation||0), 0); });
     if (trendChart) trendChart.destroy();
-    trendChart = new ApexCharts(document.querySelector("#monthlyTrendChart"), options);
-    trendChart.render();
+    trendChart = new ApexCharts(document.querySelector("#monthlyTrendChart"), { series: [{ name: 'Obligations', data: monthlyData }], chart: { type: 'area', height: 260, toolbar: { show: false } }, colors: ['#2b5e2b'], fill: { type: 'gradient' }, xaxis: { categories: months }, yaxis: { labels: { formatter: v => formatCurrency(v) } }, tooltip: { y: { formatter: v => formatCurrency(v) } } }).render();
   }
 
-  // Component Pie Chart
   function renderComponentPieChart() {
-    const components = ['I-PLAN (1.1)', 'I-PLAN (1.2)', 'I-BUILD (2.1)', 'I-BUILD (2.2)', 'I-REAP (3.1)', 'I-REAP (3.2)', 'I-SUPPORT', 'GOP'];
-    const colors = ['#3498db', '#2980b9', '#27ae60', '#2ecc71', '#f39c12', '#e67e22', '#9b59b6', '#95a5a6'];
-    
+    const comps = ['I-PLAN (1.1)','I-PLAN (1.2)','I-BUILD (2.1)','I-BUILD (2.2)','I-REAP (3.1)','I-REAP (3.2)','I-SUPPORT','GOP'];
     const { filteredTransactions } = getFilteredData();
-    
-    const series = components.map(c => 
-      filteredTransactions
-        .filter(t => t.component === c || t.fundSource === c)
-        .reduce((sum, t) => sum + (t.obligation || 0), 0)
-    ).filter(v => v > 0);
-    
-    const labels = components.filter((c, i) => 
-      filteredTransactions.filter(t => t.component === c || t.fundSource === c)
-        .reduce((sum, t) => sum + (t.obligation || 0), 0) > 0
-    );
-    
-    const options = {
-      series: series,
-      chart: { type: 'donut', height: 250 },
-      labels: labels,
-      colors: colors.slice(0, labels.length),
-      plotOptions: { pie: { donut: { size: '60%' } } },
-      dataLabels: { enabled: true, formatter: (val) => val.toFixed(1) + '%' },
-      legend: { position: 'bottom' },
-      tooltip: { y: { formatter: (val) => formatCurrency(val) } }
-    };
-    
+    const series = comps.map(c => filteredTransactions.filter(t => t.component === c).reduce((s,t) => s + (t.obligation||0), 0)).filter(v => v > 0);
+    const labels = comps.filter((_,i) => filteredTransactions.filter(t => t.component === comps[i]).reduce((s,t) => s + (t.obligation||0), 0) > 0);
     if (pieChart) pieChart.destroy();
-    if (series.length > 0) {
-      pieChart = new ApexCharts(document.querySelector("#componentPieChart"), options);
-      pieChart.render();
-    } else {
-      document.querySelector("#componentPieChart").innerHTML = '<p class="text-center text-muted py-5">No data available</p>';
-    }
+    if (series.length) pieChart = new ApexCharts(document.querySelector("#componentPieChart"), { series: series, chart: { type: 'donut', height: 260 }, labels: labels, colors: ['#2b5e2b','#c9a03d','#2c7da0','#e67e22','#9b59b6','#3498db','#1abc9c','#95a5a6'], legend: { position: 'bottom' }, tooltip: { y: { formatter: v => formatCurrency(v) } } }).render();
+    else document.querySelector("#componentPieChart").innerHTML = '<p class="text-center text-muted py-5">No data</p>';
   }
 
-  // Monthly Summary Table
   function renderMonthlySummaryTable() {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     const { filteredTransactions, filteredFunds } = getFilteredData();
-    const totalBudget = filteredFunds.reduce((sum, f) => sum + (f.allocated || 0), 0);
+    const totalBudget = filteredFunds.reduce((s,f) => s + (f.allocated||0), 0);
     const monthlyBudget = totalBudget / 12;
-    
-    let html = '';
-    let prevObligation = 0;
-    
-    months.forEach((month, i) => {
-      const obligations = filteredTransactions
-        .filter(t => t.month === month)
-        .reduce((sum, t) => sum + (t.obligation || 0), 0);
-      
-      const disbursed = filteredTransactions
-        .filter(t => t.month === month && (t.status === 'Disbursed' || t.status === 'PAID'))
-        .reduce((sum, t) => sum + (t.obligation || 0), 0);
-      
-      const pending = filteredTransactions
-        .filter(t => t.month === month && (t.status === 'UNPAID' || t.status === 'Pending'))
-        .reduce((sum, t) => sum + (t.obligation || 0), 0);
-      
-      const utilization = monthlyBudget > 0 ? ((disbursed / monthlyBudget) * 100).toFixed(1) : '0.0';
-      
-      let trendIcon = '';
-      if (i > 0) {
-        if (obligations > prevObligation) trendIcon = '<i class="fas fa-arrow-up trend-up"></i>';
-        else if (obligations < prevObligation) trendIcon = '<i class="fas fa-arrow-down trend-down"></i>';
-        else trendIcon = '<i class="fas fa-minus text-muted"></i>';
-      }
-      prevObligation = obligations;
-      
-      html += `<tr>
-        <td><strong>${month.substring(0, 3)}</strong></td>
-        <td>${formatCurrency(monthlyBudget)}</td>
-        <td>${formatCurrency(obligations)}</td>
-        <td>${formatCurrency(disbursed)}</td>
-        <td>${formatCurrency(pending)}</td>
-        <td>${utilization}%</td>
-        <td>${trendIcon}</td>
-      </tr>`;
-    });
-    
-    document.getElementById('monthlySummaryBody').innerHTML = html || '<tr><td colspan="7" class="text-center py-4 text-muted">No data available</td></tr>';
-  }
-
-  // Detailed Monthly Table
-  function renderDetailedMonthlyTable() {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const components = ['I-PLAN (1.1)', 'I-PLAN (1.2)', 'I-BUILD (2.1)', 'I-BUILD (2.2)', 'I-REAP (3.1)', 'I-REAP (3.2)', 'I-SUPPORT', 'GOP'];
-    const { filteredTransactions } = getFilteredData();
-    
-    let html = '';
-    const componentTotals = components.map(() => 0);
-    let grandTotal = 0;
-    
-    months.forEach((month, i) => {
-      let rowTotal = 0;
-      html += `<tr><td><strong>${month.substring(0, 3)}</strong></td>`;
-      
-      components.forEach((comp, j) => {
-        const amount = filteredTransactions
-          .filter(t => t.month === month && (t.component === comp || t.fundSource === comp))
-          .reduce((sum, t) => sum + (t.obligation || 0), 0);
-        componentTotals[j] += amount;
-        rowTotal += amount;
-        html += `<td>${amount > 0 ? formatNumber(amount) : '-'}</td>`;
-      });
-      
-      grandTotal += rowTotal;
-      html += `<td><strong>${formatNumber(rowTotal)}</strong></td></tr>`;
-    });
-    
-    let footHtml = `<tr><td><strong>TOTAL</strong></td>`;
-    components.forEach((_, j) => {
-      footHtml += `<td><strong>${formatNumber(componentTotals[j])}</strong></td>`;
-    });
-    footHtml += `<td><strong>${formatNumber(grandTotal)}</strong></td></tr>`;
-    
-    document.getElementById('detailedMonthlyBody').innerHTML = html || '<tr><td colspan="10" class="text-center py-4 text-muted">No data available</td></tr>';
-    document.getElementById('detailedMonthlyFoot').innerHTML = footHtml;
-  }
-
-  // Component Table
-  function renderComponentTable() {
-    const components = ['I-PLAN (1.1)', 'I-PLAN (1.2)', 'I-BUILD (2.1)', 'I-BUILD (2.2)', 'I-REAP (3.1)', 'I-REAP (3.2)', 'I-SUPPORT', 'GOP'];
-    const { filteredTransactions, filteredFunds } = getFilteredData();
-    const totalBudget = filteredFunds.reduce((sum, f) => sum + (f.allocated || 0), 0);
-    
-    let html = '';
-    
-    components.forEach(comp => {
-      const budget = totalBudget / components.length;
-      const obligations = filteredTransactions
-        .filter(t => t.component === comp || t.fundSource === comp)
-        .reduce((sum, t) => sum + (t.obligation || 0), 0);
-      const disbursed = filteredTransactions
-        .filter(t => (t.component === comp || t.fundSource === comp) && (t.status === 'Disbursed' || t.status === 'PAID'))
-        .reduce((sum, t) => sum + (t.obligation || 0), 0);
+    let html = '', prev = 0;
+    months.forEach((m,i) => {
+      const obligations = filteredTransactions.filter(t => t.month === m).reduce((s,t) => s + (t.obligation||0), 0);
+      const disbursed = filteredTransactions.filter(t => t.month === m && (t.status === 'Disbursed' || t.status === 'PAID')).reduce((s,t) => s + (t.obligation||0), 0);
       const pending = obligations - disbursed;
-      const utilization = budget > 0 ? ((disbursed / budget) * 100).toFixed(1) : '0.0';
-      
-      let statusBadge = '';
-      if (parseFloat(utilization) >= 80) statusBadge = '<span class="badge bg-success">On Track</span>';
-      else if (parseFloat(utilization) >= 50) statusBadge = '<span class="badge bg-warning">In Progress</span>';
-      else statusBadge = '<span class="badge bg-danger">Behind</span>';
-      
-      if (obligations > 0) {
-        html += `<tr>
-          <td><strong>${comp}</strong></td>
-          <td>${formatCurrency(budget)}</td>
-          <td>${formatCurrency(obligations)}</td>
-          <td>${formatCurrency(disbursed)}</td>
-          <td>${formatCurrency(pending)}</td>
-          <td>${utilization}%</td>
-          <td>${statusBadge}</td>
-        </tr>`;
-      }
+      const util = monthlyBudget > 0 ? ((disbursed / monthlyBudget) * 100).toFixed(1) : '0.0';
+      let trend = ''; if (i>0) { if (obligations > prev) trend = '<i class="fas fa-arrow-up trend-up"></i>'; else if (obligations < prev) trend = '<i class="fas fa-arrow-down trend-down"></i>'; else trend = '<i class="fas fa-minus text-muted"></i>'; } prev = obligations;
+      html += `<tr><td><strong>${m.slice(0,3)}</strong></td><td>${formatCurrency(monthlyBudget)}</td><td>${formatCurrency(obligations)}</td><td>${formatCurrency(disbursed)}</td><td>${formatCurrency(pending)}</td><td>${util}%</td><td>${trend}</td></tr>`;
     });
-    
-    document.getElementById('componentTableBody').innerHTML = html || '<tr><td colspan="7" class="text-center py-4 text-muted">No data available</td></tr>';
+    document.getElementById('monthlySummaryBody').innerHTML = html || '<tr><td colspan="7" class="text-center">No data</td></tr>';
   }
 
-  // Component Bar Chart
-  function renderComponentBarChart() {
-    const components = ['I-PLAN (1.1)', 'I-PLAN (1.2)', 'I-BUILD (2.1)', 'I-BUILD (2.2)', 'I-REAP (3.1)', 'I-REAP (3.2)', 'I-SUPPORT', 'GOP'];
+  function renderDetailedMonthlyTable() {
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const comps = ['I-PLAN (1.1)','I-PLAN (1.2)','I-BUILD (2.1)','I-BUILD (2.2)','I-REAP (3.1)','I-REAP (3.2)','I-SUPPORT','GOP'];
     const { filteredTransactions } = getFilteredData();
-    
-    const data = components.map(comp => ({
-      component: comp,
-      obligations: filteredTransactions
-        .filter(t => t.component === comp || t.fundSource === comp)
-        .reduce((sum, t) => sum + (t.obligation || 0), 0),
-      disbursed: filteredTransactions
-        .filter(t => (t.component === comp || t.fundSource === comp) && (t.status === 'Disbursed' || t.status === 'PAID'))
-        .reduce((sum, t) => sum + (t.obligation || 0), 0)
-    })).filter(d => d.obligations > 0);
-    
-    if (data.length === 0) {
-      document.querySelector("#componentBarChart").innerHTML = '<p class="text-center text-muted py-5">No data available</p>';
-      return;
-    }
-    
-    const options = {
-      series: [
-        { name: 'Obligations', data: data.map(d => d.obligations) },
-        { name: 'Disbursed', data: data.map(d => d.disbursed) }
-      ],
-      chart: { type: 'bar', height: 300, toolbar: { show: false } },
-      colors: ['#3498db', '#27ae60'],
-      plotOptions: { bar: { horizontal: false, columnWidth: '55%' } },
-      dataLabels: { enabled: false },
-      xaxis: { categories: data.map(d => d.component) },
-      yaxis: { labels: { formatter: (val) => formatCurrency(val) } },
-      tooltip: { y: { formatter: (val) => formatCurrency(val) } },
-      legend: { position: 'top' }
-    };
-    
+    let totals = comps.map(()=>0), grand=0, html='';
+    months.forEach(m => {
+      let rowTotal=0; html+=`<tr><td><strong>${m.slice(0,3)}</strong></td>`;
+      comps.forEach((c,j)=>{ let amt=filteredTransactions.filter(t=>t.month===m && t.component===c).reduce((s,t)=>s+(t.obligation||0),0); totals[j]+=amt; rowTotal+=amt; html+=`<td>${amt>0?formatNumber(amt):'-'}</td>`; });
+      grand+=rowTotal; html+=`<td><strong>${formatNumber(rowTotal)}</strong></td></tr>`;
+    });
+    let foot='<tr class="table-secondary"><td><strong>TOTAL</strong></td>'; comps.forEach((_,j)=>{ foot+=`<td><strong>${formatNumber(totals[j])}</strong></td>`; }); foot+=`<td><strong>${formatNumber(grand)}</strong></td></tr>`;
+    document.getElementById('detailedMonthlyBody').innerHTML = html || '<tr><td colspan="10" class="text-center">No data</td></tr>';
+    document.getElementById('detailedMonthlyFoot').innerHTML = foot;
+  }
+
+  function renderComponentTable() {
+    const comps = ['I-PLAN (1.1)','I-PLAN (1.2)','I-BUILD (2.1)','I-BUILD (2.2)','I-REAP (3.1)','I-REAP (3.2)','I-SUPPORT','GOP'];
+    const { filteredTransactions, filteredFunds } = getFilteredData();
+    const totalBudget = filteredFunds.reduce((s,f) => s + (f.allocated||0), 0);
+    let html='';
+    comps.forEach(c => {
+      const budget = totalBudget / comps.length;
+      const obligations = filteredTransactions.filter(t => t.component === c).reduce((s,t) => s + (t.obligation||0), 0);
+      const disbursed = filteredTransactions.filter(t => t.component === c && (t.status === 'Disbursed' || t.status === 'PAID')).reduce((s,t) => s + (t.obligation||0), 0);
+      const pending = obligations - disbursed;
+      const util = budget > 0 ? ((disbursed / budget) * 100).toFixed(1) : '0.0';
+      const statusBadge = util >= 80 ? '<span class="badge bg-success">On Track</span>' : (util >= 50 ? '<span class="badge bg-warning">In Progress</span>' : '<span class="badge bg-danger">Behind</span>');
+      if (obligations > 0) html += `<tr><td><strong>${c}</strong></td><td>${formatCurrency(budget)}</td><td>${formatCurrency(obligations)}</td><td>${formatCurrency(disbursed)}</td><td>${formatCurrency(pending)}</td><td>${util}%</td><td>${statusBadge}</td></tr>`;
+    });
+    document.getElementById('componentTableBody').innerHTML = html || '<tr><td colspan="7" class="text-center">No data</td></tr>';
+  }
+
+  function renderComponentBarChart() {
+    const comps = ['I-PLAN (1.1)','I-PLAN (1.2)','I-BUILD (2.1)','I-BUILD (2.2)','I-REAP (3.1)','I-REAP (3.2)','I-SUPPORT','GOP'];
+    const { filteredTransactions } = getFilteredData();
+    const data = comps.map(c => ({ obligations: filteredTransactions.filter(t=>t.component===c).reduce((s,t)=>s+(t.obligation||0),0), disbursed: filteredTransactions.filter(t=>t.component===c && (t.status==='Disbursed'||t.status==='PAID')).reduce((s,t)=>s+(t.obligation||0),0) })).filter(d=>d.obligations>0);
     if (barChart) barChart.destroy();
-    barChart = new ApexCharts(document.querySelector("#componentBarChart"), options);
-    barChart.render();
+    if (data.length) barChart = new ApexCharts(document.querySelector("#componentBarChart"), { series: [{ name:'Obligations', data: data.map(d=>d.obligations) }, { name:'Disbursed', data: data.map(d=>d.disbursed) }], chart: { type:'bar', height:280, toolbar:{show:false} }, colors:['#2b5e2b','#c9a03d'], xaxis: { categories: comps.filter((_,i)=>filteredTransactions.filter(t=>t.component===comps[i]).reduce((s,t)=>s+(t.obligation||0),0)>0) }, yaxis: { labels: { formatter: v=>formatCurrency(v) } }, tooltip: { y: { formatter: v=>formatCurrency(v) } } }).render();
   }
 
-  // Comparison Chart
   function renderComparisonChart() {
-    const years = [2024, 2025, 2026];
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const years = [2024,2025,2026];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const { filteredFunds } = getFilteredData();
-    
-    const series = years.map(year => ({
-      name: year.toString(),
-      data: months.map((_, i) => {
-        const monthName = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][i];
-        
-        let yearTransactions = allTransactions.filter(t => t.year == year);
-        if (currentFundFilter !== 'ALL') {
-          const selectedFund = allFunds.find(f => f.id === currentFundFilter);
-          if (selectedFund) {
-            yearTransactions = yearTransactions.filter(t => t.fund === selectedFund.name);
-          }
-        }
-        
-        return yearTransactions
-          .filter(t => t.month === monthName)
-          .reduce((sum, t) => sum + (t.obligation || 0), 0);
-      })
-    }));
-    
-    const options = {
-      series: series,
-      chart: { type: 'line', height: 300, toolbar: { show: false } },
-      colors: ['#95a5a6', '#f39c12', '#3498db'],
-      stroke: { curve: 'smooth', width: [2, 2, 3] },
-      xaxis: { categories: months },
-      yaxis: { labels: { formatter: (val) => formatCurrency(val) } },
-      tooltip: { y: { formatter: (val) => formatCurrency(val) } },
-      legend: { position: 'top' }
-    };
-    
+    const series = years.map(y => ({ name: y.toString(), data: months.map((_,i) => { const m = ['January','February','March','April','May','June','July','August','September','October','November','December'][i]; let tx = allTransactions.filter(t=>t.year==y); if(currentFundFilter!=='ALL'){ const sel=allFunds.find(f=>f.id===currentFundFilter); if(sel) tx=tx.filter(t=>t.fund===sel.name); } return tx.filter(t=>t.month===m).reduce((s,t)=>s+(t.obligation||0),0); }) }));
     if (comparisonChart) comparisonChart.destroy();
-    comparisonChart = new ApexCharts(document.querySelector("#yearComparisonChart"), options);
-    comparisonChart.render();
+    comparisonChart = new ApexCharts(document.querySelector("#yearComparisonChart"), { series: series, chart: { type:'line', height:280, toolbar:{show:false} }, colors:['#95a5a6','#c9a03d','#2b5e2b'], stroke: { curve:'smooth', width:2 }, xaxis: { categories: months }, yaxis: { labels: { formatter: v=>formatCurrency(v) } }, tooltip: { y: { formatter: v=>formatCurrency(v) } } }).render();
   }
 
-  // Comparison Table
   function renderComparisonTable() {
-    const years = [2024, 2025, 2026];
+    const years = [2024,2025,2026];
     const { filteredFunds } = getFilteredData();
-    
-    const yearData = years.map(year => {
-      let yearTransactions = allTransactions.filter(t => t.year == year);
-      if (currentFundFilter !== 'ALL') {
-        const selectedFund = allFunds.find(f => f.id === currentFundFilter);
-        if (selectedFund) {
-          yearTransactions = yearTransactions.filter(t => t.fund === selectedFund.name);
-        }
-      }
-      
-      const budget = filteredFunds.reduce((sum, f) => sum + (f.allocated || 0), 0);
-      const obligations = yearTransactions.reduce((sum, t) => sum + (t.obligation || 0), 0);
-      const disbursed = yearTransactions
-        .filter(t => t.status === 'Disbursed' || t.status === 'PAID')
-        .reduce((sum, t) => sum + (t.obligation || 0), 0);
-      const utilization = budget > 0 ? ((disbursed / budget) * 100).toFixed(1) : '0.0';
-      
-      return { budget, obligations, disbursed, utilization };
+    const yearData = years.map(y => { let tx = allTransactions.filter(t=>t.year==y); if(currentFundFilter!=='ALL'){ const sel=allFunds.find(f=>f.id===currentFundFilter); if(sel) tx=tx.filter(t=>t.fund===sel.name); } const budget = filteredFunds.reduce((s,f)=>s+(f.allocated||0),0); const obligations = tx.reduce((s,t)=>s+(t.obligation||0),0); const disbursed = tx.filter(t=>t.status==='Disbursed'||t.status==='PAID').reduce((s,t)=>s+(t.obligation||0),0); const util = budget>0 ? ((disbursed/budget)*100).toFixed(1) : '0.0'; return { budget, obligations, disbursed, utilization: util }; });
+    const metrics = ['Total Budget','Total Obligations','Total Disbursed','Utilization Rate'];
+    let html='';
+    metrics.forEach((metric,i) => {
+      const values = yearData.map(d => i===0?formatCurrency(d.budget): i===1?formatCurrency(d.obligations): i===2?formatCurrency(d.disbursed): d.utilization+'%');
+      const curr = yearData[2], prev = yearData[1];
+      let change='', cls='';
+      if(i===0 && prev.budget>0) { let diff = ((curr.budget-prev.budget)/prev.budget*100).toFixed(1); change=(diff>0?'+':'')+diff+'%'; cls=diff>=0?'trend-up':'trend-down'; }
+      else if(i===1 && prev.obligations>0) { let diff = ((curr.obligations-prev.obligations)/prev.obligations*100).toFixed(1); change=(diff>0?'+':'')+diff+'%'; cls=diff>=0?'trend-up':'trend-down'; }
+      else if(i===2 && prev.disbursed>0) { let diff = ((curr.disbursed-prev.disbursed)/prev.disbursed*100).toFixed(1); change=(diff>0?'+':'')+diff+'%'; cls=diff>=0?'trend-up':'trend-down'; }
+      else if(i===3) { let diff = parseFloat(curr.utilization)-parseFloat(prev.utilization); change=(diff>0?'+':'')+diff.toFixed(1)+'%'; cls=diff>=0?'trend-up':'trend-down'; }
+      else change='-';
+      html += `<tr><td><strong>${metric}</strong></td><td>${values[0]}</td><td>${values[1]}</td><td>${values[2]}</td><td class="${cls}">${change!=='-'?`<i class="fas fa-${change.includes('+')?'arrow-up':'arrow-down'} me-1"></i>${change}`:'-'}</td></tr>`;
     });
-    
-    const metrics = ['Total Budget', 'Total Obligations', 'Total Disbursed', 'Utilization Rate'];
-    
-    let html = '';
-    
-    metrics.forEach((metric, i) => {
-      const values = yearData.map(d => {
-        if (i === 0) return formatCurrency(d.budget);
-        if (i === 1) return formatCurrency(d.obligations);
-        if (i === 2) return formatCurrency(d.disbursed);
-        return d.utilization + '%';
-      });
-      
-      const current = yearData[2];
-      const previous = yearData[1];
-      let change = '';
-      let changeClass = '';
-      
-      if (i === 0 && previous.budget > 0) {
-        const diff = ((current.budget - previous.budget) / previous.budget * 100).toFixed(1);
-        change = (diff > 0 ? '+' : '') + diff + '%';
-        changeClass = diff >= 0 ? 'trend-up' : 'trend-down';
-      } else if (i === 1 && previous.obligations > 0) {
-        const diff = ((current.obligations - previous.obligations) / previous.obligations * 100).toFixed(1);
-        change = (diff > 0 ? '+' : '') + diff + '%';
-        changeClass = diff >= 0 ? 'trend-up' : 'trend-down';
-      } else if (i === 2 && previous.disbursed > 0) {
-        const diff = ((current.disbursed - previous.disbursed) / previous.disbursed * 100).toFixed(1);
-        change = (diff > 0 ? '+' : '') + diff + '%';
-        changeClass = diff >= 0 ? 'trend-up' : 'trend-down';
-      } else if (i === 3) {
-        const diff = parseFloat(current.utilization) - parseFloat(previous.utilization);
-        change = (diff > 0 ? '+' : '') + diff.toFixed(1) + '%';
-        changeClass = diff >= 0 ? 'trend-up' : 'trend-down';
-      } else {
-        change = 'N/A';
-        changeClass = '';
-      }
-      
-      html += `<tr>
-        <td><strong>${metric}</strong></td>
-        <td>${values[0]}</td>
-        <td>${values[1]}</td>
-        <td>${values[2]}</td>
-        <td class="${changeClass}">${change !== 'N/A' ? `<i class="fas fa-${change.includes('+') ? 'arrow-up' : 'arrow-down'} me-1"></i>${change}` : '-'}</td>
-      </tr>`;
-    });
-    
-    document.getElementById('comparisonTableBody').innerHTML = html || '<tr><td colspan="5" class="text-center py-4 text-muted">No data available</td></tr>';
+    document.getElementById('comparisonTableBody').innerHTML = html;
   }
 
-  // Event Listeners
-  document.getElementById('fundFilterSelect').addEventListener('change', function() {
-    currentFundFilter = this.value;
-    refreshAllReports();
-  });
-
-  document.getElementById('yearSelect').addEventListener('change', refreshAllReports);
-
-  document.querySelectorAll('.month-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-      currentMonthFilter = this.dataset.month;
-      refreshAllReports();
-    });
-  });
-
-  // Export functions
-  function exportReport(format) {
-    showToast(`Exporting report as ${format.toUpperCase()}...`, 'info');
-  }
-
-  function printReport() {
-    window.print();
-  }
-
-  // Make functions globally available
-  window.handleSignOut = handleSignOut;
-  window.exportReport = exportReport;
-  window.printReport = printReport;
-
-  document.addEventListener('DOMContentLoaded', function() {
-    const loader = document.querySelector('.loader');
-    const loaderOverlay = document.querySelector('.loader-overlay');
-    if (loader) loader.style.display = 'none';
-    if (loaderOverlay) loaderOverlay.style.display = 'none';
-  });
+  async function updateSidebarWidget() {
+    try { let totalBudget=0; const fundsSnap=await db.collection('funds').get(); fundsSnap.forEach(d=>totalBudget+=d.data().allocated||0); const curYear=new Date().getFullYear().toString(); const txSnap=await db.collection('transactions').where('year','==',curYear).get(); let disburse=0; txSnap.forEach(d=>{ let t=d.data(); if(['Disbursed','PAID','LDDAP Processed'].includes(t.status)) disburse+=t.obligation||0; }); let rate=totalBudget>0?(disburse/totalBudget)*100:0; let span=document.getElementById('utilizationRateWidget'); if(span) span.innerText=rate.toFixed(1)+'%'; let bar=document.getElementById('utilizationProgressBar'); if(bar){ bar.style.width=Math.min(rate,100)+'%'; bar.style.background=rate>=90?'#d32f2f':rate>=75?'#ed6c02':'#c9a03d'; } } catch(e){} }
+  window.refreshSidebarWidget=async function(){ let btn=document.querySelector('.btn-upgrade'); if(btn){ let orig=btn.innerHTML; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i>'; btn.disabled=true; await updateSidebarWidget(); await loadReportData(); btn.innerHTML=orig; btn.disabled=false; } };
+  window.handleSignOut=()=>auth.signOut().then(()=>window.location.href='auth-login.html');
+  window.printReport=()=>window.print();
+  document.getElementById('fundFilterSelect').addEventListener('change',e=>{ currentFundFilter=e.target.value; refreshAllReports(); });
+  document.getElementById('yearSelect').addEventListener('change',()=>refreshAllReports());
+  document.querySelectorAll('.month-btn').forEach(btn=>btn.addEventListener('click',function(){ document.querySelectorAll('.month-btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); currentMonthFilter=this.dataset.month; refreshAllReports(); }));
+  document.getElementById('sidebarToggleBtn')?.addEventListener('click',()=>document.getElementById('mainSidebar').classList.toggle('open'));
 </script>
-
-<script src="assets/js/script.js"></script>
-<script src="assets/js/custom.js"></script>
 </body>
 </html>

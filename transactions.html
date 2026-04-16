@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Transactions · FundTrack</title>
+  <title>Transactions · DA-PRDP RPCO CAR</title>
 
   <link rel="stylesheet" href="assets/modules/bootstrap-5.1.3/css/bootstrap.css">
   <link rel="stylesheet" href="assets/css/style.css">
@@ -13,25 +13,196 @@
   
   <style>
     :root {
-      --primary-color: #2c3e50;
-      --primary-light: #34495e;
-      --accent-color: #3498db;
-      --success-color: #27ae60;
-      --warning-color: #f39c12;
-      --danger-color: #e74c3c;
-      --border-color: #e0e0e0;
-      --bg-light: #f8f9fa;
-      --text-dark: #2c3e50;
-      --text-muted: #7f8c8d;
+      --da-green: #2b5e2b;
+      --da-gold: #c9a03d;
+      --da-light-green: #e8f0e8;
+      --da-dark: #1e3a1e;
+      --accent-blue: #2c7da0;
+      --success-color: #2e7d32;
+      --warning-color: #ed6c02;
+      --danger-color: #d32f2f;
+      --border-color: #e2e8f0;
+      --bg-light: #f8fafc;
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --sidebar-width: 280px;
     }
 
     body {
-      background: #f5f7fa;
+      background: #f1f5f9;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    /* Sidebar Premium Redesign - DA Theme */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: linear-gradient(180deg, #0f2e1f 0%, #1a3a2a 100%);
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
+      border-right: none;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      z-index: 1030;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      overflow-y: auto;
+    }
+
+    .sidebar .logo {
+      padding: 1.5rem 1.2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar .logo h2 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.3px;
+    }
+
+    .sidebar .logo h2 img {
+      width: 42px;
+      height: 42px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      background: #f5b042;
+      border-radius: 12px;
+      padding: 6px;
+    }
+
+    .agency-badge {
+      font-size: 0.7rem;
+      background: rgba(255,215,0,0.2);
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-top: 6px;
+      color: #f5d742;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    .side-menu {
+      list-style: none;
+      padding: 0 1rem;
+    }
+
+    .side-menu li {
+      margin-bottom: 8px;
+    }
+
+    .side-menu li a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+      transition: all 0.2s;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .side-menu li a i, 
+    .side-menu li a .icon {
+      font-size: 1.25rem;
+      width: 28px;
+      text-align: center;
+    }
+
+    .side-menu li a:hover {
+      background: rgba(255,255,255,0.12);
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .side-menu li a.active {
+      background: var(--da-gold);
+      color: #1e3a1e;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+    .side-menu .divider {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 1rem 0.5rem 0.5rem;
+      color: rgba(255,255,255,0.4);
+      font-weight: 600;
+    }
+
+    /* Sidebar widget */
+    .sidebar .ads {
+      margin: 2rem 1rem;
+      background: rgba(0,0,0,0.25);
+      border-radius: 20px;
+      backdrop-filter: blur(2px);
+      padding: 1rem;
+      border: 1px solid rgba(255,215,0,0.2);
+    }
+
+    .sidebar .ads .wrapper {
+      text-align: center;
+    }
+
+    .sidebar .ads .help-icon i {
+      color: var(--da-gold);
+      opacity: 0.9;
+    }
+
+    .sidebar .ads p {
+      color: white;
+      margin-top: 8px;
+    }
+
+    .btn-upgrade {
+      background: var(--da-gold);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: #1e3a1e;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-upgrade:hover {
+      background: #e6b342;
+      transform: scale(1.02);
+    }
+
+    /* Topbar */
+    .topbar {
+      background: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      padding: 0.8rem 2rem;
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: var(--sidebar-width);
+      z-index: 1020;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .content-start {
+      margin-left: var(--sidebar-width);
+      margin-top: 70px;
+      padding: 1.5rem 2rem;
+      transition: 0.3s;
     }
 
     .content-header h1 {
-      color: var(--primary-color);
-      font-weight: 600;
+      color: var(--da-dark);
+      font-weight: 700;
       font-size: 1.8rem;
     }
 
@@ -41,63 +212,52 @@
 
     .form-section {
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 24px;
-      background-color: #ffffff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
       transition: box-shadow 0.2s ease;
     }
 
-    .form-section:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
-
     .form-section-title {
-      font-weight: 600;
-      margin-bottom: 20px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid var(--accent-color);
-      color: var(--primary-color);
-      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--da-green);
+      color: var(--da-dark);
+      font-size: 1rem;
       display: flex;
       align-items: center;
     }
 
     .form-section-title i {
-      color: var(--accent-color);
+      color: var(--da-green);
       margin-right: 10px;
       font-size: 1.2rem;
     }
 
     .form-label {
-      font-weight: 500;
-      color: var(--primary-light);
+      font-weight: 600;
+      color: var(--da-dark);
       margin-bottom: 4px;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
 
     .form-control, .form-select {
       border: 1px solid var(--border-color);
-      border-radius: 8px;
-      font-size: 0.9rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
       padding: 8px 12px;
       background-color: white;
       transition: all 0.2s ease;
     }
 
     .form-control:focus, .form-select:focus {
-      border-color: var(--accent-color);
-      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-    }
-
-    .form-control[readonly] {
-      background-color: var(--bg-light);
-      border-color: var(--border-color);
-      color: var(--text-dark);
-      cursor: default;
+      border-color: var(--da-gold);
+      box-shadow: 0 0 0 3px rgba(201, 160, 61, 0.1);
     }
 
     .amount-input {
@@ -111,10 +271,10 @@
     }
 
     .table th {
-      background-color: var(--primary-color) !important;
+      background-color: var(--da-dark) !important;
       color: white !important;
-      font-size: 0.8rem;
-      font-weight: 500;
+      font-size: 0.75rem;
+      font-weight: 600;
       text-align: center;
       padding: 12px 8px;
       border: none;
@@ -126,143 +286,63 @@
       padding: 10px 8px;
       vertical-align: middle;
       border-color: var(--border-color);
-      font-size: 0.9rem;
-    }
-
-    .table tfoot td {
-      background-color: var(--bg-light);
-      font-weight: 600;
-      border-top: 2px solid var(--primary-light);
+      font-size: 0.85rem;
     }
 
     .card {
       border: none;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
       overflow: hidden;
     }
 
     .card-header {
       background-color: white;
       border-bottom: 1px solid var(--border-color);
-      padding: 16px 20px;
+      padding: 1rem 1.5rem;
     }
 
     .card-header h4 {
-      color: var(--primary-color);
-      font-weight: 600;
+      color: var(--da-dark);
+      font-weight: 700;
       margin: 0;
-      font-size: 1.1rem;
-    }
-
-    .card-body {
-      padding: 20px;
-    }
-
-    .btn {
-      border-radius: 8px;
-      padding: 8px 20px;
-      font-weight: 500;
-      transition: all 0.2s ease;
+      font-size: 1rem;
     }
 
     .btn-primary {
-      background-color: var(--accent-color);
-      border-color: var(--accent-color);
+      background: linear-gradient(135deg, var(--da-green), var(--da-dark));
+      border: none;
+      border-radius: 40px;
     }
-
     .btn-primary:hover {
-      background-color: #2980b9;
-      border-color: #2980b9;
+      background: linear-gradient(135deg, #1e4a1e, #0f2e1f);
       transform: translateY(-1px);
-      box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
     }
-
-    .btn-outline-secondary {
-      border-color: var(--border-color);
-      color: var(--text-dark);
+    .btn-outline-primary {
+      border-color: var(--da-green);
+      color: var(--da-green);
     }
-
-    .btn-outline-secondary:hover {
-      background-color: var(--bg-light);
-      border-color: var(--text-muted);
-    }
-
-    .btn-outline-info {
-      border-color: var(--accent-color);
-      color: var(--accent-color);
-    }
-
-    .btn-outline-info:hover {
-      background-color: var(--accent-color);
+    .btn-outline-primary:hover {
+      background-color: var(--da-green);
       color: white;
     }
-
-    .btn-outline-primary {
-      border-color: var(--accent-color);
-      color: var(--accent-color);
-    }
-
-    .btn-outline-danger {
-      border-color: var(--danger-color);
-      color: var(--danger-color);
-    }
-
     .btn-outline-danger:hover {
       background-color: var(--danger-color);
       color: white;
     }
-
-    .badge {
-      padding: 6px 10px;
-      border-radius: 20px;
-      font-weight: 500;
-      font-size: 0.75rem;
-    }
-
-    .badge.bg-success {
-      background-color: var(--success-color) !important;
-    }
-
-    .badge.bg-warning {
-      background-color: var(--warning-color) !important;
-      color: white;
-    }
-
-    .badge.bg-danger {
-      background-color: var(--danger-color) !important;
-    }
-
+    .badge.bg-success { background-color: var(--da-green) !important; }
+    .badge.bg-warning { background-color: var(--da-gold) !important; color: #1e3a1e; }
+    
     footer .footer {
+      margin-left: var(--sidebar-width);
       background: transparent;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border-color);
-      padding-top: 20px;
-      margin-top: 20px;
-    }
-
-    .table-hover tbody tr:hover {
-      background-color: rgba(52, 152, 219, 0.05);
-    }
-
-    .btn-sm {
-      padding: 4px 8px;
-      font-size: 0.8rem;
-    }
-
-    #totalExpendituresDisplay, #alloc_total {
-      font-family: 'Courier New', monospace;
-      font-weight: 700;
-      color: var(--primary-color);
+      padding: 1rem 2rem;
     }
 
     @media (max-width: 768px) {
-      .form-section {
-        padding: 15px;
-      }
-      .col-md-2, .col-md-3, .col-md-4 {
-        margin-bottom: 10px;
-      }
+      .sidebar { transform: translateX(-100%); }
+      .topbar, .content-start, footer .footer { margin-left: 0; }
+      .sidebar.open { transform: translateX(0); }
     }
   </style>
 </head>
@@ -271,83 +351,58 @@
 <!-- Topbar -->
 <div class="topbar transition">
   <div class="bars">
-    <button type="button" class="btn transition" id="sidebar-toggle"><i class="fa fa-bars"></i></button>
+    <button type="button" class="btn btn-light" id="sidebarToggleBtn"><i class="fa fa-bars"></i></button>
   </div>
   <div class="menu">
-    <ul>
+    <ul class="nav">
       <li class="nav-item dropdown">
-        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
-          <img src="assets/images/avatar/avatar-1.png" alt="">
-          <span id="userDisplayName" class="ms-2 text-white">Loading...</span>
+        <a class="nav-link d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+          <img src="assets/images/avatar/avatar-1.png" alt="avatar" width="38" class="rounded-circle">
+          <span id="userDisplayName" class="ms-2 fw-semibold">Loading...</span>
         </a>
-        <ul class="dropdown-menu" id="userDropdownMenu">
-          <div class="dropdown-item-text" id="userRoleDisplay">
-            <i class="fa fa-user me-2"></i> Loading...
-          </div>
-          <hr class="dropdown-divider">
-          <a class="dropdown-item" href="#" onclick="loadTransactions()"><i class="fa fa-sync-alt"></i> Refresh</a>
-          <hr class="dropdown-divider">
-          <a class="dropdown-item text-danger" href="#" onclick="handleSignOut()"><i class="fa fa-sign-out-alt"></i> Sign Out</a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><span class="dropdown-item-text" id="userRoleDisplay"><i class="fa fa-shield-alt me-2"></i> Role</span></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#" onclick="loadTransactions()"><i class="fa fa-sync-alt me-2"></i> Refresh Data</a></li>
+          <li><a class="dropdown-item text-danger" href="#" onclick="handleSignOut()"><i class="fa fa-sign-out-alt me-2"></i> Sign Out</a></li>
         </ul>
       </li>
     </ul>
   </div>
 </div>
 
-<!-- Sidebar -->
-<div class="sidebar transition overlay-scrollbars animate__animated animate__slideInLeft">
+<!-- Sidebar - DA-PRDP Styled -->
+<div class="sidebar transition" id="mainSidebar">
   <div class="sidebar-content">
-    <div id="sidebar">
-      <div class="logo">
-        <h2 class="mb-0"><img src="assets/images/logo.png"> FundTrack</h2>
-      </div>
+    <div class="logo">
+      <h2>
+        <img src="assets/images/logo.png" alt="DA Logo" onerror="this.src='https://placehold.co/42x42?text=DA'">
+        <span>DA-PRDP<br><small style="font-size: 0.7rem;">RPCO CAR</small></span>
+      </h2>
+      <div class="agency-badge"><i class="fas fa-leaf me-1"></i> Philippine Rural Development Project</div>
+    </div>
 
-      <ul class="side-menu" id="sideMenu">
-        <li>
-          <a href="index.html">
-            <i class='bx bxs-dashboard icon'></i> Dashboard
-          </a>
-        </li>
+    <ul class="side-menu">
+      <li><a href="index.html"><i class='bx bxs-dashboard'></i> Dashboard</a></li>
+      <li class="divider" data-text="FINANCE">FINANCE</li>
+      <li id="fundsMenuItem"><a href="funds.html"><i class='bx bx-wallet'></i> Funds & Budgets</a></li>
+      <li id="transactionsMenuItem"><a href="transactions.html" class="active"><i class='bx bx-transfer-alt'></i> Transactions</a></li>
+      <li class="divider" data-text="INSIGHTS">INSIGHTS</li>
+      <li><a href="monthly-reports.html"><i class='bx bx-bar-chart-alt-2'></i> Monthly Reports</a></li>
+      <li class="divider" data-text="ADMIN">ADMIN</li>
+      <li id="settingsMenuItem"><a href="settings.html"><i class='bx bxs-cog'></i> System Settings</a></li>
+    </ul>
 
-        <li class="divider" data-text="MAIN">MAIN</li>
-
-        <li id="fundsMenuItem">
-          <a href="funds.html">
-            <i class='bx bx-wallet icon'></i> Funds
-          </a>
-        </li>
-
-        <li id="transactionsMenuItem">
-          <a href="transactions.html"  class="active">
-            <i class='bx bx-transfer-alt icon'></i> Transactions
-          </a>
-        </li>
-
-        <li class="divider" data-text="REPORTS">REPORTS</li>
-
-        <li>
-          <a href="monthly-reports.html">
-            <i class='bx bx-bar-chart-alt-2 icon'></i>
-            Monthly Reports
-          </a>
-        </li>
-
-        <li class="divider" data-text="ADMIN">ADMIN</li>
-
-        <li id="settingsMenuItem">
-          <a href="settings.html">
-            <i class='bx bxs-cog icon'></i>
-            Settings
-          </a>
-        </li>
-      </ul>
-
-      <div class="ads">
-        <div class="wrapper">
-          <div class="help-icon"><i class="fa fa-chart-pie fa-3x"></i></div>
-          <p><strong>Budget Utilization</strong><br><span id="utilizationRateWidget">0%</span></p>
-          <a href="#" class="btn-upgrade" onclick="syncData()">Refresh Data</a>
+    <div class="ads">
+      <div class="wrapper">
+        <div class="help-icon"><i class="fas fa-chart-line fa-3x"></i></div>
+        <p><strong>Overall Utilization</strong><br><span id="utilizationRateWidget" style="font-size: 1.4rem; font-weight: bold;">0%</span></p>
+        <div class="progress mt-2 mb-2" style="height: 8px; background: rgba(255,255,255,0.2); border-radius: 10px;">
+          <div class="progress-bar" id="utilizationProgressBar" style="width: 0%; background: #c9a03d;"></div>
         </div>
+        <a href="#" class="btn-upgrade" onclick="refreshSidebarWidget(); return false;">
+          <i class="fas fa-sync-alt me-1"></i> Sync Now
+        </a>
       </div>
     </div>
   </div>
@@ -357,138 +412,46 @@
 <!-- Content Start -->
 <div class="content-start transition">
   <div class="container-fluid dashboard">
-    <div class="content-header">
+    <div class="content-header mb-3">
       <h1>Transaction Management</h1>
-      <p>Record and manage fund obligations and disbursements</p>
+      <p>DA-PRDP RPCO CAR · Record obligations & disbursements</p>
     </div>
 
     <form id="fullTransactionForm">
-      
-      <!-- Section 1: Basic Transaction Information -->
+      <!-- Section 1: Basic Information -->
       <div class="form-section">
         <h5 class="form-section-title"><i class="fas fa-file-alt me-2"></i>Basic Transaction Information</h5>
         <div class="row g-3">
-          <div class="col-md-3">
-            <label class="form-label">Year <span class="text-danger">*</span></label>
-            <select class="form-select" id="year"></select>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">Month <span class="text-danger">*</span></label>
-            <select class="form-select" id="month">
-              <option value="">Select Month</option>
-              <option value="January" data-mo="1">January</option>
-              <option value="February" data-mo="2">February</option>
-              <option value="March" data-mo="3">March</option>
-              <option value="April" data-mo="4">April</option>
-              <option value="May" data-mo="5">May</option>
-              <option value="June" data-mo="6">June</option>
-              <option value="July" data-mo="7">July</option>
-              <option value="August" data-mo="8">August</option>
-              <option value="September" data-mo="9">September</option>
-              <option value="October" data-mo="10">October</option>
-              <option value="November" data-mo="11">November</option>
-              <option value="December" data-mo="12">December</option>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">Mo. No.</label>
-            <input type="text" class="form-control" id="moNo" readonly>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">Date</label>
-            <input type="text" class="form-control" id="transactionDate" placeholder="MM/DD" readonly>
-          </div>
+          <div class="col-md-3"><label class="form-label">Year <span class="text-danger">*</span></label><select class="form-select" id="year"></select></div>
+          <div class="col-md-3"><label class="form-label">Month <span class="text-danger">*</span></label><select class="form-select" id="month"><option value="">Select Month</option><option value="January" data-mo="1">January</option><option value="February" data-mo="2">February</option><option value="March" data-mo="3">March</option><option value="April" data-mo="4">April</option><option value="May" data-mo="5">May</option><option value="June" data-mo="6">June</option><option value="July" data-mo="7">July</option><option value="August" data-mo="8">August</option><option value="September" data-mo="9">September</option><option value="October" data-mo="10">October</option><option value="November" data-mo="11">November</option><option value="December" data-mo="12">December</option></select></div>
+          <div class="col-md-3"><label class="form-label">Mo. No.</label><input type="text" class="form-control" id="moNo" readonly></div>
+          <div class="col-md-3"><label class="form-label">Date</label><input type="text" class="form-control" id="transactionDate" placeholder="MM/DD" readonly></div>
         </div>
         <div class="row g-3 mt-2">
-          <div class="col-md-4">
-            <label class="form-label">ORS No. <span class="text-danger">*</span></label>
-            <input type="text" class="form-control" id="orsNo" placeholder="e.g., 02-02101163-2026-02-000001" required>
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">ASA NO.</label>
-            <input type="text" class="form-control" id="asaNo" placeholder="e.g., ASA No. 2026-000013">
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">FUND</label>
-            <select class="form-select" id="fundSelect">
-              <option value="">Select Fund</option>
-            </select>
-          </div>
+          <div class="col-md-4"><label class="form-label">ORS No. <span class="text-danger">*</span></label><input type="text" class="form-control" id="orsNo" placeholder="e.g., 02-02101163-2026-000001" required></div>
+          <div class="col-md-4"><label class="form-label">ASA NO.</label><input type="text" class="form-control" id="asaNo" placeholder="ASA No. 2026-000013"></div>
+          <div class="col-md-4"><label class="form-label">FUND</label><select class="form-select" id="fundSelect"><option value="">Select Fund</option></select></div>
         </div>
         <div class="row g-3 mt-2">
-          <div class="col-md-6">
-            <label class="form-label">PAP</label>
-            <input type="text" class="form-control" id="pap" placeholder="Program/Activity/Project">
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">RC</label>
-            <input type="text" class="form-control" id="rc" placeholder="Responsibility Center">
-          </div>
+          <div class="col-md-6"><label class="form-label">PAP</label><input type="text" class="form-control" id="pap" placeholder="Program/Activity/Project"></div>
+          <div class="col-md-6"><label class="form-label">RC</label><input type="text" class="form-control" id="rc" placeholder="Responsibility Center"></div>
         </div>
         <div class="row g-3 mt-2">
-          <div class="col-md-4">
-            <label class="form-label">Payee</label>
-            <input type="text" class="form-control" id="payee" placeholder="Payee name">
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Component <span class="text-danger">*</span></label>
-            <select class="form-select" id="component">
-              <option value="">Select Component</option>
-              <option value="I-PLAN (1.1)" data-compno="1.1">I-PLAN (1.1)</option>
-              <option value="I-PLAN (1.2)" data-compno="1.2">I-PLAN (1.2)</option>
-              <option value="I-BUILD (2.1)" data-compno="2.1">I-BUILD (2.1)</option>
-              <option value="I-BUILD (2.2)" data-compno="2.2">I-BUILD (2.2)</option>
-              <option value="I-REAP (3.1)" data-compno="3.1">I-REAP (3.1)</option>
-              <option value="I-REAP (3.2)" data-compno="3.2">I-REAP (3.2)</option>
-              <option value="I-SUPPORT" data-compno="4">I-SUPPORT</option>
-            </select>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label">Comp No.</label>
-            <input type="text" class="form-control" id="componentNo" readonly>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label">Unit</label>
-            <input type="text" class="form-control" id="unit" placeholder="Unit/Office">
-          </div>
+          <div class="col-md-4"><label class="form-label">Payee</label><input type="text" class="form-control" id="payee" placeholder="Payee name"></div>
+          <div class="col-md-4"><label class="form-label">Component <span class="text-danger">*</span></label><select class="form-select" id="component"><option value="">Select Component</option><option value="I-PLAN (1.1)" data-compno="1.1">I-PLAN (1.1)</option><option value="I-PLAN (1.2)" data-compno="1.2">I-PLAN (1.2)</option><option value="I-BUILD (2.1)" data-compno="2.1">I-BUILD (2.1)</option><option value="I-BUILD (2.2)" data-compno="2.2">I-BUILD (2.2)</option><option value="I-REAP (3.1)" data-compno="3.1">I-REAP (3.1)</option><option value="I-REAP (3.2)" data-compno="3.2">I-REAP (3.2)</option><option value="I-SUPPORT" data-compno="4">I-SUPPORT</option></select></div>
+          <div class="col-md-2"><label class="form-label">Comp No.</label><input type="text" class="form-control" id="componentNo" readonly></div>
+          <div class="col-md-2"><label class="form-label">Unit</label><input type="text" class="form-control" id="unit" placeholder="Unit/Office"></div>
         </div>
         <div class="row g-3 mt-2">
-          <div class="col-md-3">
-            <label class="form-label">Category</label>
-            <select class="form-select" id="category">
-              <option value="">Select Category</option>
-              <option value="CO">CO (Capital Outlay)</option>
-              <option value="IOC">IOC</option>
-              <option value="IOC Donation">IOC Donation</option>
-              <option value="Trainings">Trainings</option>
-            </select>
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Account Title</label>
-            <select class="form-select" id="accountTitle"></select>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">UACS</label>
-            <select class="form-select" id="uacs"></select>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label">Obligation (₱)</label>
-            <input type="number" class="form-control amount-input" id="obligation" value="0.00" step="0.01" required>
-          </div>
+          <div class="col-md-3"><label class="form-label">Category</label><select class="form-select" id="category"><option value="">Select Category</option><option value="CO">CO (Capital Outlay)</option><option value="IOC">IOC</option><option value="IOC Donation">IOC Donation</option><option value="Trainings">Trainings</option></select></div>
+          <div class="col-md-4"><label class="form-label">Account Title</label><select class="form-select" id="accountTitle"></select></div>
+          <div class="col-md-3"><label class="form-label">UACS</label><select class="form-select" id="uacs"></select></div>
+          <div class="col-md-2"><label class="form-label">Obligation (₱)</label><input type="number" class="form-control amount-input" id="obligation" value="0.00" step="0.01" required></div>
         </div>
         <div class="row g-3 mt-2">
-          <div class="col-md-8">
-            <label class="form-label">Particulars</label>
-            <input type="text" class="form-control" id="particulars" placeholder="Transaction description" required>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label">Adjustment (₱)</label>
-            <input type="number" class="form-control amount-input" id="adjustment" value="0.00" step="0.01">
-          </div>
-          <div class="col-md-2">
-            <label class="form-label">Adjusted Obligation</label>
-            <input type="number" class="form-control amount-input" id="adjustedObligation" value="0.00" readonly>
-          </div>
+          <div class="col-md-8"><label class="form-label">Particulars</label><input type="text" class="form-control" id="particulars" placeholder="Transaction description" required></div>
+          <div class="col-md-2"><label class="form-label">Adjustment (₱)</label><input type="number" class="form-control amount-input" id="adjustment" value="0.00" step="0.01"></div>
+          <div class="col-md-2"><label class="form-label">Adjusted Obligation</label><input type="number" class="form-control amount-input" id="adjustedObligation" value="0.00" readonly></div>
         </div>
       </div>
 
@@ -496,111 +459,47 @@
       <div class="form-section">
         <h5 class="form-section-title"><i class="fas fa-list me-2"></i>Detailed Expense Breakdown</h5>
         <div class="table-responsive">
-          <table class="table table-bordered expense-table">
-            <thead>
-              <tr><th width="25%">Component</th><th width="35%">Expense Category</th><th width="20%">UACS</th><th width="20%">Amount (₱)</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><input type="text" class="form-control form-control-sm" id="exp_component" readonly></td>
-                <td><input type="text" class="form-control form-control-sm" id="exp_category" readonly></td>
-                <td><input type="text" class="form-control form-control-sm" id="exp_uacs" readonly></td>
-                <td><input type="number" class="form-control form-control-sm amount-input expense-amount" id="exp_amount" value="0.00" step="0.01"></td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="3" class="text-end"><strong>TOTAL EXPENDITURES</strong></td>
-                <td><strong><span id="totalExpendituresDisplay">₱0.00</span></strong></td>
-              </tr>
-            </tfoot>
+          <table class="table table-bordered">
+            <thead><tr><th width="25%">Component</th><th width="35%">Expense Category</th><th width="20%">UACS</th><th width="20%">Amount (₱)</th></tr></thead>
+            <tbody><tr><td><input type="text" class="form-control form-control-sm" id="exp_component" readonly></td><td><input type="text" class="form-control form-control-sm" id="exp_category" readonly></td><td><input type="text" class="form-control form-control-sm" id="exp_uacs" readonly></td><td><input type="number" class="form-control form-control-sm amount-input expense-amount" id="exp_amount" value="0.00" step="0.01"></td></tr></tbody>
+            <tfoot><tr><td colspan="3" class="text-end"><strong>TOTAL EXPENDITURES</strong></td><td><strong><span id="totalExpendituresDisplay">₱0.00</span></strong></td></tr></tfoot>
           </table>
         </div>
       </div>
 
-      <!-- Section 3: Fund Allocation by Source -->
+      <!-- Section 3: Fund Source Allocation -->
       <div class="form-section">
         <h5 class="form-section-title"><i class="fas fa-chart-pie me-2"></i>Fund Source Allocation</h5>
         <div class="table-responsive">
           <table class="table table-bordered">
-            <thead>
-              <tr><th>Type</th><th>Loan Proceeds</th><th>GOP</th><th>I-PLAN (1.1)</th><th>I-PLAN (1.2)</th><th>I-BUILD (2.1)</th><th>I-BUILD (2.2)</th><th>I-REAP (3.1)</th><th>I-REAP (3.2)</th><th>I-SUPPORT</th><th>TOTAL</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Allocation</td>
-                <td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_lp" value="0" step="0.01"></td>
-                <td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_gop" value="0" step="0.01"></td>
-                <td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_iplan11" value="0" step="0.01"></td>
-                <td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_iplan12" value="0" step="0.01"></td>
-                <td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_ibuild21" value="0" step="0.01"></td>
-                <td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_ibuild22" value="0" step="0.01"></td>
-                <td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_ireap31" value="0" step="0.01"></td>
-                <td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_ireap32" value="0" step="0.01"></td>
-                <td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_isupport" value="0" step="0.01"></td>
-                <td><span id="alloc_total">₱0.00</span></td>
-              </tr>
-            </tbody>
+            <thead><tr><th>Type</th><th>Loan Proceeds</th><th>GOP</th><th>I-PLAN 1.1</th><th>I-PLAN 1.2</th><th>I-BUILD 2.1</th><th>I-BUILD 2.2</th><th>I-REAP 3.1</th><th>I-REAP 3.2</th><th>I-SUPPORT</th><th>TOTAL</th></tr></thead>
+            <tbody><tr><td>Allocation</td><td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_lp" value="0" step="0.01"></td><td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_gop" value="0" step="0.01"></td><td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_iplan11" value="0" step="0.01"></td><td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_iplan12" value="0" step="0.01"></td><td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_ibuild21" value="0" step="0.01"></td><td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_ibuild22" value="0" step="0.01"></td><td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_ireap31" value="0" step="0.01"></td><td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_ireap32" value="0" step="0.01"></td><td><input type="number" class="form-control form-control-sm amount-input alloc-input" id="alloc_isupport" value="0" step="0.01"></td><td><span id="alloc_total">₱0.00</span></td></tr></tbody>
           </table>
         </div>
       </div>
 
-      <!-- Section 4: Status and Processing -->
+      <!-- Section 4: Status -->
       <div class="form-section">
         <h5 class="form-section-title"><i class="fas fa-tasks me-2"></i>Status & Processing</h5>
         <div class="row g-3">
-          <div class="col-md-3">
-            <label class="form-label">UNPAID OBLIGATION</label>
-            <input type="number" class="form-control amount-input" id="unpaidObligation" value="0" step="0.01">
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">STATUS</label>
-            <select class="form-select" id="status">
-              <option value="UNPAID">UNPAID</option>
-              <option value="PARTIAL">PARTIAL</option>
-              <option value="PAID">PAID</option>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">DATE OF INPUT (eNGAS)</label>
-            <input type="date" class="form-control" id="engasDate">
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">BOX D OF DV</label>
-            <input type="text" class="form-control" id="boxDofDV" placeholder="Box D reference">
-          </div>
+          <div class="col-md-3"><label class="form-label">UNPAID OBLIGATION</label><input type="number" class="form-control amount-input" id="unpaidObligation" value="0" step="0.01"></div>
+          <div class="col-md-3"><label class="form-label">STATUS</label><select class="form-select" id="status"><option value="UNPAID">UNPAID</option><option value="PARTIAL">PARTIAL</option><option value="PAID">PAID</option></select></div>
+          <div class="col-md-3"><label class="form-label">DATE OF INPUT (eNGAS)</label><input type="date" class="form-control" id="engasDate"></div>
+          <div class="col-md-3"><label class="form-label">BOX D OF DV</label><input type="text" class="form-control" id="boxDofDV" placeholder="Box D reference"></div>
         </div>
         <div class="row g-3 mt-2">
-          <div class="col-md-3">
-            <label class="form-label">DV Received (LDDAP)</label>
-            <input type="date" class="form-control" id="dvReceived">
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">LDDAP No.</label>
-            <input type="text" class="form-control" id="lddapNo" placeholder="LDDAP-2026-XXX">
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">EXPENDITURES (LP) GROSS</label>
-            <input type="number" class="form-control amount-input" id="expendituresLPGross" value="0" step="0.01">
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">TOTAL EXPENDITURES</label>
-            <input type="number" class="form-control amount-input" id="totalExpenditures" value="0.00" readonly>
-          </div>
+          <div class="col-md-3"><label class="form-label">DV Received (LDDAP)</label><input type="date" class="form-control" id="dvReceived"></div>
+          <div class="col-md-3"><label class="form-label">LDDAP No.</label><input type="text" class="form-control" id="lddapNo" placeholder="LDDAP-2026-XXX"></div>
+          <div class="col-md-3"><label class="form-label">EXPENDITURES (LP) GROSS</label><input type="number" class="form-control amount-input" id="expendituresLPGross" value="0" step="0.01"></div>
+          <div class="col-md-3"><label class="form-label">TOTAL EXPENDITURES</label><input type="number" class="form-control amount-input" id="totalExpenditures" value="0.00" readonly></div>
         </div>
       </div>
 
-      <!-- Form Actions -->
       <div class="row mb-4">
         <div class="col-md-12">
-          <button type="submit" class="btn btn-primary px-4">
-            <i class="fas fa-save me-2"></i>Save Transaction
-          </button>
-          <button type="reset" class="btn btn-outline-secondary px-4 ms-2">
-            <i class="fas fa-undo me-2"></i>Reset
-          </button>
-          <button type="button" class="btn btn-outline-info px-4 ms-2" id="calculateBtn">
-            <i class="fas fa-calculator me-2"></i>Calculate Totals
-          </button>
+          <button type="submit" class="btn btn-primary px-4"><i class="fas fa-save me-2"></i>Save Transaction</button>
+          <button type="reset" class="btn btn-outline-secondary px-4 ms-2"><i class="fas fa-undo me-2"></i>Reset</button>
+          <button type="button" class="btn btn-outline-info px-4 ms-2" id="calculateBtn"><i class="fas fa-calculator me-2"></i>Calculate Totals</button>
         </div>
       </div>
     </form>
@@ -610,17 +509,13 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <h4><i class="fas fa-history me-2" style="color: var(--accent-color);"></i>Recent Transactions</h4>
-            <button class="btn btn-sm btn-outline-primary" onclick="loadTransactions()">
-              <i class="fas fa-sync-alt me-1"></i> Refresh
-            </button>
+            <h4><i class="fas fa-history me-2" style="color: var(--da-green);"></i>Recent Transactions</h4>
+            <button class="btn btn-sm btn-outline-primary rounded-pill" onclick="loadTransactions()"><i class="fas fa-sync-alt me-1"></i> Refresh</button>
           </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-hover">
-                <thead>
-                  <tr><th>ORS No.</th><th>Payee</th><th>Component</th><th>Month</th><th>Obligation</th><th>Status</th><th>Actions</th></tr>
-                </thead>
+                <thead><tr><th>ORS No.</th><th>Payee</th><th>Component</th><th>Month</th><th>Obligation</th><th>Status</th><th>Actions</th></tr></thead>
                 <tbody id="transactionsTableBody"></tbody>
               </table>
             </div>
@@ -633,8 +528,8 @@
 
 <footer>
   <div class="footer">
-    <div class="float-start"><p>2026 &copy; FundTrack · Financial Management System</p></div>
-    <div class="float-end"><p>Crafted with <span class="text-danger"><i class="fa fa-heart"></i></span></p></div>
+    <div class="float-start"><p>2026 &copy; Department of Agriculture · PRDP RPCO CAR</p></div>
+    <div class="float-end"><p><i class="fa fa-heart text-danger"></i> Transaction Management</p></div>
   </div>
 </footer>
 
@@ -642,436 +537,70 @@
 <script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore-compat.js"></script>
-
-<script src="assets/js/atrana.js"></script>
 <script src="assets/modules/jquery/jquery.min.js"></script>
 <script src="assets/modules/bootstrap-5.1.3/js/bootstrap.bundle.min.js"></script>
 <script src="assets/modules/toastify/toastify.min.js"></script>
 
 <script>
-  // Firebase Configuration
   const firebaseConfig = {
     apiKey: "AIzaSyAtduM2t1jzgVs0TfPD48t3LJB5UJ90BrQ",
     authDomain: "fundmonitoring-3c89f.firebaseapp.com",
     projectId: "fundmonitoring-3c89f",
     storageBucket: "fundmonitoring-3c89f.firebasestorage.app",
     messagingSenderId: "630221204555",
-    appId: "1:630221204555:web:fa5116e95ad993093bb1ce",
-    measurementId: "G-MQ35CGE6EB"
+    appId: "1:630221204555:web:fa5116e95ad993093bb1ce"
   };
-  
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
   const auth = firebase.auth();
   db.enablePersistence().catch(console.warn);
 
-  // ==================== AUTHENTICATION ====================
-  let currentUser = null;
-  let userRole = 'viewer';
-
-  auth.onAuthStateChanged(async (user) => {
-    if (!user) {
-      window.location.href = 'auth-login.html';
-      return;
-    }
-    
-    currentUser = user;
-    document.getElementById('userDisplayName').textContent = user.displayName || user.email?.split('@')[0] || 'User';
-    
-    try {
-      const userDoc = await db.collection('users').doc(user.uid).get();
-      if (userDoc.exists) {
-        userRole = userDoc.data().role || 'viewer';
-      }
-      
-      if (userRole !== 'admin') {
-        showToast('Access denied. Administrator privileges required.', 'error');
-        setTimeout(() => { window.location.href = 'index.html'; }, 2000);
-        return;
-      }
-      
-      document.getElementById('userRoleDisplay').innerHTML = '<i class="fa fa-shield-alt me-2 text-success"></i> Administrator';
-      
-      // Initialize page (only if admin)
-      populateYearDropdown();
-      populateAccountDropdowns();
-      loadFundsDropdown();
-      loadTransactions();
-      
-    } catch (error) {
-      console.error('Error getting user role:', error);
-      showToast('Error verifying permissions', 'error');
-    }
-  });
-
-  async function handleSignOut() {
-    try {
-      await auth.signOut();
-      window.location.href = 'auth-login.html';
-    } catch (error) {
-      console.error('Sign out error:', error);
-      showToast('Error signing out', 'error');
-    }
-  }
-
-  // ==================== TRANSACTION MANAGEMENT ====================
+  let transactions = [], editingId = null, userRole = 'viewer';
   const accountData = [
-    { account: "Traveling Expenses - Local", uacs: "50201010-00" },
-    { account: "Training Expenses", uacs: "50202010-02" },
-    { account: "Office Supplies Expenses", uacs: "50203010-00" },
-    { account: "ICT Office Supplies", uacs: "5-02-03-010-01" },
-    { account: "Fuel, Oil and Lubricants Expenses", uacs: "50203090-00" },
-    { account: "Other Supplies and Materials Expenses", uacs: "5-02-03-990-00" },
-    { account: "Water Expenses", uacs: "50204010-00" },
-    { account: "Electricity Expenses", uacs: "5-02-04-020-00" },
-    { account: "Postage and Courier Services", uacs: "5-02-05-010-00" },
-    { account: "Mobile", uacs: "50205020-01" },
-    { account: "Landline", uacs: "50205020-02" },
-    { account: "Internet Subscription Expenses", uacs: "50205030-00" },
-    { account: "Consultancy Services", uacs: "5-02-11-030-00" },
-    { account: "Other Professional Services", uacs: "50211990-00" },
-    { account: "Fidelity Bond Premium", uacs: "5-02-15-020-00" },
-    { account: "Insurance Expenses", uacs: "5-02-15-030-00" },
-    { account: "Repairs and Maintenance - Motor Vehicles", uacs: "50213060-01" },
-    { account: "Printing and Publication Expenses", uacs: "50299020-00" },
-    { account: "Representation Expenses", uacs: "50299030-00" },
-    { account: "Rents - Motor Vehicles", uacs: "50299050-03" },
-    { account: "Semi Expendable - Office Equipment", uacs: "50203210-02" },
-    { account: "Semi Expendable - ICT Equipment", uacs: "50203210-03" },
-    { account: "Donations", uacs: "50299080-00" },
-    { account: "Other Maintenance and Operating Expenses", uacs: "50299990-99" },
-    { account: "Road Networks", uacs: "50604030-01" },
-    { account: "Water Supply Systems", uacs: "50604030-04" },
-    { account: "Office Equipment", uacs: "50604050-02" },
-    { account: "Information and Communication Equipment", uacs: "50604050-03" }
+    { account: "Traveling Expenses - Local", uacs: "50201010-00" }, { account: "Training Expenses", uacs: "50202010-02" }, { account: "Office Supplies Expenses", uacs: "50203010-00" },
+    { account: "ICT Office Supplies", uacs: "5-02-03-010-01" }, { account: "Fuel, Oil and Lubricants Expenses", uacs: "50203090-00" }, { account: "Other Supplies and Materials Expenses", uacs: "5-02-03-990-00" },
+    { account: "Water Expenses", uacs: "50204010-00" }, { account: "Electricity Expenses", uacs: "5-02-04-020-00" }, { account: "Consultancy Services", uacs: "5-02-11-030-00" },
+    { account: "Repairs and Maintenance - Motor Vehicles", uacs: "50213060-01" }, { account: "Representation Expenses", uacs: "50299030-00" }, { account: "Office Equipment", uacs: "50604050-02" }
   ];
 
-  let transactions = [];
-  let editingId = null;
+  function showToast(msg, type='success') { Toastify({ text: msg, duration: 3000, backgroundColor: type==='success'?'#2b5e2b':'#d32f2f' }).showToast(); }
+  function formatCurrency(amt) { return '₱'+parseFloat(amt||0).toLocaleString('en-PH',{minimumFractionDigits:2}); }
+  function parseNumber(v) { return parseFloat(v)||0; }
 
-  function formatCurrency(amount) {
-    return '₱' + parseFloat(amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  }
-
-  function parseNumber(val) { return parseFloat(val) || 0; }
-
-  function populateYearDropdown() {
-    const select = document.getElementById('year');
-    const currentYear = new Date().getFullYear();
-    select.innerHTML = '<option value="">Select Year</option>';
-    for (let year = currentYear - 2; year <= currentYear + 5; year++) {
-      const option = document.createElement('option');
-      option.value = year;
-      option.textContent = year;
-      if (year === currentYear) option.selected = true;
-      select.appendChild(option);
-    }
-  }
-
-  function populateAccountDropdowns() {
-    const accountSelect = document.getElementById('accountTitle');
-    const uacsSelect = document.getElementById('uacs');
-    
-    accountSelect.innerHTML = '<option value="">Select Account Title</option>';
-    uacsSelect.innerHTML = '<option value="">Select UACS</option>';
-    
-    accountData.sort((a, b) => a.account.localeCompare(b.account));
-    
-    accountData.forEach(item => {
-      const option = document.createElement('option');
-      option.value = item.account;
-      option.textContent = item.account;
-      option.dataset.uacs = item.uacs;
-      accountSelect.appendChild(option);
-      
-      const uacsOption = document.createElement('option');
-      uacsOption.value = item.uacs;
-      uacsOption.textContent = `${item.uacs} - ${item.account}`;
-      uacsOption.dataset.account = item.account;
-      uacsSelect.appendChild(uacsOption);
-    });
-  }
-
-  async function loadFundsDropdown() {
-    try {
-      const snapshot = await db.collection('funds').orderBy('name').get();
-      const select = document.getElementById('fundSelect');
-      select.innerHTML = '<option value="">Select Fund</option>';
-      snapshot.forEach(doc => {
-        const fund = doc.data();
-        const option = document.createElement('option');
-        option.value = fund.name;
-        option.textContent = `${fund.name} (${fund.year})`;
-        select.appendChild(option);
-      });
-    } catch (error) {
-      console.error('Error loading funds:', error);
-    }
-  }
-
-  function updateDateFields() {
-    const year = document.getElementById('year').value;
-    const monthSelect = document.getElementById('month');
-    const selectedOption = monthSelect.options[monthSelect.selectedIndex];
-    const moNo = selectedOption.dataset.mo || '';
-    
-    document.getElementById('moNo').value = moNo;
-    
-    if (year && moNo) {
-      document.getElementById('transactionDate').value = `${moNo.padStart(2, '0')}/20`;
-    }
-  }
-
-  document.getElementById('year').addEventListener('change', updateDateFields);
-  document.getElementById('month').addEventListener('change', updateDateFields);
-
-  document.getElementById('component').addEventListener('change', function() {
-    const selected = this.options[this.selectedIndex];
-    document.getElementById('componentNo').value = selected.dataset.compno || '';
-    document.getElementById('exp_component').value = this.value;
-    
-    const obligAmount = parseNumber(document.getElementById('obligation').value);
-    document.querySelectorAll('.alloc-input').forEach(input => input.value = 0);
-    
-    const componentAllocMap = {
-      'GOP': 'alloc_gop',
-      'I-PLAN (1.1)': 'alloc_iplan11',
-      'I-PLAN (1.2)': 'alloc_iplan12',
-      'I-BUILD (2.1)': 'alloc_ibuild21',
-      'I-BUILD (2.2)': 'alloc_ibuild22',
-      'I-REAP (3.1)': 'alloc_ireap31',
-      'I-REAP (3.2)': 'alloc_ireap32',
-      'I-SUPPORT': 'alloc_isupport'
-    };
-    
-    if (componentAllocMap[this.value]) {
-      document.getElementById(componentAllocMap[this.value]).value = obligAmount;
-    }
-    calculateAll();
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) { window.location.href = 'auth-login.html'; return; }
+    document.getElementById('userDisplayName').innerText = user.displayName || user.email?.split('@')[0] || 'User';
+    const userDoc = await db.collection('users').doc(user.uid).get();
+    userRole = userDoc.exists ? (userDoc.data().role || 'viewer') : 'viewer';
+    if (userRole !== 'admin') { showToast('Admin access required', 'error'); setTimeout(()=>window.location.href='index.html',1500); return; }
+    document.getElementById('userRoleDisplay').innerHTML = '<i class="fa fa-shield-alt me-2 text-success"></i> Administrator';
+    populateYearDropdown(); populateAccountDropdowns(); loadFundsDropdown(); loadTransactions();
   });
 
-  document.getElementById('accountTitle').addEventListener('change', function() {
-    const selected = this.options[this.selectedIndex];
-    const uacs = selected.dataset.uacs || '';
-    document.getElementById('uacs').value = uacs;
-    document.getElementById('exp_category').value = this.value;
-    document.getElementById('exp_uacs').value = uacs;
-  });
-
-  document.getElementById('uacs').addEventListener('change', function() {
-    const selected = this.options[this.selectedIndex];
-    const account = selected.dataset.account || '';
-    document.getElementById('accountTitle').value = account;
-    document.getElementById('exp_category').value = account;
-    document.getElementById('exp_uacs').value = this.value;
-  });
-
-  document.getElementById('obligation').addEventListener('input', function() {
-    document.getElementById('exp_amount').value = this.value;
-    const component = document.getElementById('component').value;
-    if (component) document.getElementById('component').dispatchEvent(new Event('change'));
-    calculateAll();
-  });
-
-  document.getElementById('exp_amount').addEventListener('input', function() {
-    document.getElementById('obligation').value = this.value;
-    calculateAll();
-  });
-
-  function calculateAll() {
-    let allocTotal = 0;
-    document.querySelectorAll('.alloc-input').forEach(input => { allocTotal += parseNumber(input.value); });
-    document.getElementById('alloc_total').textContent = formatCurrency(allocTotal);
-
-    let expenseTotal = 0;
-    document.querySelectorAll('.expense-amount').forEach(input => { expenseTotal += parseNumber(input.value); });
-    document.getElementById('totalExpendituresDisplay').textContent = formatCurrency(expenseTotal);
-    document.getElementById('totalExpenditures').value = expenseTotal.toFixed(2);
-
-    const oblig = parseNumber(document.getElementById('obligation').value);
-    const adj = parseNumber(document.getElementById('adjustment').value);
-    document.getElementById('adjustedObligation').value = (oblig - adj).toFixed(2);
-  }
-
-  async function loadTransactions() {
-    try {
-      const snapshot = await db.collection('transactions').orderBy('createdAt', 'desc').limit(20).get();
-      transactions = [];
-      snapshot.forEach(doc => { transactions.push({ id: doc.id, ...doc.data() }); });
-      renderTransactionsTable();
-    } catch (error) { console.error('Error loading:', error); }
-  }
-
-  function renderTransactionsTable() {
-    const tbody = document.getElementById('transactionsTableBody');
-    if (transactions.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-muted">No transactions found</td></tr>';
-      return;
-    }
-    tbody.innerHTML = transactions.map(t => `
-      <tr><td><strong>${t.orsNo || ''}</strong></td><td>${t.payee || ''}</td><td>${t.component || ''}</td><td>${t.month || ''}</td><td>${formatCurrency(t.obligation)}</td><td><span class="badge bg-${t.status === 'PAID' ? 'success' : 'warning'}">${t.status || 'UNPAID'}</span></td>
-        <td><button class="btn btn-sm btn-outline-primary me-1" onclick="editTransaction('${t.id}')"><i class="fas fa-edit"></i></button>
-        <button class="btn btn-sm btn-outline-danger" onclick="deleteTransaction('${t.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join('');
-  }
-
-  function showToast(message, type = 'success') {
-    Toastify({ text: message, duration: 3000, backgroundColor: type === 'success' ? '#27ae60' : '#e74c3c' }).showToast();
-  }
-
-  document.getElementById('fullTransactionForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    calculateAll();
-    
-    const formData = {
-      year: document.getElementById('year').value,
-      moNo: document.getElementById('moNo').value,
-      month: document.getElementById('month').value,
-      transactionDate: document.getElementById('transactionDate').value,
-      asaNo: document.getElementById('asaNo').value,
-      pap: document.getElementById('pap').value,
-      rc: document.getElementById('rc').value,
-      orsNo: document.getElementById('orsNo').value,
-      fund: document.getElementById('fundSelect').value,
-      payee: document.getElementById('payee').value,
-      component: document.getElementById('component').value,
-      componentNo: document.getElementById('componentNo').value,
-      unit: document.getElementById('unit').value,
-      category: document.getElementById('category').value,
-      accountTitle: document.getElementById('accountTitle').value,
-      uacs: document.getElementById('uacs').value,
-      particulars: document.getElementById('particulars').value,
-      obligation: parseNumber(document.getElementById('obligation').value),
-      adjustment: parseNumber(document.getElementById('adjustment').value),
-      adjustedObligation: parseNumber(document.getElementById('adjustedObligation').value),
-      unpaidObligation: parseNumber(document.getElementById('unpaidObligation').value),
-      status: document.getElementById('status').value,
-      engasDate: document.getElementById('engasDate').value,
-      boxDofDV: document.getElementById('boxDofDV').value,
-      dvReceived: document.getElementById('dvReceived').value,
-      lddapNo: document.getElementById('lddapNo').value,
-      expendituresLPGross: parseNumber(document.getElementById('expendituresLPGross').value),
-      totalExpenditures: parseNumber(document.getElementById('totalExpenditures').value),
-      expenseComponent: document.getElementById('exp_component').value,
-      expenseCategory: document.getElementById('exp_category').value,
-      expenseUACS: document.getElementById('exp_uacs').value,
-      expenseAmount: parseNumber(document.getElementById('exp_amount').value),
-      allocations: {
-        lp: parseNumber(document.getElementById('alloc_lp').value),
-        gop: parseNumber(document.getElementById('alloc_gop').value),
-        iplan11: parseNumber(document.getElementById('alloc_iplan11').value),
-        iplan12: parseNumber(document.getElementById('alloc_iplan12').value),
-        ibuild21: parseNumber(document.getElementById('alloc_ibuild21').value),
-        ibuild22: parseNumber(document.getElementById('alloc_ibuild22').value),
-        ireap31: parseNumber(document.getElementById('alloc_ireap31').value),
-        ireap32: parseNumber(document.getElementById('alloc_ireap32').value),
-        isupport: parseNumber(document.getElementById('alloc_isupport').value)
-      },
-      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
-
-    try {
-      if (editingId) {
-        await db.collection('transactions').doc(editingId).update(formData);
-        showToast('Transaction updated successfully');
-        editingId = null;
-      } else {
-        formData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-        await db.collection('transactions').add(formData);
-        showToast('Transaction saved successfully');
-      }
-      resetForm();
-      loadTransactions();
-    } catch (error) {
-      showToast('Error saving transaction', 'error');
-    }
-  });
-
-  function resetForm() {
-    document.getElementById('fullTransactionForm').reset();
-    populateYearDropdown();
-    document.getElementById('month').value = '';
-    document.getElementById('moNo').value = '';
-    document.getElementById('transactionDate').value = '';
-    document.getElementById('alloc_total').textContent = '₱0.00';
-    document.getElementById('totalExpendituresDisplay').textContent = '₱0.00';
-    document.getElementById('obligation').value = '0.00';
-    document.getElementById('exp_amount').value = '0.00';
-  }
-
-  window.editTransaction = function(id) {
-    const transaction = transactions.find(t => t.id === id);
-    if (!transaction) return;
-    
-    editingId = id;
-    document.getElementById('year').value = transaction.year || '';
-    document.getElementById('month').value = transaction.month || '';
-    updateDateFields();
-    document.getElementById('transactionDate').value = transaction.transactionDate || '';
-    document.getElementById('asaNo').value = transaction.asaNo || '';
-    document.getElementById('pap').value = transaction.pap || '';
-    document.getElementById('rc').value = transaction.rc || '';
-    document.getElementById('orsNo').value = transaction.orsNo || '';
-    document.getElementById('fundSelect').value = transaction.fund || '';
-    document.getElementById('payee').value = transaction.payee || '';
-    document.getElementById('component').value = transaction.component || '';
-    document.getElementById('componentNo').value = transaction.componentNo || '';
-    document.getElementById('unit').value = transaction.unit || '';
-    document.getElementById('category').value = transaction.category || '';
-    document.getElementById('accountTitle').value = transaction.accountTitle || '';
-    document.getElementById('uacs').value = transaction.uacs || '';
-    document.getElementById('particulars').value = transaction.particulars || '';
-    document.getElementById('obligation').value = transaction.obligation || 0;
-    document.getElementById('adjustment').value = transaction.adjustment || 0;
-    document.getElementById('status').value = transaction.status || 'UNPAID';
-    document.getElementById('unpaidObligation').value = transaction.unpaidObligation || 0;
-    document.getElementById('engasDate').value = transaction.engasDate || '';
-    document.getElementById('boxDofDV').value = transaction.boxDofDV || '';
-    document.getElementById('dvReceived').value = transaction.dvReceived || '';
-    document.getElementById('lddapNo').value = transaction.lddapNo || '';
-    document.getElementById('expendituresLPGross').value = transaction.expendituresLPGross || 0;
-    document.getElementById('exp_component').value = transaction.expenseComponent || transaction.component || '';
-    document.getElementById('exp_category').value = transaction.expenseCategory || transaction.accountTitle || '';
-    document.getElementById('exp_uacs').value = transaction.expenseUACS || transaction.uacs || '';
-    document.getElementById('exp_amount').value = transaction.expenseAmount || transaction.obligation || 0;
-    
-    if (transaction.allocations) {
-      document.getElementById('alloc_lp').value = transaction.allocations.lp || 0;
-      document.getElementById('alloc_gop').value = transaction.allocations.gop || 0;
-      document.getElementById('alloc_iplan11').value = transaction.allocations.iplan11 || 0;
-      document.getElementById('alloc_iplan12').value = transaction.allocations.iplan12 || 0;
-      document.getElementById('alloc_ibuild21').value = transaction.allocations.ibuild21 || 0;
-      document.getElementById('alloc_ibuild22').value = transaction.allocations.ibuild22 || 0;
-      document.getElementById('alloc_ireap31').value = transaction.allocations.ireap31 || 0;
-      document.getElementById('alloc_ireap32').value = transaction.allocations.ireap32 || 0;
-      document.getElementById('alloc_isupport').value = transaction.allocations.isupport || 0;
-    }
-    
-    calculateAll();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  window.deleteTransaction = async function(id) {
-    if (confirm('Are you sure you want to delete this transaction?')) {
-      try {
-        await db.collection('transactions').doc(id).delete();
-        showToast('Transaction deleted successfully');
-        loadTransactions();
-      } catch (error) {
-        showToast('Error deleting transaction', 'error');
-      }
-    }
-  };
-
-  // Make functions globally available
-  window.handleSignOut = handleSignOut;
-  window.loadTransactions = loadTransactions;
-
-  document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('calculateBtn').addEventListener('click', calculateAll);
-    document.querySelectorAll('.amount-input').forEach(i => i.addEventListener('input', calculateAll));
-  });
+  function populateYearDropdown() { const sel=document.getElementById('year'); const curr=new Date().getFullYear(); sel.innerHTML='<option value="">Select Year</option>'; for(let y=curr-2;y<=curr+5;y++){ let opt=document.createElement('option'); opt.value=y; opt.textContent=y; if(y===curr) opt.selected=true; sel.appendChild(opt); } }
+  function populateAccountDropdowns() { const accSel=document.getElementById('accountTitle'), uacsSel=document.getElementById('uacs'); accSel.innerHTML='<option value="">Select Account Title</option>'; uacsSel.innerHTML='<option value="">Select UACS</option>'; accountData.forEach(item=>{ let opt=document.createElement('option'); opt.value=item.account; opt.textContent=item.account; opt.dataset.uacs=item.uacs; accSel.appendChild(opt); let uopt=document.createElement('option'); uopt.value=item.uacs; uopt.textContent=`${item.uacs} - ${item.account}`; uopt.dataset.account=item.account; uacsSel.appendChild(uopt); }); }
+  async function loadFundsDropdown() { const snap=await db.collection('funds').orderBy('name').get(); const sel=document.getElementById('fundSelect'); sel.innerHTML='<option value="">Select Fund</option>'; snap.forEach(d=>{ let fund=d.data(); let opt=document.createElement('option'); opt.value=fund.name; opt.textContent=`${fund.name} (${fund.year})`; sel.appendChild(opt); }); }
+  function updateDateFields() { const year=document.getElementById('year').value; const moSel=document.getElementById('month'); const moNo=moSel.options[moSel.selectedIndex]?.dataset.mo||''; document.getElementById('moNo').value=moNo; if(year&&moNo) document.getElementById('transactionDate').value=`${moNo.padStart(2,'0')}/20`; }
+  document.getElementById('year').addEventListener('change',updateDateFields); document.getElementById('month').addEventListener('change',updateDateFields);
+  document.getElementById('component').addEventListener('change',function(){ let opt=this.options[this.selectedIndex]; document.getElementById('componentNo').value=opt.dataset.compno||''; document.getElementById('exp_component').value=this.value; let oblig=parseNumber(document.getElementById('obligation').value); ['alloc_lp','alloc_gop','alloc_iplan11','alloc_iplan12','alloc_ibuild21','alloc_ibuild22','alloc_ireap31','alloc_ireap32','alloc_isupport'].forEach(id=>document.getElementById(id).value=0); const map={'I-PLAN (1.1)':'alloc_iplan11','I-PLAN (1.2)':'alloc_iplan12','I-BUILD (2.1)':'alloc_ibuild21','I-BUILD (2.2)':'alloc_ibuild22','I-REAP (3.1)':'alloc_ireap31','I-REAP (3.2)':'alloc_ireap32','I-SUPPORT':'alloc_isupport'}; if(map[this.value]) document.getElementById(map[this.value]).value=oblig; calculateAll(); });
+  document.getElementById('accountTitle').addEventListener('change',function(){ let opt=this.options[this.selectedIndex]; let uacs=opt.dataset.uacs||''; document.getElementById('uacs').value=uacs; document.getElementById('exp_category').value=this.value; document.getElementById('exp_uacs').value=uacs; });
+  document.getElementById('uacs').addEventListener('change',function(){ let opt=this.options[this.selectedIndex]; document.getElementById('accountTitle').value=opt.dataset.account||''; document.getElementById('exp_category').value=opt.dataset.account||''; document.getElementById('exp_uacs').value=this.value; });
+  document.getElementById('obligation').addEventListener('input',function(){ document.getElementById('exp_amount').value=this.value; let comp=document.getElementById('component').value; if(comp) document.getElementById('component').dispatchEvent(new Event('change')); calculateAll(); });
+  document.getElementById('exp_amount').addEventListener('input',function(){ document.getElementById('obligation').value=this.value; calculateAll(); });
+  function calculateAll(){ let allocTotal=0; document.querySelectorAll('.alloc-input').forEach(i=>allocTotal+=parseNumber(i.value)); document.getElementById('alloc_total').innerText=formatCurrency(allocTotal); let expenseTotal=0; document.querySelectorAll('.expense-amount').forEach(i=>expenseTotal+=parseNumber(i.value)); document.getElementById('totalExpendituresDisplay').innerText=formatCurrency(expenseTotal); document.getElementById('totalExpenditures').value=expenseTotal.toFixed(2); let oblig=parseNumber(document.getElementById('obligation').value); let adj=parseNumber(document.getElementById('adjustment').value); document.getElementById('adjustedObligation').value=(oblig-adj).toFixed(2); }
+  async function loadTransactions(){ const snap=await db.collection('transactions').orderBy('createdAt','desc').limit(20).get(); transactions=snap.docs.map(d=>({id:d.id,...d.data()})); renderTable(); }
+  function renderTable(){ let tbody=document.getElementById('transactionsTableBody'); if(transactions.length===0){ tbody.innerHTML='<tr><td colspan="7" class="text-center py-4 text-muted">No transactions</td></tr>'; return; } tbody.innerHTML=transactions.map(t=>`<tr><td><strong>${t.orsNo||''}</strong></td><td>${t.payee||''}</td><td>${t.component||''}</td><td>${t.month||''}</td><td>${formatCurrency(t.obligation)}</td><td><span class="badge ${t.status==='PAID'?'bg-success':'bg-warning'}">${t.status||'UNPAID'}</span></td><td><button class="btn btn-sm btn-outline-primary me-1" onclick="editTransaction('${t.id}')"><i class="fas fa-edit"></i></button><button class="btn btn-sm btn-outline-danger" onclick="deleteTransaction('${t.id}')"><i class="fas fa-trash"></i></button></td></tr>`).join(''); }
+  document.getElementById('fullTransactionForm').addEventListener('submit',async function(e){ e.preventDefault(); calculateAll(); let data={ year:document.getElementById('year').value, moNo:document.getElementById('moNo').value, month:document.getElementById('month').value, transactionDate:document.getElementById('transactionDate').value, asaNo:document.getElementById('asaNo').value, pap:document.getElementById('pap').value, rc:document.getElementById('rc').value, orsNo:document.getElementById('orsNo').value, fund:document.getElementById('fundSelect').value, payee:document.getElementById('payee').value, component:document.getElementById('component').value, componentNo:document.getElementById('componentNo').value, unit:document.getElementById('unit').value, category:document.getElementById('category').value, accountTitle:document.getElementById('accountTitle').value, uacs:document.getElementById('uacs').value, particulars:document.getElementById('particulars').value, obligation:parseNumber(document.getElementById('obligation').value), adjustment:parseNumber(document.getElementById('adjustment').value), adjustedObligation:parseNumber(document.getElementById('adjustedObligation').value), unpaidObligation:parseNumber(document.getElementById('unpaidObligation').value), status:document.getElementById('status').value, engasDate:document.getElementById('engasDate').value, boxDofDV:document.getElementById('boxDofDV').value, dvReceived:document.getElementById('dvReceived').value, lddapNo:document.getElementById('lddapNo').value, expendituresLPGross:parseNumber(document.getElementById('expendituresLPGross').value), totalExpenditures:parseNumber(document.getElementById('totalExpenditures').value), expenseComponent:document.getElementById('exp_component').value, expenseCategory:document.getElementById('exp_category').value, expenseUACS:document.getElementById('exp_uacs').value, expenseAmount:parseNumber(document.getElementById('exp_amount').value), allocations:{ lp:parseNumber(document.getElementById('alloc_lp').value), gop:parseNumber(document.getElementById('alloc_gop').value), iplan11:parseNumber(document.getElementById('alloc_iplan11').value), iplan12:parseNumber(document.getElementById('alloc_iplan12').value), ibuild21:parseNumber(document.getElementById('alloc_ibuild21').value), ibuild22:parseNumber(document.getElementById('alloc_ibuild22').value), ireap31:parseNumber(document.getElementById('alloc_ireap31').value), ireap32:parseNumber(document.getElementById('alloc_ireap32').value), isupport:parseNumber(document.getElementById('alloc_isupport').value) }, updatedAt:firebase.firestore.FieldValue.serverTimestamp() }; try{ if(editingId){ await db.collection('transactions').doc(editingId).update(data); showToast('Transaction updated'); editingId=null; } else{ data.createdAt=firebase.firestore.FieldValue.serverTimestamp(); await db.collection('transactions').add(data); showToast('Transaction saved'); } resetForm(); loadTransactions(); } catch(err){ showToast('Error saving','error'); } });
+  function resetForm(){ document.getElementById('fullTransactionForm').reset(); populateYearDropdown(); document.getElementById('month').value=''; document.getElementById('moNo').value=''; document.getElementById('transactionDate').value=''; document.getElementById('alloc_total').innerText='₱0.00'; document.getElementById('totalExpendituresDisplay').innerText='₱0.00'; document.getElementById('obligation').value='0.00'; document.getElementById('exp_amount').value='0.00'; editingId=null; }
+  window.editTransaction=function(id){ let t=transactions.find(x=>x.id===id); if(!t) return; editingId=id; document.getElementById('year').value=t.year||''; document.getElementById('month').value=t.month||''; updateDateFields(); document.getElementById('transactionDate').value=t.transactionDate||''; document.getElementById('asaNo').value=t.asaNo||''; document.getElementById('pap').value=t.pap||''; document.getElementById('rc').value=t.rc||''; document.getElementById('orsNo').value=t.orsNo||''; document.getElementById('fundSelect').value=t.fund||''; document.getElementById('payee').value=t.payee||''; document.getElementById('component').value=t.component||''; document.getElementById('componentNo').value=t.componentNo||''; document.getElementById('unit').value=t.unit||''; document.getElementById('category').value=t.category||''; document.getElementById('accountTitle').value=t.accountTitle||''; document.getElementById('uacs').value=t.uacs||''; document.getElementById('particulars').value=t.particulars||''; document.getElementById('obligation').value=t.obligation||0; document.getElementById('adjustment').value=t.adjustment||0; document.getElementById('status').value=t.status||'UNPAID'; document.getElementById('unpaidObligation').value=t.unpaidObligation||0; document.getElementById('engasDate').value=t.engasDate||''; document.getElementById('boxDofDV').value=t.boxDofDV||''; document.getElementById('dvReceived').value=t.dvReceived||''; document.getElementById('lddapNo').value=t.lddapNo||''; document.getElementById('expendituresLPGross').value=t.expendituresLPGross||0; document.getElementById('exp_component').value=t.expenseComponent||t.component||''; document.getElementById('exp_category').value=t.expenseCategory||t.accountTitle||''; document.getElementById('exp_uacs').value=t.expenseUACS||t.uacs||''; document.getElementById('exp_amount').value=t.expenseAmount||t.obligation||0; if(t.allocations){ document.getElementById('alloc_lp').value=t.allocations.lp||0; document.getElementById('alloc_gop').value=t.allocations.gop||0; document.getElementById('alloc_iplan11').value=t.allocations.iplan11||0; document.getElementById('alloc_iplan12').value=t.allocations.iplan12||0; document.getElementById('alloc_ibuild21').value=t.allocations.ibuild21||0; document.getElementById('alloc_ibuild22').value=t.allocations.ibuild22||0; document.getElementById('alloc_ireap31').value=t.allocations.ireap31||0; document.getElementById('alloc_ireap32').value=t.allocations.ireap32||0; document.getElementById('alloc_isupport').value=t.allocations.isupport||0; } calculateAll(); window.scrollTo({top:0,behavior:'smooth'}); };
+  window.deleteTransaction=async function(id){ if(confirm('Delete transaction?')){ await db.collection('transactions').doc(id).delete(); showToast('Deleted'); loadTransactions(); } };
+  window.handleSignOut=()=>auth.signOut().then(()=>window.location.href='auth-login.html');
+  window.loadTransactions=loadTransactions;
+  document.getElementById('calculateBtn').addEventListener('click',calculateAll);
+  document.getElementById('sidebarToggleBtn')?.addEventListener('click',()=>document.getElementById('mainSidebar').classList.toggle('open'));
+  async function updateSidebarWidget(){ try{ let totalBudget=0; const fundsSnap=await db.collection('funds').get(); fundsSnap.forEach(d=>totalBudget+=d.data().allocated||0); const curYear=new Date().getFullYear().toString(); const txSnap=await db.collection('transactions').where('year','==',curYear).get(); let disburse=0; txSnap.forEach(d=>{ let t=d.data(); if(['Disbursed','PAID','LDDAP Processed'].includes(t.status)) disburse+=t.obligation||0; }); let rate=totalBudget>0?(disburse/totalBudget)*100:0; let span=document.getElementById('utilizationRateWidget'); if(span) span.innerText=rate.toFixed(1)+'%'; let bar=document.getElementById('utilizationProgressBar'); if(bar){ bar.style.width=Math.min(rate,100)+'%'; bar.style.background=rate>=90?'#d32f2f':rate>=75?'#ed6c02':'#c9a03d'; } }catch(e){} }
+  window.refreshSidebarWidget=async function(){ let btn=document.querySelector('.btn-upgrade'); if(btn){ let orig=btn.innerHTML; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i>'; btn.disabled=true; await updateSidebarWidget(); btn.innerHTML=orig; btn.disabled=false; showToast('Dashboard updated','success'); } };
+  updateSidebarWidget();
 </script>
-<script src="assets/js/script.js"></script>
-<script src="assets/js/custom.js"></script>
 </body>
 </html>
